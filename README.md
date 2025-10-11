@@ -1,13 +1,13 @@
 # SaleSync
 
- A simple Java console application for managing sales/employees/products. Built with Java and MongoDB driver.
+ Application for managing store day-to-day work load. Built with Java and MongoDB driver.
 
 ## Project overview
 
- SaleSync is a small object-oriented project intended for a university OOP course. It demonstrates basic application structure, data models, and operations for employees (Admin/Cashier), products, and product management. The project uses the MongoDB Java driver as a dependency (configured in `pom.xml`) though the codebase includes an abstraction `DatabaseConnectionManager` so the app can be extended or modified to connect to other data sources.
+ SaleSync is a small object-oriented project intended for a university OOP course. It demonstrates basic application structure, data models, and operations for employees (Admin/Cashier/ProductManager) and products. The project uses the MongoDB Java driver as a dependency (configured in `pom.xml`)
 
  Main features
- - Models for Admin, Cashier, User, Product and ProductManager
+ - Models for Admin, Cashier, Employee, Product and ProductManager
  - Operations packages for employee and product related actions
  - A simple console/view entrypoint in `org.oop_project.Main` / `org.oop_project.View.SaleSyncApp`
 
@@ -52,25 +52,23 @@ Top-level packages
 	- `SaleSyncApp.java` — a minimal Swing-based GUI (JFrame) used as the application's window. Contains a demo label and button and demonstrates how a simple view would be wired up.
 
 - `org.oop_project.DatabaseHandler` — database integration and domain models:
-	- `DatabaseConnectionManager.java` — a singleton wrapper around the MongoDB Java driver. It configures a POJO codec registry, exposes `getCollection(...)` for typed collections, and provides `getInstance()` and `close()` methods. Default connection string is `mongodb://localhost:27017` and DB name is `SaleSync` (change these in code or refactor to use env/config).
+	- `DatabaseConnectionManager.java` — a singleton wrapper around the MongoDB Java driver. It configures a POJO codec registry, exposes `getCollection(...)` for typed collections, and provides `getInstance()` and `close()` methods. Default connection string is `mongodb://localhost:27017` and DB name is `SaleSync`.
 
 Sub-packages and important classes
 
 - `org.oop_project.DatabaseHandler.Operations` — database operation helpers:
 	- `Operations.java` — base class that holds a `DatabaseConnectionManager` instance and references to typed `MongoCollection<User>` and `MongoCollection<Product>`. Provides `closeConnection()` to close the DB client.
-	- `UserOperations.java` — employee-specific operations: add a employee, find by username, get a employee, list all employees, and delete by name. Uses MongoDB filters to query collections.
+	- `EmployeeOperations.java` — employee-specific operations: add a employee, find by username, get a employee, list all employees, and delete by name. Uses MongoDB filters to query collections.
 	- `ProductOperations.java` — product-specific operations: add a product and obtain the last product id (helper used by `Product` when creating new records).
 
 - `org.oop_project.DatabaseHandler.Models` — domain model POJOs (persisted as MongoDB documents):
-	- `User.java` — main employee POJO with fields: `ObjectId id` (annotated with `@BsonId`), `username`, `password`, `role`. Includes a no-arg constructor and convenience constructor, plus getters/setters — ready to be used with MongoDB POJO codec.
-	- `Admin.java`, `Cashier.java`, `ProductManager.java` — role-specific classes that extend `User`. They currently re-declare fields and constructors (they can be simplified by inheriting fields directly from `User`), but are included to model different employee roles.
-	- `Product.java` — product model with `productId`, `name`, `price`, and `stockQuantity`. Includes static console helper methods `productPortal(User)` and `addProduct()` that interactively collect data and call `ProductOperations` to insert products.
+	- `Employee.java` — main employee POJO with fields: `ObjectId id` (annotated with `@BsonId`), `username`, `password`, `role`. Includes a no-arg constructor and convenience constructor, plus getters/setters — ready to be used with MongoDB POJO codec.
+	- `Admin.java`, `Cashier.java`, `ProductManager.java` — role-specific classes that extend `Employee`. They currently re-declare fields and constructors (they can be simplified by inheriting fields directly from `User`), but are included to model different employee roles.
+	- `Product.java` — product model with `productId`, `name`, `price`, and `stockQuantity`. Includes static console helper methods `productPortal(User)` and `add()` that interactively collect data and call `ProductOperations` to insert products.
 
 Other notes
 
 - The `pom.xml` declares the MongoDB synchronous driver. Compiler level is set to Java 25; update `pom.xml` if you target a different JDK.
-- Some helper methods (for example `Product.getLastId`) rely on collection ordering — consider replacing those with a robust ID generation strategy for production.
-
 
 ## How to use
 
