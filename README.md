@@ -1,0 +1,2 @@
+# SaleSync
+Modern Store Manager
