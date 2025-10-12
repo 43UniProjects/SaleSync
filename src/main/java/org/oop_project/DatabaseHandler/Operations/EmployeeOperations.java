@@ -1,14 +1,14 @@
 package org.oop_project.DatabaseHandler.Operations;
 
-import com.mongodb.client.model.Sorts;
-import org.oop_project.DatabaseHandler.Enums.Role;
-import org.oop_project.DatabaseHandler.Models.Employee;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.oop_project.DatabaseHandler.Enums.Role;
+import org.oop_project.DatabaseHandler.Models.Employee;
+
 import static com.mongodb.client.model.Filters.eq;
+import com.mongodb.client.model.Sorts;
 
 public class EmployeeOperations extends Operations {
 
@@ -36,7 +36,7 @@ public class EmployeeOperations extends Operations {
     }
 
     public String getLastId() {
-        Employee u = employeeCollection.find().sort(Sorts.descending("id")).first();
+        Employee u = employeeCollection.find().sort(Sorts.descending("_id")).first();
         return u != null ? u.getId() : "0";
     }
 

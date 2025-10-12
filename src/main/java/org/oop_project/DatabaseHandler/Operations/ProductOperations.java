@@ -1,17 +1,18 @@
 package org.oop_project.DatabaseHandler.Operations;
 
-import com.mongodb.client.model.Filters;
-import com.mongodb.client.model.Sorts;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.bson.Document;
 import org.bson.codecs.pojo.annotations.BsonId;
 import org.bson.conversions.Bson;
 import org.oop_project.DatabaseHandler.Enums.UnitType;
 import org.oop_project.DatabaseHandler.Models.Product;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import com.mongodb.client.model.Filters;
+import com.mongodb.client.model.Sorts;
 
 
 public class ProductOperations extends Operations {
@@ -46,7 +47,7 @@ public class ProductOperations extends Operations {
     }
 
     public String getLastId() {
-        Product lastProduct = productCollection.find().sort(Sorts.descending("id")).first();
+        Product lastProduct = productCollection.find().sort(Sorts.descending("_id")).first();
         return lastProduct != null ? lastProduct.getId() : "0";
     }
 

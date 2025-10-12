@@ -1,11 +1,10 @@
 package org.oop_project.DatabaseHandler.Models;
 
-import org.bson.codecs.pojo.annotations.BsonId;
-import org.bson.types.ObjectId;
-import org.oop_project.DatabaseHandler.Enums.UnitType;
-
 import java.util.Date;
 import java.util.HashMap;
+
+import org.bson.codecs.pojo.annotations.BsonId;
+import org.oop_project.DatabaseHandler.Enums.UnitType;
 
 /*
  * Represents a Product entity in the MongoDB 'Product' collection.
@@ -16,8 +15,8 @@ import java.util.HashMap;
 public class Product {
 
     @BsonId
-    private ObjectId _id;
-    private String id;
+    //private ObjectId _id;
+    private String _id;
     private String name;
     private String description;
     private UnitType productType;
@@ -52,7 +51,7 @@ public class Product {
             int supplierId,
             double stockQuantity
     ) {
-        this.id = productId;
+        this._id = productId;
         this.name = name;
         this.description = description;
         this.productType = unitType;
@@ -69,8 +68,12 @@ public class Product {
 
     // Getters and Setters
 
+    public void setId(String id) {
+        this._id = id;
+    }
+
     public String getId() {
-        return this.id;
+        return this._id;
     }
 
     public String getName() {
@@ -204,7 +207,7 @@ public class Product {
     public void addProperty(String key, Object value) {
         Object ret = this.properties.put(key, value);
         if (ret != null) {
-            System.out.printf("Property value ( %s ) was over written of Product ID ( %s )", key, this.id);
+            System.out.printf("Property value ( %s ) was over written of Product ID ( %s )", key, this._id);
         }
     }
 
