@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.bson.Document;
-import org.bson.codecs.pojo.annotations.BsonId;
 import org.bson.conversions.Bson;
 import org.oop_project.DatabaseHandler.Enums.UnitType;
 import org.oop_project.DatabaseHandler.Models.Product;
@@ -36,7 +35,7 @@ public class ProductOperations extends Operations {
         System.out.println("\nProduct added: " + newProduct.getName());
     }
 
-    public Product get(BsonId id) {
+    public Product get(String id) {
         return productCollection.find(Filters.eq("_id", id)).first();
     }
 
@@ -67,8 +66,9 @@ public class ProductOperations extends Operations {
         productCollection.updateOne(filter, updateOperation);
     }
 
-    public void remove(BsonId id) {
-        productCollection.deleteOne(Filters.eq("_id", id));
+    public boolean remove(String id) {
+        long deletedCount = productCollection.deleteOne(Filters.eq("_id", id)).getDeletedCount();
+        return deletedCount > 0;
     }
 
 }
