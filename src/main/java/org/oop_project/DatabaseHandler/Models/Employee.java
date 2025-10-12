@@ -1,10 +1,10 @@
 package org.oop_project.DatabaseHandler.Models;
 
+import java.time.LocalDate;
+
 import org.bson.codecs.pojo.annotations.BsonId;
 import org.bson.types.ObjectId;
 import org.oop_project.DatabaseHandler.Enums.Role;
-
-import java.util.Date;
 
 /*
  * Represents a Employee entity in the MongoDB 'Employee' collection.
@@ -21,10 +21,10 @@ public class Employee {
     private String id;
     private String firstName;
     private String lastName;
-    private Date dob;
+    private LocalDate dob;
     private String phoneNumber;
     private String email;
-    private Date startDate;
+    private LocalDate startDate;
     private String username;
     private String password;
     private Role role;
@@ -34,7 +34,7 @@ public class Employee {
         // left empty intentionally
     }
 
-    public Employee(String firstName, String lastName, Date dob, String phoneNumber, String email, String username, Role role) {
+    public Employee(String firstName, String lastName, LocalDate dob, String phoneNumber, String email, String username, Role role) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.dob = dob;
@@ -69,11 +69,11 @@ public class Employee {
         this.lastName = lastName;
     }
 
-    public Date getDob() {
+    public LocalDate getDob() {
         return dob;
     }
 
-    public void setDob(Date dob) {
+    public void setDob(LocalDate dob) {
         this.dob = dob;
     }
 
@@ -93,12 +93,13 @@ public class Employee {
         this.email = email;
     }
 
-    public Date getStartDate() {
+    public LocalDate getStartDate() {
         return startDate;
     }
 
     private void setStartDate() {
-        this.startDate = new Date();
+        LocalDate currentDate = LocalDate.now();  // YYYY-MM-DD
+        this.startDate = currentDate;
     }
 
     public String getUsername() {

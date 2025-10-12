@@ -1,9 +1,10 @@
 package org.oop_project.DatabaseHandler.Operations;
 
-import com.mongodb.client.MongoCollection;
 import org.oop_project.DatabaseHandler.DatabaseConnectionManager;
 import org.oop_project.DatabaseHandler.Models.Employee;
 import org.oop_project.DatabaseHandler.Models.Product;
+
+import com.mongodb.client.MongoCollection;
 
 /*
 * Base class for the collection operations in the database

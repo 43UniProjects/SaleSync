@@ -2,6 +2,7 @@ package org.oop_project;
 
 import java.util.Scanner;
 
+import org.oop_project.CLI.AdminPortal;
 import org.oop_project.CLI.InventoryManager;
 import org.oop_project.DatabaseHandler.Enums.Role;
 import org.oop_project.DatabaseHandler.Models.Employee;
@@ -34,13 +35,7 @@ public class Main {
             
             switch (role) {
                 case Role.ADMIN:
-                    // TODO
-                    /*
-                    * Manage Employee ( Add, Update, Remove )
-                    * Manage Supplier ( Add, Update, Remove )
-                    * Manage Branch Details
-                    * Handle Discounts
-                    * */
+                    AdminPortal.showMenu(employee);
 
                     break;
 

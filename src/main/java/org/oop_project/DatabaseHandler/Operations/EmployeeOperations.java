@@ -1,7 +1,7 @@
 package org.oop_project.DatabaseHandler.Operations;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.oop_project.DatabaseHandler.Enums.Role;
@@ -12,12 +12,12 @@ import com.mongodb.client.model.Sorts;
 
 public class EmployeeOperations extends Operations {
 
-    public void add(String userID, String firstName, String lastName, Date dob, String phoneNumber, String email, String username, Role role, String pwd) {
+    public void add(String userID, String firstName, String lastName, LocalDate dob, String phoneNumber, String email, String username, String pwd, Role role) {
         Employee newEmployee = new Employee(firstName, lastName, dob, phoneNumber, email, username, role);
         newEmployee.setId(userID);
         newEmployee.setPassword(pwd);
         employeeCollection.insertOne(newEmployee);
-        System.out.println("Employee saved: " + newEmployee.getUsername());
+        System.out.println("\nEmployee saved: " + newEmployee.getUsername());
     }
 
     public boolean find(String username) {
