@@ -1,12 +1,12 @@
 package org.oop_project.CLI;
 
-import java.util.List;
-
 import org.oop_project.DatabaseHandler.Enums.UnitType;
 import org.oop_project.DatabaseHandler.Models.Employee;
 import org.oop_project.DatabaseHandler.Models.Product;
 import org.oop_project.DatabaseHandler.Operations.ProductOperations;
 import org.oop_project.Main;
+
+import java.util.List;
 
 public class InventoryManager {
     static  ProductOperations productManager = new ProductOperations();
@@ -115,7 +115,7 @@ public class InventoryManager {
 
         if(prod != null) {
             System.out.println("\nProduct Details:\n");
-            System.out.println("\tID: " + prod.getProductId());
+            System.out.println("\tID: " + prod.getId());
             System.out.println("\tName: " + prod.getName());
             System.out.println("\tDescription: " + prod.getDescription());
             System.out.println("\tFamily: " + prod.getFamily());

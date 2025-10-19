@@ -1,11 +1,13 @@
 package org.oop_project.CLI;
-import java.time.LocalDate;
-import java.util.Scanner;
 
 import org.oop_project.DatabaseHandler.Enums.Role;
 import org.oop_project.DatabaseHandler.Models.Employee;
 import org.oop_project.DatabaseHandler.Operations.EmployeeOperations;
 import org.oop_project.Main;
+
+import java.time.LocalDate;
+import java.util.Date;
+import java.util.Scanner;
 
 public class AdminPortal {
     static Scanner sc = new Scanner(System.in);
@@ -64,7 +66,7 @@ public class AdminPortal {
         String dob = sc.nextLine();
 
         // Parse the string into a LocalDate object
-        LocalDate dob_ = LocalDate.parse(dob); 
+        Date dob_ = java.sql.Date.valueOf(dob);
 
         System.out.print("\tPhone Number: ");
         String phoneNumber = sc.nextLine();
@@ -79,7 +81,7 @@ public class AdminPortal {
         Role role = Role.valueOf(roleInput.toUpperCase());
         String userID = String.valueOf(newID);
         
-        employeeManager.add(userID, firstName, lastName, dob_, phoneNumber, email, username, password, role);
+        employeeManager.add(userID, firstName, lastName, dob_, phoneNumber, email, username, role, password);
 
     }
 }
