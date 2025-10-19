@@ -1,23 +1,29 @@
 package org.oop_project.DatabaseHandler.Operations;
 
+import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Sorts;
 import org.oop_project.DatabaseHandler.Enums.Role;
 import org.oop_project.DatabaseHandler.Models.Employee;
+import org.oop_project.DatabaseHandler.Models.Product;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import static com.mongodb.client.model.Filters.eq;
+import static org.oop_project.DatabaseHandler.DatabaseConnectionManager.EMPLOYEE_COLLECTION_NAME;
+import static org.oop_project.DatabaseHandler.DatabaseConnectionManager.PRODUCT_COLLECTION_NAME;
 
 public class EmployeeOperations extends Operations {
 
+
+    final MongoCollection<Employee> employeeCollection = dbClient.getCollection(EMPLOYEE_COLLECTION_NAME, Employee.class);
+
     public void add(String userID, String firstName, String lastName, Date dob, String phoneNumber, String email, String username, Role role, String pwd) {
-        Employee newEmployee = new Employee(firstName, lastName, dob, phoneNumber, email, username, role);
-        newEmployee.setId(userID);
+        Employee newEmployee = new Employee(userID, firstName, lastName, dob, phoneNumber, email, username, role);
         newEmployee.setPassword(pwd);
         employeeCollection.insertOne(newEmployee);
-        System.out.println("Employee saved: " + newEmployee.getUsername());
+        System.out.printf("\nEmployee saved: %s\n", newEmployee.getUsername());
     }
 
     public boolean find(String username) {
@@ -36,8 +42,9 @@ public class EmployeeOperations extends Operations {
     }
 
     public String getLastId() {
-        Employee u = employeeCollection.find().sort(Sorts.descending("id")).first();
-        return u != null ? u.getId() : "0";
+        Employee e = employeeCollection.find().sort(Sorts.descending("id")).first();
+        assert e != null;
+        return e.getId();
     }
 
     public void delete(String username) {

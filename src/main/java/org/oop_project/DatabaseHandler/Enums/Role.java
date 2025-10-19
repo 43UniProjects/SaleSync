@@ -1,9 +1,9 @@
 package org.oop_project.DatabaseHandler.Enums;
 
 public enum Role {
-    ADMIN("admin"),
-    CASHIER("cashier"),
-    PRODUCT_MANAGER("productManager");
+    ADMIN("ADMIN"),
+    CASHIER("CASHIER"),
+    PRODUCT_MANAGER("PRODUCT_MANAGER");
 
     private final String label;
 
@@ -13,7 +13,7 @@ public enum Role {
     }
 
     // Getter method to read the description
-    public String getDescription() {
+    public String getLabel() {
         return label;
     }
 }

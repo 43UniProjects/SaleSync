@@ -1,7 +1,7 @@
 package org.oop_project.DatabaseHandler.Models;
 
 import org.bson.codecs.pojo.annotations.BsonId;
-import org.bson.types.ObjectId;
+import org.bson.codecs.pojo.annotations.BsonProperty;
 import org.oop_project.DatabaseHandler.Enums.Role;
 
 import java.util.Date;
@@ -10,15 +10,18 @@ import java.util.Date;
  * Represents a Employee entity in the MongoDB 'Employee' collection.
  * This class is a Plain Old Java Object (POJO) that maps to a BSON document.
  * It contains essential employee details such as a unique identifier and other properties.
- * This act as the base class for all employees with different roles with in the company
+ * This act as the base class for all employees with different roles with in the store
  *
  * */
 
 public class Employee {
 
     @BsonId
-    private ObjectId _id;
+    private BsonId _id;
+
+    @BsonProperty("id")
     private String id;
+
     private String firstName;
     private String lastName;
     private Date dob;
@@ -34,7 +37,8 @@ public class Employee {
         // left empty intentionally
     }
 
-    public Employee(String firstName, String lastName, Date dob, String phoneNumber, String email, String username, Role role) {
+    public Employee(String userId, String firstName, String lastName, Date dob, String phoneNumber, String email, String username, Role role) {
+        this.id = userId;
         this.firstName = firstName;
         this.lastName = lastName;
         this.dob = dob;
@@ -45,16 +49,17 @@ public class Employee {
         this.setStartDate();
     }
 
-    public String getId() {
-        return id;
-    }
 
     public void setId(String id) {
         this.id = id;
     }
 
+    public String getId() {
+        return this.id;
+    }
+
     public String getFirstName() {
-        return firstName;
+        return this.firstName;
     }
 
     public void setFirstName(String firstName) {
@@ -62,7 +67,7 @@ public class Employee {
     }
 
     public String getLastName() {
-        return lastName;
+        return this.lastName;
     }
 
     public void setLastName(String lastName) {
@@ -70,7 +75,7 @@ public class Employee {
     }
 
     public Date getDob() {
-        return dob;
+        return this.dob;
     }
 
     public void setDob(Date dob) {
@@ -78,7 +83,7 @@ public class Employee {
     }
 
     public String getPhoneNumber() {
-        return phoneNumber;
+        return this.phoneNumber;
     }
 
     public void setPhoneNumber(String phoneNumber) {
@@ -86,7 +91,7 @@ public class Employee {
     }
 
     public String getEmail() {
-        return email;
+        return this.email;
     }
 
     public void setEmail(String email) {
@@ -94,7 +99,7 @@ public class Employee {
     }
 
     public Date getStartDate() {
-        return startDate;
+        return this.startDate;
     }
 
     private void setStartDate() {
@@ -102,7 +107,7 @@ public class Employee {
     }
 
     public String getUsername() {
-        return username;
+        return this.username;
     }
 
     public void setUsername(String username) {
@@ -110,7 +115,7 @@ public class Employee {
     }
 
     public String getPassword() {
-        return password;
+        return this.password;
     }
 
     public void setPassword(String password) {
@@ -118,7 +123,7 @@ public class Employee {
     }
 
     public Role getRole() {
-        return role;
+        return this.role;
     }
 
     public void setRole(Role role) {
