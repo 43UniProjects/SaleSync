@@ -6,24 +6,28 @@ import org.oop_project.DatabaseHandler.Operations.EmployeeOperations;
 import  org.oop_project.DatabaseHandler.Operations.ProductOperations;
 import org.oop_project.DatabaseHandler.Enums.UnitType;
 import org.oop_project.DatabaseHandler.Enums.Role;
+import org.oop_project.Utils.Generate;
 
+import java.nio.file.Paths;
+import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
+import java.nio.file.Path;
+
 
 public class Main {
 
     // initialize DB operations
-    static EmployeeOperations employeeManager = new EmployeeOperations();
-    static  ProductOperations productManager = new ProductOperations();
+    public static final EmployeeOperations employeeManager = new EmployeeOperations();
+    public static final ProductOperations productManager = new ProductOperations();
 
-    static Scanner sc = new Scanner(System.in);
-    
+    public static final Scanner sc = new Scanner(System.in);
+    public static final String INITIAL_ITEM_FAMILIES_DATA_PATH = "src/main/java/org/oop_project/DatabaseHandler/data/item_families.json";
+
     public static void main(String[] args) {
-
 
         System.out.println("\n===== SaleSync =====\n");
         System.out.println("Please Login\n");
-
 
         System.out.print("\tUsername: ");
         String username = sc.nextLine();
@@ -35,7 +39,7 @@ public class Main {
         if(employeeManager.find(username)  && password.equals(employee.getPassword())) {
             Role role = employee.getRole();
             switch (role) {
-                case Role.ADMIN:
+                case ADMIN:
                     // TODO
                     /*
                     * Manage Employee ( Add, Update, Remove )
@@ -43,14 +47,13 @@ public class Main {
                     * Manage Branch Details
                     * Handle Discounts
                     * */
-
-
+                    System.out.println("ADMIN LOGIN");
                     break;
 
-                case Role.CASHIER:
+                case CASHIER:
                     System.out.println("cahier");
                     break;
-                case Role.PRODUCT_MANAGER:
+                case PRODUCT_MANAGER:
                     int option;
 
                     do {

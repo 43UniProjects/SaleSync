@@ -1,37 +1,41 @@
 package org.oop_project.DatabaseHandler;
 
-import org.bson.codecs.configuration.CodecProvider;
-import static org.bson.codecs.configuration.CodecRegistries.fromProviders;
-import static org.bson.codecs.configuration.CodecRegistries.fromRegistries;
-import org.bson.codecs.configuration.CodecRegistry;
-import static org.bson.codecs.pojo.PojoCodecProvider.builder;
-
 import com.mongodb.ConnectionString;
 import com.mongodb.MongoClientSettings;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import io.mongock.driver.mongodb.sync.v4.driver.MongoSync4Driver;
+import io.mongock.runner.standalone.MongockStandalone;
+import org.bson.codecs.configuration.CodecProvider;
+import org.bson.codecs.configuration.CodecRegistry;
 
-//import models.Employee;
+import static org.bson.codecs.configuration.CodecRegistries.fromProviders;
+import static org.bson.codecs.configuration.CodecRegistries.fromRegistries;
+import static org.bson.codecs.pojo.PojoCodecProvider.builder;
 
 public class DatabaseConnectionManager {
-    private static final String CONNECTION_STRING = "mongodb://localhost:27017";
-    private static final String DATABASE_NAME = "SaleSync";
 
+    private static final String CONNECTION_STRING = "mongodb://localhost:27017/?retryWrites=false";
+    private static final String MIGRATION_PACKAGE = "org.oop_project.DatabaseHandler.migrations";
+    private static final String DATABASE_NAME = "SaleSync";
+    public static final String EMPLOYEE_COLLECTION_NAME = "Employee";
+    public static final String PRODUCT_COLLECTION_NAME = "Product";
+    public static final String SUPPLIER_COLLECTION_NAME = "Supplier";
+    public static final String ITEM_FAMILY_COLLECTION_NAME = "ItemFamily";
+
+
+    private static DatabaseConnectionManager INSTANCE; // Keep a single shared instance (simple singleton pattern)
     private MongoClient mongoClient;
     private MongoDatabase database;
 
-    // private MongoCollection<Employee> userCollection;
-
-    // Keep a single shared instance (simple singleton pattern)
-    private static DatabaseConnectionManager INSTANCE;
+    private int i = 0;
 
     public DatabaseConnectionManager() {
+
         try {
-
             CodecProvider pojoCodecProvider = builder().automatic(true).build();
-
             // Combines default codec registry with pojo codec registry
             CodecRegistry pojoCodecRegistry = fromRegistries(
                     MongoClientSettings.getDefaultCodecRegistry(),
@@ -43,31 +47,41 @@ public class DatabaseConnectionManager {
             MongoClientSettings.Builder mongoClientSettingsBuilder = MongoClientSettings.builder();
             // Adding connection string
             mongoClientSettingsBuilder.applyConnectionString(connStr);
-            // Overriding default BSON codec registry with  POJO Codec registry
+            // Overriding default BSON codec registry with POJO Codec registry
             mongoClientSettingsBuilder.codecRegistry(pojoCodecRegistry);
             // Building mongo client settings obj
             MongoClientSettings settings = mongoClientSettingsBuilder.build();
 
             mongoClient = MongoClients.create(settings);
 
-            database = mongoClient.getDatabase(DATABASE_NAME);
+            this.database = mongoClient.getDatabase(DATABASE_NAME);
 
-            System.out.println(database);
+            System.out.println("Connected to MongoDB successfully!" + ++i);
 
-            System.out.println("Connected to MongoDB successfully!");
+            System.out.println("Application starting. Initializing Mongock migration...");
+
+            // 2. Build the Mongock Driver
+            MongoSync4Driver driver = MongoSync4Driver.withDefaultLock(mongoClient, DATABASE_NAME);
+            driver.disableTransaction();
+
+            // 3. Build and execute the Mongock Runner
+            MongockStandalone.builder()
+                    .setDriver(driver)
+                    .addMigrationScanPackage(MIGRATION_PACKAGE)
+                    .buildRunner()
+                    .execute();
+
+            System.out.println("✅ Mongock migration completed successfully.");
+
+            // --- Application continues here after database is migrated ---
+            System.out.println("Application is now fully initialized and starting up...");
+
         } catch (Exception e) {
-            System.err.println("Error connecting to MongoDB: " + e.getMessage());
+            System.err.println("❌ An error occurred during Mongock execution. Application failed to start.");
+            e.printStackTrace();
         }
     }
 
-
-    public <T> MongoCollection<T> getCollection(String collectionName, Class<T> clazz) {
-        return database.getCollection(collectionName, clazz);
-    }
-
-    /**
-     * Obtain the shared instance of MongoConnectionManager.
-     */
     public static synchronized DatabaseConnectionManager getInstance() {
         if (INSTANCE == null) {
             INSTANCE = new DatabaseConnectionManager();
@@ -75,11 +89,18 @@ public class DatabaseConnectionManager {
         return INSTANCE;
     }
 
+    public <T> MongoCollection<T> getCollection(String collectionName, Class<T> clazz) {
+        return this.database.getCollection(collectionName, clazz);
+    }
+
     // --- Disconnect ---
+
     public void close() {
         if (mongoClient != null) {
             mongoClient.close();
             System.out.println("MongoDB connection closed.");
         }
+
     }
+
 }
