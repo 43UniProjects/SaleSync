@@ -1,18 +1,15 @@
 package org.oop_project;
 
-import org.oop_project.DatabaseHandler.Models.Employee;
-import org.oop_project.DatabaseHandler.Models.Product;
-import org.oop_project.DatabaseHandler.Operations.EmployeeOperations;
-import  org.oop_project.DatabaseHandler.Operations.ProductOperations;
-import org.oop_project.DatabaseHandler.Enums.UnitType;
-import org.oop_project.DatabaseHandler.Enums.Role;
-import org.oop_project.Utils.Generate;
+import org.oop_project.DatabaseHandler.enums.Role;
+import org.oop_project.DatabaseHandler.enums.UnitType;
+import org.oop_project.DatabaseHandler.models.Employee;
+import org.oop_project.DatabaseHandler.models.Product;
+import org.oop_project.DatabaseHandler.operations.EmployeeOperations;
+import org.oop_project.DatabaseHandler.operations.ProductOperations;
+import org.oop_project.utils.Generate;
 
-import java.nio.file.Paths;
-import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
-import java.nio.file.Path;
 
 
 public class Main {
@@ -26,6 +23,22 @@ public class Main {
 
     public static void main(String[] args) {
 
+        /*Employee e = new Employee(
+                Generate.generateUserId(employeeManager, Role.ADMIN),
+                "kamal",
+                "weerasinghe",
+                new Date(),
+                "0701234567",
+                "test@gamil.com",
+                "kamal",
+                Role.ADMIN
+        );
+
+        //  in the future > e.setPassword(Generate.hashPassword("123"));
+        e.setPassword("123");
+
+        employeeManager.add(e);*/
+
         System.out.println("\n===== SaleSync =====\n");
         System.out.println("Please Login\n");
 
@@ -33,20 +46,21 @@ public class Main {
         String username = sc.nextLine();
         System.out.print("\tPassword: ");
         String password = sc.nextLine();
-        
+
         Employee employee = employeeManager.get(username);
 
-        if(employeeManager.find(username)  && password.equals(employee.getPassword())) {
+        if (employeeManager.find(username) && password.equals(employee.getPassword())) {
             Role role = employee.getRole();
             switch (role) {
                 case ADMIN:
                     // TODO
                     /*
-                    * Manage Employee ( Add, Update, Remove )
-                    * Manage Supplier ( Add, Update, Remove )
-                    * Manage Branch Details
-                    * Handle Discounts
-                    * */
+                     * Manage Employee ( Add, Update, Remove )
+                     * Manage Supplier ( Add, Update, Remove )
+                     * Manage Branch Details
+                     * Handle Discounts
+                     * Handle tax rate
+                     * */
                     System.out.println("ADMIN LOGIN");
                     break;
 
@@ -98,33 +112,33 @@ public class Main {
                             int stockQuantity = sc.nextInt();
 
                             System.out.print("\tSupplier ID: ");
-                            int supplierID = sc.nextInt();
+                            String supplierID = sc.nextLine();
 
                             int newID = Integer.parseInt(productManager.getLastId()) + 1;
 
                             productManager.add(
-                                    String.valueOf(newID),
-                                    productName,
-                                    description,
-                                    UnitType.UNIT,
-                                    family,
-                                    subFamily,
-                                    unitPrice,
-                                    taxRate,
-                                    discountRate,
-                                    supplierID,
-                                    stockQuantity
+                                    new Product(
+                                            Generate.generateProductId(productManager, family, subFamily),
+                                            productName,
+                                            description,
+                                            UnitType.UNIT,
+                                            family,
+                                            subFamily,
+                                            unitPrice,
+                                            taxRate,
+                                            discountRate,
+                                            supplierID,
+                                            stockQuantity
+                                    )
                             );
 
-                        }
-                        else if(option == 2) {
+                        } else if (option == 2) {
                             System.out.println("Select the product");
                             List<Product> productList = productManager.getAll();
-                            for(Product prod: productList) {
+                            for (Product prod : productList) {
                                 System.out.printf("%s: %s\n", prod.getName(), prod.getId());
                             }
-                        }
-                        else {
+                        } else {
                             //logout();
                             System.out.println("Logging out...");
                         }

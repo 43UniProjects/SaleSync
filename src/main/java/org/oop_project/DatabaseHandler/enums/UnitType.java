@@ -1,4 +1,4 @@
-package org.oop_project.DatabaseHandler.Enums;
+package org.oop_project.DatabaseHandler.enums;
 
 public enum UnitType {
     UNIT, KILOS, LITERS

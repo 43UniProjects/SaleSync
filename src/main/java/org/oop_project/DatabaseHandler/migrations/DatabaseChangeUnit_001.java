@@ -6,7 +6,7 @@ import io.mongock.api.annotations.ChangeUnit;
 import io.mongock.api.annotations.Execution;
 import io.mongock.api.annotations.RollbackExecution;
 import org.bson.Document;
-import org.oop_project.DatabaseHandler.Enums.Role;
+import org.oop_project.DatabaseHandler.enums.Role;
 
 import java.util.Arrays;
 
