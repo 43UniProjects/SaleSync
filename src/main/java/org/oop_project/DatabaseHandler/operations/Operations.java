@@ -19,7 +19,7 @@ public interface Operations<T> {
     List<T> getAll();
     String getLastId();
     void update(String id, HashMap<String, Object> updatedEntries);
-    void delete(String identifier);
+    boolean delete(String identifier);
     default void closeConnection() {
         dbClient.close();
     }
