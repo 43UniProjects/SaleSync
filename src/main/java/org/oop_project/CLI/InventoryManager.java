@@ -76,12 +76,13 @@ public class InventoryManager {
         double discountRate = sc.nextDouble();
 
         System.out.print("\tStock Quantity: ");
-        int stockQuantity = sc.nextInt();
+        double stockQuantity = sc.nextInt();
 
         System.out.print("\tSupplier ID: ");
         int supplierID = sc.nextInt();
 
         int newID = Integer.parseInt(productManager.getLastId()) + 1;
+
 
         productManager.add(
                 String.valueOf(newID),
@@ -103,7 +104,7 @@ public class InventoryManager {
         List<Product> productList = productManager.getAll();
 
         for(Product prod: productList) {
-            System.out.printf("\t%s. %s\n", prod.getProductId(), prod.getName());
+            System.out.printf("\t%s. %s\n", prod.getId(), prod.getName());
         }
     }
 

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorMain" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.oop_project.View.controllers.CashierController" stylesheets="@/org/oop_project/view/css/style.css" styleClass="root-dark">
+  <children>
+    <AnchorPane id="AnchorHead" prefHeight="120.0" prefWidth="900.0" styleClass="header-dark">
+      <children>
+        <Label layoutY="28.0" prefWidth="900.0" alignment="CENTER" text="Cashier Portal" textAlignment="CENTER">
+          <font><Font name="System Bold" size="36.0"/></font>
+        </Label>
+        <Label layoutY="84.0" prefWidth="900.0" alignment="CENTER" text="Coming soon..." textAlignment="CENTER" />
+      </children>
+    </AnchorPane>
+
+    <Button fx:id="btnBack" layoutX="780.0" layoutY="20.0" prefWidth="100.0" prefHeight="30.0" text="Back" onAction="#backToLogin" />
+  </children>
+</AnchorPane>

@@ -41,8 +41,8 @@ public class ProductOperations extends Operations {
         System.out.println("\nProduct added: " + newProduct.getName());
     }
 
-    public Product get(BsonId id) {
-        return productCollection.find(Filters.eq("_id", id)).first();
+    public Product get(String id) {
+        return productCollection.find(Filters.eq("id", id)).first();
     }
 
     public List<Product> getAll() {
@@ -72,8 +72,9 @@ public class ProductOperations extends Operations {
         productCollection.updateOne(filter, updateOperation);
     }
 
-    public void remove(BsonId id) {
-        productCollection.deleteOne(Filters.eq("_id", id));
+    public boolean remove(String id) {
+        // this can return whether record is deleted or not as a boolean value
+        return productCollection.deleteOne(Filters.eq("id", id)).getDeletedCount() > 0;
     }
 
 }
