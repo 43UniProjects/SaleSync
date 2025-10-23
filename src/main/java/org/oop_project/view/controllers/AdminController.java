@@ -1,4 +1,4 @@
-﻿package org.oop_project.View.controllers;
+﻿package org.oop_project.view.controllers;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
