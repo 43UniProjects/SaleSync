@@ -14,9 +14,9 @@ import javafx.scene.input.KeyEvent;
 
 import java.util.List;
 
-import org.oop_project.DatabaseHandler.Enums.Role;
-import org.oop_project.DatabaseHandler.Models.Employee;
-import org.oop_project.DatabaseHandler.Operations.EmployeeOperations;
+import org.oop_project.DatabaseHandler.enums.Role;
+import org.oop_project.DatabaseHandler.models.Employee;
+import org.oop_project.DatabaseHandler.operations.EmployeeOperations;
 
 public class LoginController {
     @FXML private TextField usernameField;

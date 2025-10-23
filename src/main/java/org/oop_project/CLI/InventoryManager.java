@@ -1,12 +1,11 @@
 package org.oop_project.CLI;
 
-import org.oop_project.DatabaseHandler.Enums.UnitType;
-import org.oop_project.DatabaseHandler.Models.Employee;
-import org.oop_project.DatabaseHandler.Models.Product;
-import org.oop_project.DatabaseHandler.Operations.ProductOperations;
-import org.oop_project.Main;
-
 import java.util.List;
+
+import org.oop_project.DatabaseHandler.models.Employee;
+import org.oop_project.DatabaseHandler.models.Product;
+import org.oop_project.DatabaseHandler.operations.ProductOperations;
+import org.oop_project.Main;
 
 public class InventoryManager {
     static  ProductOperations productManager = new ProductOperations();
@@ -84,19 +83,19 @@ public class InventoryManager {
         int newID = Integer.parseInt(productManager.getLastId()) + 1;
 
 
-        productManager.add(
-                String.valueOf(newID),
-                productName,
-                description,
-                UnitType.UNIT,
-                family,
-                subFamily,
-                unitPrice,
-                taxRate,
-                discountRate,
-                supplierID,
-                stockQuantity
-        );
+        // productManager.add(
+        //         String.valueOf(newID),
+        //         productName,
+        //         description,
+        //         UnitType.UNIT,
+        //         family,
+        //         subFamily,
+        //         unitPrice,
+        //         taxRate,
+        //         discountRate,
+        //         supplierID,
+        //         stockQuantity
+        // );
     }
 
     public static void showAll(){
@@ -135,7 +134,7 @@ public class InventoryManager {
         sc.nextLine();
         System.out.print("\nEnter the product ID to delete: ");
         String prodId = sc.nextLine();
-        boolean isDeleted = productManager.remove(prodId);
+        boolean isDeleted = productManager.delete(prodId);
         if(isDeleted) {
             System.out.println("\nProduct deleted successfully.");
         } else {

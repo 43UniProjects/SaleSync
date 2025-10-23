@@ -1,4 +1,4 @@
-package org.oop_project.Utils;
+package org.oop_project.utils;
 
 import java.util.ArrayList;
 import java.util.Arrays;

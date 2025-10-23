@@ -1,8 +1,8 @@
-package org.oop_project.DatabaseHandler.Models;
+package org.oop_project.DatabaseHandler.models;
 
 import org.bson.codecs.pojo.annotations.BsonId;
 import org.bson.types.ObjectId;
-import org.oop_project.DatabaseHandler.Enums.UnitType;
+import org.oop_project.DatabaseHandler.enums.UnitType;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -27,7 +27,7 @@ public class Product {
     private double taxRate;
     private double discountRate;
     private double retailPrice;
-    private int supplierId;
+    private String supplierId;
     private double availableQuantity;
     private Date lastStockDate;
     private boolean isActive;
@@ -49,7 +49,7 @@ public class Product {
             double unitPrice,
             double taxRate,
             double discountRate,
-            int supplierId,
+            String supplierId,
             double stockQuantity
     ) {
         this.id = productId;
@@ -143,11 +143,11 @@ public class Product {
         return this.retailPrice;
     }
 
-    public int getSupplierId() {
+    public String getSupplierId() {
         return this.supplierId;
     }
 
-    public void setSupplierId(int supplierId) {
+    public void setSupplierId(String supplierId) {
         this.supplierId = supplierId;
     }
 

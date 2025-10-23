@@ -11,9 +11,9 @@ import javafx.stage.Stage;
 import java.time.LocalDate;
 import java.util.List;
 
-import org.oop_project.DatabaseHandler.Models.Employee;
-import org.oop_project.DatabaseHandler.Models.Employee;
-import org.oop_project.DatabaseHandler.Operations.EmployeeOperations;
+import org.oop_project.DatabaseHandler.models.Employee;
+import org.oop_project.DatabaseHandler.models.Employee;
+import org.oop_project.DatabaseHandler.operations.EmployeeOperations;
 
 public class AdminController {
 

@@ -6,13 +6,10 @@ import io.mongock.api.annotations.ChangeUnit;
 import io.mongock.api.annotations.Execution;
 import io.mongock.api.annotations.RollbackExecution;
 import org.bson.Document;
-import org.json.JSONObject;
-import org.oop_project.Utils.JsonReader;
 
 import java.util.Arrays;
 
 import static org.oop_project.DatabaseHandler.DatabaseConnectionManager.ITEM_FAMILY_COLLECTION_NAME;
-import static org.oop_project.Main.INITIAL_ITEM_FAMILIES_DATA_PATH;
 
 // @ChangeUnit ensures this class runs once and its execution is recorded.
 @ChangeUnit(id = "ItemFamilySetup", order = "004", author = "SaleSync")

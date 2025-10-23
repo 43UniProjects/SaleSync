@@ -1,13 +1,12 @@
 package org.oop_project.CLI;
 
-import org.oop_project.DatabaseHandler.Enums.Role;
-import org.oop_project.DatabaseHandler.Models.Employee;
-import org.oop_project.DatabaseHandler.Operations.EmployeeOperations;
-import org.oop_project.Main;
-
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.Scanner;
+
+import org.oop_project.DatabaseHandler.enums.Role;
+import org.oop_project.DatabaseHandler.models.Employee;
+import org.oop_project.DatabaseHandler.operations.EmployeeOperations;
+import org.oop_project.Main;
 
 public class AdminPortal {
     static Scanner sc = new Scanner(System.in);
@@ -81,7 +80,7 @@ public class AdminPortal {
         Role role = Role.valueOf(roleInput.toUpperCase());
         String userID = String.valueOf(newID);
         
-        employeeManager.add(userID, firstName, lastName, dob_, phoneNumber, email, username, role, password);
+        //employeeManager.add(userID, firstName, lastName, dob_, phoneNumber, email, username, role, password);
 
     }
 }

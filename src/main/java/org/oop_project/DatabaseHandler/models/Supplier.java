@@ -1,4 +1,4 @@
-package org.oop_project.DatabaseHandler.Models;
+package org.oop_project.DatabaseHandler.models;
 
 import org.bson.codecs.pojo.annotations.BsonId;
 import org.bson.codecs.pojo.annotations.BsonProperty;
@@ -9,14 +9,14 @@ public class Supplier {
 
     private BsonId _id;
     @BsonProperty("id")
-    private int id;
+    private String id;
     private String name;
     private String phoneNumber;
     private String email;
     private Date joinedDate;
     private boolean isActive;
 
-    public Supplier(int id, String name, String phoneNumber, String email, Date joinedDate, boolean isActive) {
+    public Supplier(String id, String name, String phoneNumber, String email, Date joinedDate, boolean isActive) {
         this.id = id;
         this.name = name;
         this.phoneNumber = phoneNumber;
@@ -25,11 +25,11 @@ public class Supplier {
         this.isActive = isActive;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

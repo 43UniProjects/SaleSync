@@ -1,4 +1,4 @@
-package org.oop_project.Utils;
+package org.oop_project.utils;
 
 
 public class Text {

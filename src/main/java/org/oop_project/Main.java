@@ -4,9 +4,9 @@ import java.util.Scanner;
 
 import org.oop_project.CLI.AdminPortal;
 import org.oop_project.CLI.InventoryManager;
-import org.oop_project.DatabaseHandler.Enums.Role;
-import org.oop_project.DatabaseHandler.Models.Employee;
-import org.oop_project.DatabaseHandler.Operations.EmployeeOperations;
+import org.oop_project.DatabaseHandler.enums.Role;
+import org.oop_project.DatabaseHandler.models.Employee;
+import org.oop_project.DatabaseHandler.operations.EmployeeOperations;
 import org.oop_project.View.gui;
 
 public class Main {
@@ -22,38 +22,53 @@ public class Main {
     public static void main(String[] args) {
         gui.main(args);
 
-        System.out.println("\n===== SaleSync =====\n");
-        System.out.println("Please Login\n");
+        // /*Employee e = new Employee(
+        //         Generate.generateUserId(employeeManager, Role.ADMIN),
+        //         "kamal",
+        //         "weerasinghe",
+        //         new Date(),
+        //         "0701234567",
+        //         "test@gamil.com",
+        //         "kamal",
+        //         Role.ADMIN
+        // );
+
+        // //  in the future > e.setPassword(Generate.hashPassword("123"));
+        // e.setPassword("123");
+
+        // employeeManager.add(e);*/
+
+        // System.out.println("\n===== SaleSync =====\n");
+        // System.out.println("Please Login\n");
 
 
-        System.out.print("\tUsername: ");
-        String username = sc.nextLine();
-        System.out.print("\tPassword: ");
-        String password = sc.nextLine();
+        // System.out.print("\tUsername: ");
+        // String username = sc.nextLine();
+        // System.out.print("\tPassword: ");
+        // String password = sc.nextLine();
 
-        Employee employee = employeeManager.get(username);
+        // Employee employee = employeeManager.get(username);
 
-        if(employeeManager.find(username)  && password.equals(employee.getPassword())) {
-            Role role = Role.valueOf(employee.getRole().toString()); // get the role enum from the employee object
+        // if(employeeManager.find(username)  && password.equals(employee.getPassword())) {
+        //     Role role = Role.valueOf(employee.getRole().toString()); // get the role enum from the employee object
             
 
-            switch (role) {
-                case ADMIN:
-                    AdminPortal.showMenu(employee);
+        //     switch (role) {
+        //         case ADMIN:
+        //             AdminPortal.showMenu(employee);
+        //             break;
 
-                    break;
+        //         case CASHIER:
+        //             System.out.println("cashier");
+        //             break;
+        //         case PRODUCT_MANAGER:
+        //             InventoryManager.showMenu(employee);
 
-                case CASHIER:
-                    System.out.println("cashier");
-                    break;
-                case PRODUCT_MANAGER:
-                    InventoryManager.showMenu(employee);
-
-                    break;
-            }
-        } else {
-            System.out.println("\nLogin failed! Invalid username or password.");
-        }
+        //             break;
+        //     }
+        // } else {
+        //     System.out.println("\nLogin failed! Invalid username or password.");
+        // }
 
         // Close database connection
         employeeManager.closeConnection();
