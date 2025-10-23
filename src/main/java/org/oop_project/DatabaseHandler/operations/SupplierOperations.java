@@ -57,8 +57,8 @@ public class SupplierOperations implements Operations<Supplier> {
     }
 
     @Override
-    public void delete(String id) {
-        supplierCollection.deleteOne(eq("id", id));
+    public boolean delete(String id) {
+        return supplierCollection.deleteOne(eq("id", id)).getDeletedCount() > 0;
     }
 
 }

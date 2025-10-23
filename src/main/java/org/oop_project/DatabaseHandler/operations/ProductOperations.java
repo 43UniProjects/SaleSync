@@ -19,15 +19,15 @@ public class ProductOperations implements Operations<Product> {
 
     final MongoCollection<Product> productCollection = dbClient.getCollection(PRODUCT_COLLECTION_NAME, Product.class);
 
-    @Override
+    @Override    
     public void add(Product newProduct) {
         productCollection.insertOne(newProduct);
         System.out.println("\nProduct added: " + newProduct.getName());
     }
 
     @Override
-    public boolean find(String identifier) {
-        return false;
+    public boolean find(String id) {
+        return productCollection.find(Filters.eq("id", id)).first() != null;
     }
 
     @Override
@@ -66,8 +66,9 @@ public class ProductOperations implements Operations<Product> {
     }
 
     @Override
-    public void delete(String id) {
-        productCollection.deleteOne(Filters.eq("id", id));
+    public boolean delete(String id) {
+        // this can return whether record is deleted or not as a boolean value
+        return productCollection.deleteOne(Filters.eq("id", id)).getDeletedCount() > 0;
     }
 
 }

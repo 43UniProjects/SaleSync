@@ -66,8 +66,9 @@ public class ItemFamilyOperations implements Operations<ItemFamily>{
         itemFamilyCollection.updateOne(filter, updateOperation);
     }
 
-    public void delete(String id) {
-        itemFamilyCollection.deleteOne(eq("id", id));
+    @Override
+    public boolean delete(String id) {
+        return itemFamilyCollection.deleteOne(eq("id", id)).getDeletedCount() > 0;
     }
 
 }

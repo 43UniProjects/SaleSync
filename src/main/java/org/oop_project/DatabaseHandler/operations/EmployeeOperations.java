@@ -57,8 +57,8 @@ public class EmployeeOperations implements Operations<Employee> {
     }
 
     @Override
-    public void delete(String username) {
-        employeeCollection.deleteOne(eq("username", username));
+    public boolean delete(String username) {
+        return employeeCollection.deleteOne(eq("username", username)).getDeletedCount() > 0;
     }
 
 }
