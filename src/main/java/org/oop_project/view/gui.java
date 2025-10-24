@@ -1,4 +1,4 @@
-package org.oop_project.View;
+package org.oop_project.view;
 
 import java.io.IOException;
 

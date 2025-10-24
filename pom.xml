@@ -156,7 +156,7 @@
                 <artifactId>javafx-maven-plugin</artifactId>
                 <version>0.0.8</version>
                 <configuration>
-                    <mainClass>org.oop_project.View.gui</mainClass>
+                    <mainClass>org.oop_project.Main</mainClass>
                 </configuration>
             </plugin>
         </plugins>
