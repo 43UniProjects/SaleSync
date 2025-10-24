@@ -79,7 +79,7 @@ public class AdminController {
             // Convert database employees to EmployeeRow objects for the table
             employees.clear();
             for (Employee emp : dbEmployees) {
-                
+
                 employees.add(new EmployeeRow(
                     emp.getId(),
                     emp.getFirstName(),
@@ -128,15 +128,22 @@ public class AdminController {
         LocalDate dob = dobPicker.getValue();
         LocalDate start = startDatePicker.getValue();
 
+        if(!(employeeManager.find(user))){
+            Employee emp = new Employee(id, fn, ln, dob, phone, email, user, Role.valueOf(role), start);
+            emp.setPassword(safeText(passwordField));
+            employeeManager.add(emp);
 
-        Employee emp = new Employee(id, fn, ln, dob, phone, email, user, Role.valueOf(role), start);
-        emp.setPassword(safeText(passwordField));
-        employeeManager.add(emp);
+            employees.add(new EmployeeRow(id, fn, ln, dob, phone, email, user, role, start));
+            statusLabel.setText("Employee added! (Demo mode)");
+            statusLabel.setStyle("-fx-text-fill: green;");
+            clearFields();
+        }else{
+            statusLabel.setText("Username already exists (Demo mode)");
+            statusLabel.setStyle("-fx-text-fill: red;");
+        }
 
-        employees.add(new EmployeeRow(id, fn, ln, dob, phone, email, user, role, start));
-        statusLabel.setText("Employee added! (Demo mode)");
-        statusLabel.setStyle("-fx-text-fill: green;");
-        clearFields();
+
+
     }
 
     @FXML
