@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorMain" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.oop_project.View.controllers.AdminController" stylesheets="@/org/oop_project/view/css/style.css" styleClass="root-dark">
+<AnchorPane id="AnchorMain" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.oop_project.view.controllers.AdminController" stylesheets="@/org/oop_project/view/css/style.css" styleClass="root-dark">
    <children>
    <AnchorPane id="AnchorHead" layoutX="-1.0" prefHeight="146.0" prefWidth="1100.0" styleClass="header-dark">
          <children>

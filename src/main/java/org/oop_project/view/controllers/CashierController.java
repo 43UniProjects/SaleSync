@@ -1,10 +1,10 @@
-package org.oop_project.View.controllers;
+package org.oop_project.view.controllers;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.stage.Stage;
 import javafx.scene.control.Button;
+import javafx.stage.Stage;
 
 public class CashierController {
 

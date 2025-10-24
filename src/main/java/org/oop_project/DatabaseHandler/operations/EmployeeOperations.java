@@ -45,7 +45,7 @@ public class EmployeeOperations implements Operations<Employee> {
     @Override
     public String getLastId() {
         Employee e = employeeCollection.find().sort(Sorts.descending("id")).first();
-        return e != null ? e.getId() : null;
+        return e != null ? e.getId() : "0";
     }
 
     @Override
