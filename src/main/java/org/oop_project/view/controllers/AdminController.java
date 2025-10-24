@@ -79,7 +79,7 @@ public class AdminController {
             // Convert database employees to EmployeeRow objects for the table
             employees.clear();
             for (Employee emp : dbEmployees) {
-                System.out.println(emp.getStartDate());
+                
                 employees.add(new EmployeeRow(
                     emp.getId(),
                     emp.getFirstName(),
@@ -107,6 +107,8 @@ public class AdminController {
                     if (roleComboBox != null) roleComboBox.setValue(sel.getRole());
                     if (dobPicker != null) dobPicker.setValue(LocalDate.parse(sel.getDob()));
                     if (startDatePicker != null) startDatePicker.setValue(LocalDate.parse(sel.getStartDate()));
+                    String pass = employeeManager.get(sel.getUsername()).getPassword();
+                    if (passwordField != null) passwordField.setText(pass);
                 }
             });
         }
@@ -179,6 +181,8 @@ public class AdminController {
         EmployeeRow sel = employeeTable != null ? employeeTable.getSelectionModel().getSelectedItem() : null;
         if (sel != null) {
             employees.remove(sel);
+            String username = safeText(usernameField);
+            employeeManager.delete(username);
             statusLabel.setText("Employee deleted! (Demo mode)");
             statusLabel.setStyle("-fx-text-fill: green;");
             clearFields();
