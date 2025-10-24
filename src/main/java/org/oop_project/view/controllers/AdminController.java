@@ -2,6 +2,7 @@ package org.oop_project.view.controllers;
 
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import org.oop_project.DatabaseHandler.models.Employee;
@@ -141,7 +142,17 @@ public class AdminController {
         // TODO: Replace with DB update by ID
         EmployeeRow sel = employeeTable != null ? employeeTable.getSelectionModel().getSelectedItem() : null;
         if (sel != null) {
-
+            HashMap<String, Object> updatedRecords = new HashMap<>();
+            updatedRecords.put("firstName", safeText(firstNameField));
+            updatedRecords.put("lastName", safeText(lastNameField));
+            updatedRecords.put("phoneNumber", safeText(phoneNumberField));
+            updatedRecords.put("email", safeText(emailField));
+            updatedRecords.put("username", safeText(usernameField));
+            updatedRecords.put("role", roleComboBox != null && roleComboBox.getValue() != null ? roleComboBox.getValue() : "");
+            updatedRecords.put("dob", dobPicker.getValue());
+            updatedRecords.put("startDate", startDatePicker.getValue());
+            updatedRecords.put("password", safeText(passwordField));
+            employeeManager.update(sel.getEmployeeNumber(), updatedRecords);
 
 
             sel.setFirstName(safeText(firstNameField));
@@ -155,6 +166,7 @@ public class AdminController {
             employeeTable.refresh();
             statusLabel.setText("Employee updated! (Demo mode)");
             statusLabel.setStyle("-fx-text-fill: green;");
+            clearFields();
         } else {
             statusLabel.setText("Select a row to update (Demo mode)");
             statusLabel.setStyle("-fx-text-fill: orange;");
