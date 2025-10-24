@@ -4,7 +4,7 @@ import org.bson.codecs.pojo.annotations.BsonId;
 import org.bson.codecs.pojo.annotations.BsonProperty;
 import org.oop_project.DatabaseHandler.enums.Role;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 /*
  * Represents a Employee entity in the MongoDB 'Employee' collection.
@@ -24,10 +24,10 @@ public class Employee {
 
     private String firstName;
     private String lastName;
-    private Date dob;
+    private LocalDate dob;
     private String phoneNumber;
     private String email;
-    private Date startDate;
+    private LocalDate startDate;
     private String username;
     private String password;
     private Role role;
@@ -37,7 +37,7 @@ public class Employee {
         // left empty intentionally
     }
 
-    public Employee(String userId, String firstName, String lastName, Date dob, String phoneNumber, String email, String username, Role role) {
+    public Employee(String userId, String firstName, String lastName, LocalDate dob, String phoneNumber, String email, String username, Role role, LocalDate startDate) {
         this.id = userId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -46,7 +46,7 @@ public class Employee {
         this.email = email;
         this.username = username;
         this.role = role;
-        this.setStartDate();
+        this.startDate = startDate;
     }
 
 
@@ -74,11 +74,11 @@ public class Employee {
         this.lastName = lastName;
     }
 
-    public Date getDob() {
+    public LocalDate getDob() {
         return this.dob;
     }
 
-    public void setDob(Date dob) {
+    public void setDob(LocalDate dob) {
         this.dob = dob;
     }
 
@@ -98,13 +98,13 @@ public class Employee {
         this.email = email;
     }
 
-    public Date getStartDate() {
+    public LocalDate getStartDate() {
         return this.startDate;
     }
 
-    private void setStartDate() {
-        this.startDate = new Date();
-    }
+    public void setStartDate(LocalDate startDate) {
+        this.startDate = startDate;
+    }   
 
     public String getUsername() {
         return this.username;
