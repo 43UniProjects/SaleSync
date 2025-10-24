@@ -1,4 +1,4 @@
-# 🛒 SaleSync
+# 🛒 SaleSync v2
 
 <div align="center">
 
