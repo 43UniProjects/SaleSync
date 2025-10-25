@@ -22,7 +22,10 @@
       </children>
     </AnchorPane>
 
-    <Button fx:id="btnLogout" layoutX="970.0" layoutY="20.0" onAction="#backToLogin" prefHeight="30.0" prefWidth="100.0" text="Logout" />
+    <Button fx:id="btnLogout" layoutX="970.0" layoutY="20.0" onAction="#backToLogin" prefHeight="30.0" prefWidth="100.0" text="Logout">
+         <font>
+            <Font name="System Bold" size="12.800000190734863" />
+         </font></Button>
 
     <!-- Form left -->
     <Label layoutX="30.0" layoutY="160.0" text="Product Details">
