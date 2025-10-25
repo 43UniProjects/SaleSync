@@ -47,7 +47,7 @@
             <Font size="14.0" />
          </font>
       </Label>
-      <TextField fx:id="employeeNumberField" editable="false" layoutX="150.0" layoutY="201.0" prefHeight="27.0" prefWidth="200.0" promptText="Auto-generated" />
+      <TextField fx:id="idField" editable="false" layoutX="150.0" layoutY="201.0" prefHeight="27.0" prefWidth="200.0" promptText="Auto-generated" />
 
       <!-- First Name -->
       <Label layoutX="30.0" layoutY="239.0" text="First Name:">
