@@ -22,7 +22,10 @@
       </children>
     </AnchorPane>
 
-    <Button fx:id="btnLogout" layoutX="970.0" layoutY="20.0" onAction="#backToLogin" prefHeight="30.0" prefWidth="100.0" text="Logout" />
+    <Button fx:id="btnLogout" layoutX="970.0" layoutY="20.0" onAction="#backToLogin" prefHeight="30.0" prefWidth="100.0" text="Logout">
+         <font>
+            <Font name="System Bold" size="12.800000190734863" />
+         </font></Button>
 
     <!-- Form left -->
     <Label layoutX="30.0" layoutY="160.0" text="Product Details">
@@ -62,10 +65,22 @@
     <Label layoutX="30.0" layoutY="557.0" text="Quantity:" />
     <TextField fx:id="quantityField" layoutX="150.0" layoutY="554.0" prefWidth="200.0" promptText="Enter quantity" />
 
-    <Button fx:id="btnAdd" layoutX="195.0" layoutY="603.0" onAction="#addProduct" prefHeight="35.0" prefWidth="110.0" text="Add" />
-    <Button fx:id="btnUpdate" layoutX="69.0" layoutY="656.0" onAction="#updateProduct" prefHeight="35.0" prefWidth="110.0" text="Update" />
-    <Button fx:id="btnDelete" layoutX="195.0" layoutY="656.0" onAction="#removeProduct" prefHeight="35.0" prefWidth="110.0" text="Remove" />
-    <Button fx:id="btnClear" layoutX="69.0" layoutY="603.0" onAction="#clearFields" prefHeight="35.0" prefWidth="110.0" text="Clear" />
+    <Button fx:id="btnAdd" layoutX="195.0" layoutY="603.0" onAction="#addProduct" prefHeight="35.0" prefWidth="110.0" text="Add">
+         <font>
+            <Font name="System Bold" size="12.800000190734863" />
+         </font></Button>
+    <Button fx:id="btnUpdate" layoutX="69.0" layoutY="656.0" onAction="#updateProduct" prefHeight="35.0" prefWidth="110.0" text="Update">
+         <font>
+            <Font name="System Bold" size="12.800000190734863" />
+         </font></Button>
+    <Button fx:id="btnDelete" layoutX="195.0" layoutY="656.0" onAction="#removeProduct" prefHeight="35.0" prefWidth="110.0" text="Remove">
+         <font>
+            <Font name="System Bold" size="12.800000190734863" />
+         </font></Button>
+    <Button fx:id="btnClear" layoutX="69.0" layoutY="603.0" onAction="#clearFields" prefHeight="35.0" prefWidth="110.0" text="Clear">
+         <font>
+            <Font name="System Bold" size="12.800000190734863" />
+         </font></Button>
 
     <Label fx:id="statusLabel" alignment="CENTER" layoutX="20.0" layoutY="708.0" prefWidth="350.0" />
 
