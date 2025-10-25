@@ -1,14 +1,13 @@
 package org.oop_project.view.controllers;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
 import org.oop_project.DatabaseHandler.models.Employee;
 import org.oop_project.DatabaseHandler.enums.Role;
 import org.oop_project.DatabaseHandler.operations.EmployeeOperations;
-import org.oop_project.view.utils.EmployeeRow;
+import org.oop_project.view.helpers.EmployeeRow;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
