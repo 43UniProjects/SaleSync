@@ -32,12 +32,14 @@
     -fx-font-family: 'Ubuntu', 'Roboto', 'Arial', sans-serif;
 }
 
-#headLogin, #headAdminPanel {
+/* heading styles */
+
+#headLogin, #headAdminPanel, #productHead  {
     -fx-text-fill: rgb(192, 192, 243);
     -fx-font-size: 36px;
 }
 
-#subHeadLogin, #subHeadAdminPanel {
+#subHeadLogin, #subHeadAdminPanel, #productSubHead  {
     -fx-text-fill: #6cb2ff;
     -fx-font-size: 19px;
 }
@@ -122,8 +124,8 @@
 }
 
 #btnClear {
-    background-color: #9E9E9E; /* compat */
-    -fx-background-color: #9E9E9E;
+    background-color: #757575; /* compat */
+    -fx-background-color: #757575;
     -fx-text-fill: white;
     -fx-background-radius: 5;
     cursor: hand; /* compat */
@@ -131,8 +133,8 @@
 }
 
 #btnClear:hover {
-    background-color: #757575; /* compat */
-    -fx-background-color: #757575;
+    background-color: #595959; /* compat */
+    -fx-background-color: #595959;
 }
 
 #btnLogout {

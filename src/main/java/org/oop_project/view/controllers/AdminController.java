@@ -3,7 +3,7 @@ package org.oop_project.view.controllers;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
-
+import org.oop_project.utils.Generate;
 import org.oop_project.DatabaseHandler.models.Employee;
 import org.oop_project.DatabaseHandler.enums.Role;
 import org.oop_project.DatabaseHandler.operations.EmployeeOperations;
@@ -26,7 +26,7 @@ import javafx.stage.Stage;
 
 public class AdminController {
 
-    static EmployeeOperations employeeManager = new EmployeeOperations();
+    private final static EmployeeOperations employeeManager = new EmployeeOperations();
 
     @FXML private TextField idField;
     @FXML private TextField firstNameField;
@@ -55,7 +55,7 @@ public class AdminController {
 
     // In-memory list to simulate DB (demo mode)
     private final ObservableList<EmployeeRow> employees = FXCollections.observableArrayList();
-   
+
 
     @FXML
     public void initialize() {
@@ -80,18 +80,18 @@ public class AdminController {
             for (Employee emp : dbEmployees) {
 
                 employees.add(new EmployeeRow(
-                    emp.getId(),
-                    emp.getFirstName(),
-                    emp.getLastName(),
-                    emp.getDob() != null ? emp.getDob() : null,
-                    emp.getPhoneNumber(),
-                    emp.getEmail(),
-                    emp.getUsername(),
-                    emp.getRole().toString(),
-                    emp.getStartDate() != null ? emp.getStartDate(): null
+                        emp.getId(),
+                        emp.getFirstName(),
+                        emp.getLastName(),
+                        emp.getDob() != null ? emp.getDob() : null,
+                        emp.getPhoneNumber(),
+                        emp.getEmail(),
+                        emp.getUsername(),
+                        emp.getRole().toString(),
+                        emp.getStartDate() != null ? emp.getStartDate(): null
                 ));
             }
-            
+
             employeeTable.setItems(employees);
 
             // When a row is selected, populate form fields
@@ -115,9 +115,8 @@ public class AdminController {
 
     @FXML
     protected void addEmployee() {
-        // TODO: Replace this in-memory add with actual DB insert via EmployeeOperations
-        int nextId = Integer.parseInt(employeeManager.getLastId()) + 1;
-        String id = String.valueOf(nextId);
+
+        String id = Generate.generateUserId(employeeManager, Role.valueOf(roleComboBox.getValue()));
 
         // checks whether all fields are filled to prevent exceptions
         if (safeText(firstNameField).isEmpty() ||
@@ -256,5 +255,5 @@ public class AdminController {
     private String safeText(TextField tf) { return tf != null && tf.getText() != null ? tf.getText().trim() : ""; }
 
     // Lightweight row model for TableView (UI-only)
-    
+
 }
