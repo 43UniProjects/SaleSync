@@ -1,4 +1,4 @@
-﻿package org.oop_project.view.controllers;
+package org.oop_project.view.controllers;
 
 import java.time.LocalDate;
 import java.util.Date;
@@ -119,12 +119,27 @@ public class AdminController {
         // TODO: Replace this in-memory add with actual DB insert via EmployeeOperations
         int nextId = Integer.parseInt(employeeManager.getLastId()) + 1;
         String id = String.valueOf(nextId);
+
+        // checks whether all fields are filled to prevent exceptions
+        if (safeText(firstNameField).isEmpty() ||
+                safeText(lastNameField).isEmpty() ||
+                safeText(phoneNumberField).isEmpty() ||
+                safeText(emailField).isEmpty() ||
+                safeText(usernameField).isEmpty() ||
+                roleComboBox.getValue() == null ||
+                dobPicker.getValue() == null ||
+                startDatePicker.getValue() == null) {
+            statusLabel.setText("Please fill all the fileds");
+            statusLabel.setStyle("-fx-text-fill: red;");
+            return;
+        }
+
         String fn = safeText(firstNameField);
         String ln = safeText(lastNameField);
         String phone = safeText(phoneNumberField);
         String email = safeText(emailField);
         String user = safeText(usernameField);
-        String role = roleComboBox != null && roleComboBox.getValue() != null ? roleComboBox.getValue() : "";
+        String role = roleComboBox.getValue();
         LocalDate dob = dobPicker.getValue();
         LocalDate start = startDatePicker.getValue();
 
@@ -134,11 +149,11 @@ public class AdminController {
             employeeManager.add(emp);
 
             employees.add(new EmployeeRow(id, fn, ln, dob, phone, email, user, role, start));
-            statusLabel.setText("Employee added! (Demo mode)");
+            statusLabel.setText("Employee added!");
             statusLabel.setStyle("-fx-text-fill: green;");
             clearFields();
         }else{
-            statusLabel.setText("Username already exists (Demo mode)");
+            statusLabel.setText("Username already exists");
             statusLabel.setStyle("-fx-text-fill: red;");
         }
 
@@ -173,11 +188,11 @@ public class AdminController {
             sel.setDob(dobPicker != null && dobPicker.getValue() != null ? dobPicker.getValue() : null);
             sel.setStartDate(startDatePicker != null && startDatePicker.getValue() != null ? startDatePicker.getValue() : null);
             employeeTable.refresh();
-            statusLabel.setText("Employee updated! (Demo mode)");
+            statusLabel.setText("Employee updated!");
             statusLabel.setStyle("-fx-text-fill: green;");
             clearFields();
         } else {
-            statusLabel.setText("Select a row to update (Demo mode)");
+            statusLabel.setText("Select a row to update");
             statusLabel.setStyle("-fx-text-fill: orange;");
         }
     }
@@ -190,11 +205,11 @@ public class AdminController {
             employees.remove(sel);
             String username = safeText(usernameField);
             employeeManager.delete(username);
-            statusLabel.setText("Employee deleted! (Demo mode)");
+            statusLabel.setText("Employee deleted!");
             statusLabel.setStyle("-fx-text-fill: green;");
             clearFields();
         } else {
-            statusLabel.setText("Select a row to delete (Demo mode)");
+            statusLabel.setText("Select a row to delete");
             statusLabel.setStyle("-fx-text-fill: orange;");
         }
     }
