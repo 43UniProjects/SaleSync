@@ -1,14 +1,13 @@
-﻿package org.oop_project.view.controllers;
+package org.oop_project.view.controllers;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-
+import org.oop_project.utils.Generate;
 import org.oop_project.DatabaseHandler.models.Employee;
 import org.oop_project.DatabaseHandler.enums.Role;
 import org.oop_project.DatabaseHandler.operations.EmployeeOperations;
-import org.oop_project.view.utils.EmployeeRow;
+import org.oop_project.view.helpers.EmployeeRow;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -27,7 +26,7 @@ import javafx.stage.Stage;
 
 public class AdminController {
 
-    static EmployeeOperations employeeManager = new EmployeeOperations();
+    private final static EmployeeOperations employeeManager = new EmployeeOperations();
 
     @FXML private TextField idField;
     @FXML private TextField firstNameField;
@@ -56,7 +55,7 @@ public class AdminController {
 
     // In-memory list to simulate DB (demo mode)
     private final ObservableList<EmployeeRow> employees = FXCollections.observableArrayList();
-   
+
 
     @FXML
     public void initialize() {
@@ -79,20 +78,20 @@ public class AdminController {
             // Convert database employees to EmployeeRow objects for the table
             employees.clear();
             for (Employee emp : dbEmployees) {
-                
+
                 employees.add(new EmployeeRow(
-                    emp.getId(),
-                    emp.getFirstName(),
-                    emp.getLastName(),
-                    emp.getDob() != null ? emp.getDob() : null,
-                    emp.getPhoneNumber(),
-                    emp.getEmail(),
-                    emp.getUsername(),
-                    emp.getRole().toString(),
-                    emp.getStartDate() != null ? emp.getStartDate(): null
+                        emp.getId(),
+                        emp.getFirstName(),
+                        emp.getLastName(),
+                        emp.getDob() != null ? emp.getDob() : null,
+                        emp.getPhoneNumber(),
+                        emp.getEmail(),
+                        emp.getUsername(),
+                        emp.getRole().toString(),
+                        emp.getStartDate() != null ? emp.getStartDate(): null
                 ));
             }
-            
+
             employeeTable.setItems(employees);
 
             // When a row is selected, populate form fields
@@ -116,27 +115,48 @@ public class AdminController {
 
     @FXML
     protected void addEmployee() {
-        // TODO: Replace this in-memory add with actual DB insert via EmployeeOperations
-        int nextId = Integer.parseInt(employeeManager.getLastId()) + 1;
-        String id = String.valueOf(nextId);
+
+        String id = Generate.generateUserId(employeeManager, Role.valueOf(roleComboBox.getValue()));
+
+        // checks whether all fields are filled to prevent exceptions
+        if (safeText(firstNameField).isEmpty() ||
+                safeText(lastNameField).isEmpty() ||
+                safeText(phoneNumberField).isEmpty() ||
+                safeText(emailField).isEmpty() ||
+                safeText(usernameField).isEmpty() ||
+                roleComboBox.getValue() == null ||
+                dobPicker.getValue() == null ||
+                startDatePicker.getValue() == null) {
+            statusLabel.setText("Please fill all the fileds");
+            statusLabel.setStyle("-fx-text-fill: red;");
+            return;
+        }
+
         String fn = safeText(firstNameField);
         String ln = safeText(lastNameField);
         String phone = safeText(phoneNumberField);
         String email = safeText(emailField);
         String user = safeText(usernameField);
-        String role = roleComboBox != null && roleComboBox.getValue() != null ? roleComboBox.getValue() : "";
+        String role = roleComboBox.getValue();
         LocalDate dob = dobPicker.getValue();
         LocalDate start = startDatePicker.getValue();
 
+        if(!(employeeManager.find(user))){
+            Employee emp = new Employee(id, fn, ln, dob, phone, email, user, Role.valueOf(role), start);
+            emp.setPassword(safeText(passwordField));
+            employeeManager.add(emp);
 
-        Employee emp = new Employee(id, fn, ln, dob, phone, email, user, Role.valueOf(role), start);
-        emp.setPassword(safeText(passwordField));
-        employeeManager.add(emp);
+            employees.add(new EmployeeRow(id, fn, ln, dob, phone, email, user, role, start));
+            statusLabel.setText("Employee added!");
+            statusLabel.setStyle("-fx-text-fill: green;");
+            clearFields();
+        }else{
+            statusLabel.setText("Username already exists");
+            statusLabel.setStyle("-fx-text-fill: red;");
+        }
 
-        employees.add(new EmployeeRow(id, fn, ln, dob, phone, email, user, role, start));
-        statusLabel.setText("Employee added! (Demo mode)");
-        statusLabel.setStyle("-fx-text-fill: green;");
-        clearFields();
+
+
     }
 
     @FXML
@@ -166,11 +186,11 @@ public class AdminController {
             sel.setDob(dobPicker != null && dobPicker.getValue() != null ? dobPicker.getValue() : null);
             sel.setStartDate(startDatePicker != null && startDatePicker.getValue() != null ? startDatePicker.getValue() : null);
             employeeTable.refresh();
-            statusLabel.setText("Employee updated! (Demo mode)");
+            statusLabel.setText("Employee updated!");
             statusLabel.setStyle("-fx-text-fill: green;");
             clearFields();
         } else {
-            statusLabel.setText("Select a row to update (Demo mode)");
+            statusLabel.setText("Select a row to update");
             statusLabel.setStyle("-fx-text-fill: orange;");
         }
     }
@@ -183,11 +203,11 @@ public class AdminController {
             employees.remove(sel);
             String username = safeText(usernameField);
             employeeManager.delete(username);
-            statusLabel.setText("Employee deleted! (Demo mode)");
+            statusLabel.setText("Employee deleted!");
             statusLabel.setStyle("-fx-text-fill: green;");
             clearFields();
         } else {
-            statusLabel.setText("Select a row to delete (Demo mode)");
+            statusLabel.setText("Select a row to delete");
             statusLabel.setStyle("-fx-text-fill: orange;");
         }
     }
@@ -235,5 +255,5 @@ public class AdminController {
     private String safeText(TextField tf) { return tf != null && tf.getText() != null ? tf.getText().trim() : ""; }
 
     // Lightweight row model for TableView (UI-only)
-    
+
 }

@@ -1,7 +1,6 @@
 package org.oop_project.view.controllers;
 
 import java.io.IOException;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -14,6 +13,13 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import org.oop_project.DatabaseHandler.enums.UnitType;
+import org.oop_project.DatabaseHandler.models.Product;
+import org.oop_project.DatabaseHandler.operations.ProductOperations;
+import org.oop_project.DatabaseHandler.models.Product;
+import static org.oop_project.utils.Generate.generateProductId;
+import org.oop_project.view.helpers.ProductRow;
+
 
 
 public class ProductController {
@@ -47,7 +53,8 @@ public class ProductController {
     @FXML private TableColumn<ProductRow, String> colQty;
 
     private final ObservableList<ProductRow> products = FXCollections.observableArrayList();
-    private int nextId = 1; // Auto-generated product id number (demo)
+
+    private final static ProductOperations productManager = new ProductOperations();
 
     @FXML
     public void initialize() {
@@ -82,18 +89,12 @@ public class ProductController {
                 quantityField.setText(sel.getQuantity());
             }
         });
-
-        generateProductId();
-    }
-
-    private void generateProductId() {
-        productIdField.setText(String.format("P%04d", nextId));
     }
 
     @FXML
     protected void addProduct() {
-        // TODO: Replace with DB insert via ProductOperations
-        String id = String.format("P%04d", nextId++);
+
+        String id = generateProductId(productManager, safe(familyField), safe(subFamilyField));
         String name = safe(nameField);
         String desc = safe(descriptionField);
         String type = unitTypeCombo.getValue() != null ? unitTypeCombo.getValue() : "";
@@ -102,14 +103,18 @@ public class ProductController {
         double unitPrice = parseDouble(unitPriceField);
         double tax = parseDouble(taxRateField);
         double discount = parseDouble(discountRateField);
-        int supplierId = parseInt(supplierIdField);
+        String supplierId = safe(supplierIdField);
         double qty = parseDouble(quantityField);
         double retail = calcRetail(unitPrice, tax, discount);
 
+        Product product = new Product(id, name, desc, UnitType.valueOf(type), family, subFamily, unitPrice, tax, discount, supplierId, qty);
+        productManager.add(product);
+
         products.add(new ProductRow(id, name, desc, type, family, subFamily, unitPrice, tax, discount, retail, supplierId, qty));
+
+
         status("Product added! (Demo mode)", true);
         clearFields();
-        generateProductId();
     }
 
     @FXML
@@ -129,7 +134,7 @@ public class ProductController {
         sel.setTaxRate(tax);
         sel.setDiscountRate(discount);
         sel.setRetailPrice(calcRetail(unitPrice, tax, discount));
-        sel.setSupplierId(parseInt(supplierIdField));
+        sel.setSupplierId(safe(supplierIdField));
         sel.setQuantity(parseDouble(quantityField));
         productTable.refresh();
         status("Product updated! (Demo mode)", true);
@@ -143,7 +148,6 @@ public class ProductController {
         products.remove(sel);
         status("Product removed! (Demo mode)", true);
         clearFields();
-        generateProductId();
     }
 
     @FXML
@@ -207,46 +211,5 @@ public class ProductController {
         return unitPrice + tax - discount;
     }
 
-    // Lightweight row model for the TableView (UI-only)
-    public static class ProductRow {
-    private final String id;
-        private String name;
-        private String description;
-        private String type;
-        private String family;
-        private String subFamily;
-        private double unitPrice;
-        private double taxRate;
-        private double discountRate;
-        private double retailPrice;
-        private int supplierId;
-        private double quantity;
 
-        public ProductRow(String id, String name, String description, String type, String family, String subFamily, double unitPrice, double taxRate, double discountRate, double retailPrice, int supplierId, double quantity) {
-            this.id = id; this.name = name; this.description = description; this.type = type; this.family = family; this.subFamily = subFamily; this.unitPrice = unitPrice; this.taxRate = taxRate; this.discountRate = discountRate; this.retailPrice = retailPrice; this.supplierId = supplierId; this.quantity = quantity;
-        }
-        public String getId() { return id; }
-        public String getName() { return name; }
-        public String getDescription() { return description; }
-        public String getType() { return type; }
-        public String getFamily() { return family; }
-        public String getSubFamily() { return subFamily; }
-        public String getUnitPrice() { return String.format("%.2f", unitPrice); }
-        public String getTaxRate() { return String.format("%.2f", taxRate); }
-        public String getDiscountRate() { return String.format("%.2f", discountRate); }
-        public String getRetailPrice() { return String.format("%.2f", retailPrice); }
-        public String getSupplierId() { return String.valueOf(supplierId); }
-        public String getQuantity() { return String.format("%.2f", quantity); }
-        public void setName(String v) { this.name = v; }
-        public void setDescription(String v) { this.description = v; }
-        public void setType(String v) { this.type = v; }
-        public void setFamily(String v) { this.family = v; }
-        public void setSubFamily(String v) { this.subFamily = v; }
-        public void setUnitPrice(double v) { this.unitPrice = v; }
-        public void setTaxRate(double v) { this.taxRate = v; }
-        public void setDiscountRate(double v) { this.discountRate = v; }
-        public void setRetailPrice(double v) { this.retailPrice = v; }
-        public void setSupplierId(int v) { this.supplierId = v; }
-    public void setQuantity(double v) { this.quantity = v; }
-    }
 }

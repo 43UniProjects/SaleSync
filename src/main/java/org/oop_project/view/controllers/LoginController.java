@@ -190,7 +190,7 @@ public class LoginController {
             Stage stage = (Stage) btnLogin.getScene().getWindow();
             stage.setScene(scene);
             stage.setWidth(1100);
-            stage.setHeight(750);
+            stage.setHeight(790);
             stage.setTitle("SaleSync - Product Dashboard");
         } catch (Exception e) {
             loginStatus.setText("Error loading product dashboard!");
