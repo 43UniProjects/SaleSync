@@ -8,6 +8,8 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
@@ -20,19 +22,25 @@
                   <Font name="System Bold" size="36.0" />
                </font>
             </Label>
-            <Label fx:id="subHeadAdminPanel" alignment="CENTER" layoutX="0.0" layoutY="94.0" prefWidth="1100.0" text="Employee Management" textAlignment="CENTER">
+            <Label fx:id="subHeadAdminPanel" alignment="CENTER" layoutX="0.0" layoutY="94.0" prefWidth="1100.0" text="Employee Management Dashboard" textAlignment="CENTER">
                <font>
                   <Font name="Georgia" size="19.0" />
                </font>
             </Label>
-         </children>
-      </AnchorPane>
-
-      <Button id="btnLogout" fx:id="btnLogout" layoutX="970.0" layoutY="20.0" mnemonicParsing="false" onAction="#logout" prefHeight="30.0" prefWidth="100.0" text="Logout">
+            <Button fx:id="btnLogout" layoutX="970.0" layoutY="20.0" onAction="#logout" prefHeight="30.0" prefWidth="100.0" text="Logout" contentDisplay="LEFT" alignment="CENTER" style="-fx-graphic-text-gap:10; -fx-padding:4 8 4 8;">
+                <graphic>
+                  <ImageView fitWidth="16.0" fitHeight="16.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@/org/oop_project/view/images/sign-out.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
          <font>
-            <Font name="System Bold" size="12.0" />
+            <Font name="System Bold" size="12.800000190734863" />
          </font>
       </Button>
+         </children>
+      </AnchorPane>
 
       <!-- Employee Input Section -->
       <Label layoutX="30.0" layoutY="160.0" text="Employee Details">
@@ -47,7 +55,7 @@
             <Font size="14.0" />
          </font>
       </Label>
-      <TextField fx:id="idField" editable="false" layoutX="150.0" layoutY="201.0" prefHeight="27.0" prefWidth="200.0" promptText="Auto-generated" />
+   <TextField fx:id="employeeNumberField" editable="false" layoutX="150.0" layoutY="201.0" prefHeight="27.0" prefWidth="200.0" promptText="Auto-generated" />
 
       <!-- First Name -->
       <Label layoutX="30.0" layoutY="239.0" text="First Name:">
@@ -122,27 +130,55 @@
       <DatePicker fx:id="startDatePicker" layoutX="150.0" layoutY="516.0" prefHeight="27.0" prefWidth="200.0" promptText="Select start date" />
 
       <!-- Action Buttons -->
-      <Button id="btnAdd" fx:id="btnAdd" layoutX="205.0" layoutY="567.0" mnemonicParsing="false" onAction="#addEmployee" prefHeight="35.0" prefWidth="110.0" text="Add Employee">
+      <Button id="btnAdd" fx:id="btnAdd" alignment="CENTER" contentDisplay="LEFT" layoutX="205.0" layoutY="567.0" mnemonicParsing="false" onAction="#addEmployee" prefHeight="35.0" prefWidth="110.0" text="Add">
+         <graphic>
+            <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@/org/oop_project/view/images/add.png" />
+               </image>
+            </ImageView>
+         </graphic>
          <font>
-            <Font name="System Bold" size="12.0" />
+            <Font name="System Bold" size="14.0" />
          </font>
       </Button>
 
-      <Button id="btnUpdate" fx:id="btnUpdate" layoutX="72.0" layoutY="619.0" mnemonicParsing="false" onAction="#updateEmployee" prefHeight="35.0" prefWidth="110.0" text="Update">
+      <Button id="btnUpdate" fx:id="btnUpdate" alignment="CENTER" contentDisplay="LEFT" layoutX="72.0" layoutY="619.0" mnemonicParsing="false" onAction="#updateEmployee" prefHeight="35.0" prefWidth="110.0" text="Update">
+         <graphic>
+            <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@/org/oop_project/view/images/update.png" />
+               </image>
+            </ImageView>
+         </graphic>
          <font>
-            <Font name="System Bold" size="12.0" />
+            <Font name="System Bold" size="14.0" />
          </font>
       </Button>
 
-      <Button id="btnDelete" fx:id="btnDelete" layoutX="205.0" layoutY="619.0" mnemonicParsing="false" onAction="#deleteEmployee" prefHeight="35.0" prefWidth="110.0" text="Delete">
+      <Button id="btnDelete" fx:id="btnDelete" alignment="CENTER" contentDisplay="LEFT" layoutX="205.0" layoutY="619.0" mnemonicParsing="false" onAction="#deleteEmployee" prefHeight="35.0" prefWidth="110.0" text="Delete">
+         <graphic>
+            <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@/org/oop_project/view/images/trash.png" />
+               </image>
+            </ImageView>
+         </graphic>
          <font>
-            <Font name="System Bold" size="12.0" />
+            <Font name="System Bold" size="14.0" />
          </font>
       </Button>
 
-      <Button id="btnClear" fx:id="btnClear" layoutX="72.0" layoutY="567.0" mnemonicParsing="false" onAction="#clearFields" prefHeight="35.0" prefWidth="110.0" text="Clear">
+      <Button id="btnClear" fx:id="btnClear" alignment="CENTER" contentDisplay="LEFT" layoutX="72.0" layoutY="567.0" mnemonicParsing="false" onAction="#clearFields" prefHeight="35.0" prefWidth="110.0" text="Clear">
+         <graphic>
+            <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@/org/oop_project/view/images/clear.png" />
+               </image>
+            </ImageView>
+         </graphic>
          <font>
-            <Font name="System Bold" size="12.0" />
+            <Font name="System Bold" size="14.0" />
          </font>
       </Button>
 

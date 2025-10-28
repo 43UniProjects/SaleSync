@@ -3,11 +3,13 @@ package org.oop_project.view.controllers;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
-import org.oop_project.utils.Generate;
-import org.oop_project.DatabaseHandler.models.Employee;
+
 import org.oop_project.DatabaseHandler.enums.Role;
+import org.oop_project.DatabaseHandler.models.Employee;
 import org.oop_project.DatabaseHandler.operations.EmployeeOperations;
+import org.oop_project.utils.Generate;
 import org.oop_project.view.helpers.EmployeeRow;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -28,7 +30,7 @@ public class AdminController {
 
     private final static EmployeeOperations employeeManager = new EmployeeOperations();
 
-    @FXML private TextField idField;
+    @FXML private TextField employeeNumberField;
     @FXML private TextField firstNameField;
     @FXML private TextField lastNameField;
     @FXML private DatePicker dobPicker;
@@ -97,7 +99,7 @@ public class AdminController {
             // When a row is selected, populate form fields
             employeeTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSel, sel) -> {
                 if (sel != null) {
-                    if (idField != null) idField.setText(String.valueOf(sel.getEmployeeNumber()));
+                    if (employeeNumberField != null) employeeNumberField.setText(String.valueOf(sel.getEmployeeNumber()));
                     if (firstNameField != null) firstNameField.setText(sel.getFirstName());
                     if (lastNameField != null) lastNameField.setText(sel.getLastName());
                     if (phoneNumberField != null) phoneNumberField.setText(sel.getPhone());
@@ -214,7 +216,7 @@ public class AdminController {
 
     @FXML
     protected void clearFields() {
-        if (idField != null) idField.clear();
+    if (employeeNumberField != null) employeeNumberField.clear();
         if (firstNameField != null) firstNameField.clear();
         if (lastNameField != null) lastNameField.clear();
         if (dobPicker != null) dobPicker.setValue(null);
