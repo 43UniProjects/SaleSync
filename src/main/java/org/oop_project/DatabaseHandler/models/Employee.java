@@ -20,17 +20,17 @@ public class Employee {
     private BsonId _id;
 
     @BsonProperty("id")
-    private String id;
+    protected String id;
 
-    private String firstName;
-    private String lastName;
-    private LocalDate dob;
-    private String phoneNumber;
-    private String email;
-    private LocalDate startDate;
-    private String username;
-    private String password;
-    private Role role;
+    protected String firstName;
+    protected String lastName;
+    protected LocalDate dob;
+    protected String phoneNumber;
+    protected String email;
+    protected LocalDate startDate;
+    protected String username;
+    protected String password;
+    protected Role role;
 
     // REQUIRED for the pojo codec provider
     public Employee() {
