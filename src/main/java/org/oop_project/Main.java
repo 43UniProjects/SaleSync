@@ -5,8 +5,6 @@ import org.oop_project.view.gui;
 
 public class Main {
 
-    public static final String INITIAL_ITEM_FAMILIES_DATA_PATH = "data.json";
-
     // initialize DB operations
     static EmployeeOperations employeeManager = new EmployeeOperations();
 
