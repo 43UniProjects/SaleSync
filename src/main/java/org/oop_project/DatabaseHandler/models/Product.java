@@ -27,7 +27,6 @@ public class Product {
     private double taxRate;
     private double discountRate;
     private double retailPrice;
-    private String supplierId;
     private double availableQuantity;
     private Date lastStockDate;
     private boolean isActive;
@@ -49,7 +48,6 @@ public class Product {
             double unitPrice,
             double taxRate,
             double discountRate,
-            String supplierId,
             double stockQuantity
     ) {
         this.id = productId;
@@ -61,7 +59,6 @@ public class Product {
         this.unitPrice = unitPrice;
         this.taxRate = taxRate;
         this.discountRate = discountRate;
-        this.supplierId = supplierId;
         this.availableQuantity = stockQuantity;
         this.setRetailPrice();
         this.changeState();
@@ -141,14 +138,6 @@ public class Product {
 
     public double getRetailPrice() {
         return this.retailPrice;
-    }
-
-    public String getSupplierId() {
-        return this.supplierId;
-    }
-
-    public void setSupplierId(String supplierId) {
-        this.supplierId = supplierId;
     }
 
     public double getAvailableQuantity() {

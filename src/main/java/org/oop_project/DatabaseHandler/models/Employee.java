@@ -7,7 +7,7 @@ import org.oop_project.DatabaseHandler.enums.Role;
 import java.time.LocalDate;
 
 /*
- * Represents a Employee entity in the MongoDB 'Employee' collection.
+ * Represents an Employee entity in the MongoDB 'Employee' collection.
  * This class is a Plain Old Java Object (POJO) that maps to a BSON document.
  * It contains essential employee details such as a unique identifier and other properties.
  * This act as the base class for all employees with different roles with in the store
@@ -129,4 +129,6 @@ public class Employee {
     public void setRole(Role role) {
         this.role = role;
     }
+
+
 }
