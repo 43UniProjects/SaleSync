@@ -1,24 +1,21 @@
 package org.oop_project.view.controllers;
 
-import java.io.IOException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import org.oop_project.DatabaseHandler.enums.UnitType;
 import org.oop_project.DatabaseHandler.models.Product;
 import org.oop_project.DatabaseHandler.operations.ProductOperations;
-import org.oop_project.DatabaseHandler.models.Product;
-import static org.oop_project.utils.Generate.generateProductId;
 import org.oop_project.view.helpers.ProductRow;
+
+import java.io.IOException;
+
+import static org.oop_project.utils.Generate.generateProductId;
 
 
 
@@ -33,7 +30,6 @@ public class ProductController {
     @FXML private TextField unitPriceField;
     @FXML private TextField taxRateField;
     @FXML private TextField discountRateField;
-    @FXML private TextField supplierIdField;
     @FXML private TextField quantityField;
     @FXML private Label statusLabel;
 
@@ -49,7 +45,6 @@ public class ProductController {
     @FXML private TableColumn<ProductRow, String> colTax;
     @FXML private TableColumn<ProductRow, String> colDiscount;
     @FXML private TableColumn<ProductRow, String> colRetail;
-    @FXML private TableColumn<ProductRow, String> colSupplier;
     @FXML private TableColumn<ProductRow, String> colQty;
 
     private final ObservableList<ProductRow> products = FXCollections.observableArrayList();
@@ -69,7 +64,6 @@ public class ProductController {
         colTax.setCellValueFactory(new PropertyValueFactory<>("taxRate"));
         colDiscount.setCellValueFactory(new PropertyValueFactory<>("discountRate"));
         colRetail.setCellValueFactory(new PropertyValueFactory<>("retailPrice"));
-        colSupplier.setCellValueFactory(new PropertyValueFactory<>("supplierId"));
         colQty.setCellValueFactory(new PropertyValueFactory<>("quantity"));
         productTable.setItems(products);
 
@@ -85,7 +79,6 @@ public class ProductController {
                 unitPriceField.setText(sel.getUnitPrice());
                 taxRateField.setText(sel.getTaxRate());
                 discountRateField.setText(sel.getDiscountRate());
-                supplierIdField.setText(sel.getSupplierId());
                 quantityField.setText(sel.getQuantity());
             }
         });
@@ -103,14 +96,13 @@ public class ProductController {
         double unitPrice = parseDouble(unitPriceField);
         double tax = parseDouble(taxRateField);
         double discount = parseDouble(discountRateField);
-        String supplierId = safe(supplierIdField);
         double qty = parseDouble(quantityField);
         double retail = calcRetail(unitPrice, tax, discount);
 
-        Product product = new Product(id, name, desc, UnitType.valueOf(type), family, subFamily, unitPrice, tax, discount, supplierId, qty);
+        Product product = new Product(id, name, desc, UnitType.valueOf(type), family, subFamily, unitPrice, tax, discount, qty);
         productManager.add(product);
 
-        products.add(new ProductRow(id, name, desc, type, family, subFamily, unitPrice, tax, discount, retail, supplierId, qty));
+        products.add(new ProductRow(id, name, desc, type, family, subFamily, unitPrice, tax, discount, retail, qty));
 
 
         status("Product added! (Demo mode)", true);
@@ -134,7 +126,6 @@ public class ProductController {
         sel.setTaxRate(tax);
         sel.setDiscountRate(discount);
         sel.setRetailPrice(calcRetail(unitPrice, tax, discount));
-        sel.setSupplierId(safe(supplierIdField));
         sel.setQuantity(parseDouble(quantityField));
         productTable.refresh();
         status("Product updated! (Demo mode)", true);
@@ -160,7 +151,6 @@ public class ProductController {
         unitPriceField.clear();
         taxRateField.clear();
         discountRateField.clear();
-        supplierIdField.clear();
         quantityField.clear();
         productTable.getSelectionModel().clearSelection();
     }

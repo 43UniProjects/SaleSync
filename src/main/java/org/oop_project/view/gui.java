@@ -1,19 +1,19 @@
 package org.oop_project.view;
 
-import java.io.IOException;
-
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
+import java.io.IOException;
+
 public class gui extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/oop_project/view/fxml/login.fxml"));
 
-        Scene scene = new Scene(fxmlLoader.load(), 600, 400);
+        Scene scene = new Scene(fxmlLoader.load());
 
         // Load CSS if it exists
         try {
@@ -34,8 +34,6 @@ public class gui extends Application {
 
 
         stage.setTitle("SaleSync");
-        stage.setWidth(600);
-        stage.setHeight(450);
         stage.setResizable(false);
 
 

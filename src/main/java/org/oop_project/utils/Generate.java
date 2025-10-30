@@ -3,7 +3,6 @@ package org.oop_project.utils;
 import org.oop_project.DatabaseHandler.enums.Role;
 import org.oop_project.DatabaseHandler.operations.EmployeeOperations;
 import org.oop_project.DatabaseHandler.operations.ProductOperations;
-import org.oop_project.DatabaseHandler.operations.SupplierOperations;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -62,21 +61,6 @@ public class Generate {
 
         int idNumber = Integer.parseInt(lastId.split("-")[2]) + 1;
         return itemFamily + itemSubFamily + "-" + (idNumber < 10 ? "0" + idNumber : idNumber);
-    }
-
-    /*
-     * name = "Cylon Biscuits Limited" codeName = "CBL"
-     * Ex: CBL-01 > (FORMAT CodeName-AssignedId)
-     */
-    public static String generateSupplierId(SupplierOperations supplierOps, String codeName) {
-        String lastId = supplierOps.getLastId();
-
-        if (lastId == null) {
-            return codeName + "01";
-        }
-
-        int idNumber = Integer.parseInt(lastId.split("-")[2]) + 1;
-        return  String.format("%s-%s", codeName, idNumber < 10 ? "0" + idNumber : idNumber);
     }
 
 

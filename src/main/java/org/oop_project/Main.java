@@ -1,7 +1,5 @@
 package org.oop_project;
 
-import java.util.Scanner;
-
 import org.oop_project.DatabaseHandler.operations.EmployeeOperations;
 import org.oop_project.view.gui;
 
