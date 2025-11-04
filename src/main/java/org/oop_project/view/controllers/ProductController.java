@@ -119,6 +119,12 @@ public class ProductController {
     protected void addProduct() {
 
         String id = generateProductId(productManager, safe(familyField), safe(subFamilyField));
+
+        // checks whether all fields are filled to prevent exceptions
+        if(safe(nameField).isEmpty() || safe(descriptionField).isEmpty() || safe(unitPriceField).isEmpty() || safe(quantityField).isEmpty() || safe(taxRateField).isEmpty() || safe(discountRateField).isEmpty() || unitTypeCombo.getValue() == null || safe(familyField).isEmpty() || safe(subFamilyField).isEmpty()) {
+            status("Please fill in all required fields!", false);
+            return;
+        }
         
         String name = safe(nameField);
         String desc = safe(descriptionField);

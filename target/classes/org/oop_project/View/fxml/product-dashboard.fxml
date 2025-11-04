@@ -118,7 +118,7 @@
             <Font name="System Bold" size="12.800000190734863" />
          </font></Button>
 
-    <Label fx:id="statusLabel" alignment="CENTER" layoutX="20.0" layoutY="708.0" prefWidth="350.0" />
+    <Label fx:id="statusLabel" alignment="CENTER" layoutX="8.0" layoutY="690.0" prefWidth="350.0" />
 
     <!-- Right: table and search -->
     <Label layoutX="400.0" layoutY="160.0" text="All Products">
