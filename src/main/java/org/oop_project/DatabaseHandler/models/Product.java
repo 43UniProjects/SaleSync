@@ -1,11 +1,12 @@
 package org.oop_project.DatabaseHandler.models;
 
-import org.bson.codecs.pojo.annotations.BsonId;
-import org.bson.types.ObjectId;
-import org.oop_project.DatabaseHandler.enums.UnitType;
-
 import java.util.Date;
 import java.util.HashMap;
+
+import org.bson.codecs.pojo.annotations.BsonId;
+import org.bson.codecs.pojo.annotations.BsonProperty;
+import org.bson.types.ObjectId;
+import org.oop_project.DatabaseHandler.enums.UnitType;
 
 /*
  * Represents a Product entity in the MongoDB 'Product' collection.
@@ -17,7 +18,10 @@ public class Product {
 
     @BsonId
     private ObjectId _id;
+
+    @BsonProperty("id")
     private String id;
+
     private String name;
     private String description;
     private UnitType productType;
@@ -39,7 +43,7 @@ public class Product {
     }
 
     public Product(
-            String productId,
+            String id,
             String name,
             String description,
             UnitType unitType,
@@ -50,7 +54,7 @@ public class Product {
             double discountRate,
             double stockQuantity
     ) {
-        this.id = productId;
+        this.id = id;
         this.name = name;
         this.description = description;
         this.productType = unitType;
@@ -65,6 +69,10 @@ public class Product {
     }
 
     // Getters and Setters
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getId() {
         return this.id;

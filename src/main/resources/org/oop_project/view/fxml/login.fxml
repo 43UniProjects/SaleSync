@@ -9,43 +9,43 @@
 
 <AnchorPane id="AnchorMain" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="441.0" prefWidth="588.0" styleClass="root-dark" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.oop_project.view.controllers.LoginController">
    <children>
-      <AnchorPane id="AnchorHead" layoutX="-3.0" prefHeight="146.0" prefWidth="588.0">
+      <AnchorPane id="AnchorHead" layoutX="-3.0" prefHeight="146.0" prefWidth="594.0">
          <children>
-            <Label fx:id="headLogin" layoutX="227.0" layoutY="28.0" text="SaleSync" textAlignment="CENTER">
+            <Label fx:id="headLogin" layoutX="224.0" layoutY="28.0" text="SaleSync" textAlignment="CENTER">
                <font>
                   <Font name="System Bold" size="36.0" />
                </font>
             </Label>
-            <Label fx:id="subHeadLogin" layoutX="194.0" layoutY="94.0" text="A Modern Store Manager">
+            <Label fx:id="subHeadLogin" layoutX="191.0" layoutY="94.0" text="A Modern Store Manager">
                <font>
                   <Font name="Georgia" size="19.0" />
                </font>
             </Label>
          </children>
       </AnchorPane>
-      <Label layoutX="198.0" layoutY="185.0" text="Please login to continue">
+      <Label layoutX="205.0" layoutY="166.0" text="Please login to continue">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <Label layoutX="145.0" layoutY="263.0" text="Username">
+      <Label layoutX="144.0" layoutY="235.0" text="Username">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <Label layoutX="148.0" layoutY="307.0" text="Password">
+      <Label layoutX="147.0" layoutY="279.0" text="Password">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <TextField fx:id="usernameField" layoutX="268.0" layoutY="263.0" prefHeight="27.0" prefWidth="190.0" />
-      <Button id="btnLogin" fx:id="btnSubmit" layoutX="369.0" layoutY="351.0" mnemonicParsing="false" onAction="#submit" prefHeight="30.0" prefWidth="88.0" text="Login">
+      <TextField fx:id="usernameField" layoutX="267.0" layoutY="235.0" prefHeight="27.0" prefWidth="190.0" />
+      <Button id="btnLogin" fx:id="btnSubmit" layoutX="251.0" layoutY="330.0" mnemonicParsing="false" onAction="#submit" prefHeight="30.0" prefWidth="88.0" text="Login">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
       </Button>
-      <PasswordField fx:id="passwordField" layoutX="268.0" layoutY="307.0" prefHeight="27.0" prefWidth="190.0" />
-      <Label id="loginStatus" fx:id="loginStatus" alignment="CENTER" contentDisplay="CENTER" layoutX="136.0" layoutY="427.0" prefHeight="27.0" prefWidth="346.0" textAlignment="CENTER">
+      <PasswordField fx:id="passwordField" layoutX="267.0" layoutY="279.0" prefHeight="27.0" prefWidth="190.0" />
+      <Label id="loginStatus" fx:id="loginStatus" alignment="CENTER" contentDisplay="CENTER" layoutX="121.0" layoutY="382.0" prefHeight="27.0" prefWidth="346.0" textAlignment="CENTER">
          <font>
          <Font size="16.0" />
          </font>

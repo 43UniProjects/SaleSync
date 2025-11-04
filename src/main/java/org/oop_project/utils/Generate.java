@@ -60,7 +60,7 @@ public class Generate {
         }
 
         int idNumber = Integer.parseInt(lastId.split("-")[2]) + 1;
-        return itemFamily + itemSubFamily + "-" + (idNumber < 10 ? "0" + idNumber : idNumber);
+        return itemFamily + "-" + itemSubFamily + "-" + (idNumber < 10 ? "0" + String.valueOf(idNumber) : String.valueOf(idNumber));
     }
 
 

@@ -86,6 +86,24 @@ public class AdminController {
             colRole.setCellValueFactory(new PropertyValueFactory<>("role"));
             colStartDate.setCellValueFactory(new PropertyValueFactory<>("startDate"));
 
+            // When a row is selected, populate form fields
+            employeeTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSel, sel) -> {
+                if (sel != null) {
+                    if (employeeNumberField != null)
+                        employeeNumberField.setText(String.valueOf(sel.getEmployeeNumber()));
+                    if (firstNameField != null) firstNameField.setText(sel.getFirstName());
+                    if (lastNameField != null) lastNameField.setText(sel.getLastName());
+                    if (phoneNumberField != null) phoneNumberField.setText(sel.getPhone());
+                    if (emailField != null) emailField.setText(sel.getEmail());
+                    if (usernameField != null) usernameField.setText(sel.getUsername());
+                    if (roleComboBox != null) roleComboBox.setValue(sel.getRole());
+                    if (dobPicker != null) dobPicker.setValue(LocalDate.parse(sel.getDob()));
+                    if (startDatePicker != null) startDatePicker.setValue(LocalDate.parse(sel.getStartDate()));
+                    String pass = employeeManager.get(sel.getUsername()).getPassword();
+                    if (passwordField != null) passwordField.setText(pass);
+                }
+            });
+
             List<Employee> dbEmployees = employeeManager.getAll();
 
             // Convert database employees to EmployeeRow objects for the table
@@ -107,23 +125,6 @@ public class AdminController {
 
             employeeTable.setItems(employees);
 
-            // When a row is selected, populate form fields
-            employeeTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSel, sel) -> {
-                if (sel != null) {
-                    if (employeeNumberField != null)
-                        employeeNumberField.setText(String.valueOf(sel.getEmployeeNumber()));
-                    if (firstNameField != null) firstNameField.setText(sel.getFirstName());
-                    if (lastNameField != null) lastNameField.setText(sel.getLastName());
-                    if (phoneNumberField != null) phoneNumberField.setText(sel.getPhone());
-                    if (emailField != null) emailField.setText(sel.getEmail());
-                    if (usernameField != null) usernameField.setText(sel.getUsername());
-                    if (roleComboBox != null) roleComboBox.setValue(sel.getRole());
-                    if (dobPicker != null) dobPicker.setValue(LocalDate.parse(sel.getDob()));
-                    if (startDatePicker != null) startDatePicker.setValue(LocalDate.parse(sel.getStartDate()));
-                    String pass = employeeManager.get(sel.getUsername()).getPassword();
-                    if (passwordField != null) passwordField.setText(pass);
-                }
-            });
         }
     }
 
