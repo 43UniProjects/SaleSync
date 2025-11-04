@@ -1,23 +1,26 @@
 package org.oop_project.view.controllers;
 
+import java.io.IOException;
+import java.util.List;
+
+import org.oop_project.DatabaseHandler.enums.UnitType;
+import org.oop_project.DatabaseHandler.models.Product;
+import org.oop_project.DatabaseHandler.operations.ProductOperations;
+import static org.oop_project.utils.Generate.generateProductId;
+import org.oop_project.view.helpers.ProductRow;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-import org.oop_project.DatabaseHandler.enums.UnitType;
-import org.oop_project.DatabaseHandler.models.Employee;
-import org.oop_project.DatabaseHandler.models.Product;
-import org.oop_project.DatabaseHandler.operations.ProductOperations;
-import org.oop_project.view.helpers.ProductRow;
-
-import java.io.IOException;
-import java.util.List;
-
-import static org.oop_project.utils.Generate.generateProductId;
 
 
 
@@ -92,7 +95,7 @@ public class ProductController {
         if (dbProduct != null) {
 
             for (Product prod : dbProduct) {
-                System.out.println(prod.getName());
+                
                 products.add(new ProductRow(
                         prod.getId(),
                         prod.getName(),
@@ -116,7 +119,7 @@ public class ProductController {
     protected void addProduct() {
 
         String id = generateProductId(productManager, safe(familyField), safe(subFamilyField));
-        //System.out.println(id);
+        
         String name = safe(nameField);
         String desc = safe(descriptionField);
         String type = unitTypeCombo.getValue() != null ? unitTypeCombo.getValue() : "";
@@ -175,6 +178,7 @@ public class ProductController {
 
     @FXML
     protected void clearFields() {
+        productIdField.clear();
         nameField.clear();
         descriptionField.clear();
         unitTypeCombo.setValue(null);
@@ -189,8 +193,20 @@ public class ProductController {
 
     @FXML
     protected void searchProduct() {
-        // TODO: Implement server-side or DB-backed search
-        status("Search not implemented yet (Demo)", false);
+        // Search done through filtering the table observable list
+
+        String query = safe(searchField).toLowerCase();
+        if (query.isEmpty()) {
+            productTable.setItems(products);
+            return;
+        }
+        // Implement search filtering logic here
+        ObservableList<ProductRow> filtered = products.filtered(p -> p.getName().toLowerCase().contains(query) || 
+                                                                p.getId().toLowerCase().contains(query) ||
+                                                                p.getFamily().toLowerCase().contains(query) ||
+                                                                p.getSubFamily().toLowerCase().contains(query));
+        productTable.setItems(filtered);    
+
     }
 
     @FXML

@@ -22,7 +22,7 @@
                   <Font name="System Bold" size="36.0" />
                </font>
             </Label>
-            <Label fx:id="subHeadAdminPanel" alignment="CENTER" layoutX="0.0" layoutY="94.0" prefWidth="1100.0" text="Employee Management Dashboard" textAlignment="CENTER">
+            <Label fx:id="subHeadAdminPanel" alignment="CENTER" layoutX="0.0" layoutY="94.0" prefWidth="1100.0" text="Manage Employee Records" textAlignment="CENTER">
                <font>
                   <Font name="Georgia" size="19.0" />
                </font>

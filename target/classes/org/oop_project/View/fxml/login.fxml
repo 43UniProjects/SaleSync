@@ -39,12 +39,12 @@
          </font>
       </Label>
       <TextField fx:id="usernameField" layoutX="267.0" layoutY="235.0" prefHeight="27.0" prefWidth="190.0" />
+      <PasswordField fx:id="passwordField" layoutX="267.0" layoutY="279.0" prefHeight="27.0" prefWidth="190.0" />
       <Button id="btnLogin" fx:id="btnSubmit" layoutX="251.0" layoutY="330.0" mnemonicParsing="false" onAction="#submit" prefHeight="30.0" prefWidth="88.0" text="Login">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
       </Button>
-      <PasswordField fx:id="passwordField" layoutX="267.0" layoutY="279.0" prefHeight="27.0" prefWidth="190.0" />
       <Label id="loginStatus" fx:id="loginStatus" alignment="CENTER" contentDisplay="CENTER" layoutX="121.0" layoutY="382.0" prefHeight="27.0" prefWidth="346.0" textAlignment="CENTER">
          <font>
          <Font size="16.0" />
