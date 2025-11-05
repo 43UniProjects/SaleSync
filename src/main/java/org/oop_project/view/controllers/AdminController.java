@@ -176,6 +176,12 @@ public class AdminController {
 
     @FXML
     protected void updateEmployee() {
+        if (!(employeeManager.find(safeText(usernameField)))) {
+            statusLabel.setText("Username already exists");
+            statusLabel.setStyle("-fx-text-fill: red;");
+            return;
+        }
+
 
         EmployeeRow sel = employeeTable != null ? employeeTable.getSelectionModel().getSelectedItem() : null;
         if (sel != null) {
