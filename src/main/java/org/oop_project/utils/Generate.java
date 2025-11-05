@@ -40,6 +40,7 @@ public class Generate {
     * */
     public static String generateUserId(EmployeeOperations employeeOps, Role role) {
         String lastId = employeeOps.getLastId();
+        System.out.println(lastId);
 
         if (lastId == null) {
             return String.format("%s-01", role.getLabel());

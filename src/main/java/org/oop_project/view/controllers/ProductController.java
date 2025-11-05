@@ -149,7 +149,7 @@ public class ProductController {
 
     @FXML
     protected void updateProduct() {
-        // TODO: Replace with DB update by ID
+
         ProductRow sel = productTable.getSelectionModel().getSelectedItem();
         if (sel == null) { status("Select a row to update", false); return; }
         sel.setName(safe(nameField));
@@ -171,7 +171,7 @@ public class ProductController {
 
     @FXML
     protected void removeProduct() {
-        // TODO: Replace with DB delete by ID
+
         ProductRow sel = productTable.getSelectionModel().getSelectedItem();
         if (sel == null) { status("Select a row to remove", false); return; }
 

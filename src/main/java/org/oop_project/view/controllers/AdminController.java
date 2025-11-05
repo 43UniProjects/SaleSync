@@ -176,7 +176,7 @@ public class AdminController {
 
     @FXML
     protected void updateEmployee() {
-        // TODO: Replace with DB update by ID
+
         EmployeeRow sel = employeeTable != null ? employeeTable.getSelectionModel().getSelectedItem() : null;
         if (sel != null) {
 
@@ -229,7 +229,7 @@ public class AdminController {
 
     @FXML
     protected void deleteEmployee() {
-        // TODO: Replace with DB delete by ID
+
         EmployeeRow sel = employeeTable != null ? employeeTable.getSelectionModel().getSelectedItem() : null;
         if (sel != null) {
             employees.remove(sel);
@@ -288,6 +288,5 @@ public class AdminController {
         return tf != null && tf.getText() != null ? tf.getText().trim() : "";
     }
 
-    // Lightweight row model for TableView (UI-only)
 
 }
