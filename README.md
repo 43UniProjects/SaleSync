@@ -39,7 +39,7 @@
 - 👥 **Employee Management**: Support for multiple roles (Admin, Cashier, Product Manager)
 - 📦 **Product Management**: Complete CRUD operations for inventory
 - 🗄️ **MongoDB Integration**: Seamless database operations with POJO mapping
-- 🖥️ **Swing GUI**: Simple graphical interface for user interaction
+- 🖥️ **JavaFx GUI**: Modern graphical interface for user interaction
 
 
 ## 🚀 Features
@@ -48,7 +48,7 @@
 - ✅ **Employee Operations**: Add, search, list, and delete employees
 - ✅ **Product Operations**: Manage product inventory with real-time updates
 - ✅ **Database Persistence**: MongoDB integration with POJO codec support
-- ✅ **Console & GUI Interface**: Both command-line and Swing-based UI options
+- ✅ **GUI Interface**: JavaFx-based UI options
 - ✅ **Type Safety**: Strongly-typed collections and enums for roles and units
 - ✅ **Database Migrations**: Mongock integration for versioned schema management
 
@@ -143,7 +143,7 @@ SaleSync/
                 └── oop_project/
                     ├── 🎯 Main.java                      # Application entry point
                     ├── 📁 View/
-                    │   └── SaleSyncApp.java             # Swing GUI interface
+                    │   └── gui.java             # JavaFx GUI interface
                     ├── 📁 DatabaseHandler/
                     │   ├── DatabaseConnectionManager.java  # MongoDB singleton
                     │   ├── 📁 Enums/
@@ -171,10 +171,10 @@ SaleSync/
 ### 🔑 Key Components
 
 #### **Main.java**
-Entry point that initializes the Swing UI, handles console login, validates credentials via `EmployeeOperations`, and manages database connections.
+Entry point that initializes the JavaFx UI, validates credentials via `EmployeeOperations`, and manages database connections.
 
 #### **SaleSyncApp.java**
-Minimal Swing-based GUI (JFrame) demonstrating UI wiring with labels and buttons.
+Modern JavaFx-based GUI demonstrating UI wiring with labels and buttons.
 
 #### **DatabaseConnectionManager.java**
 Singleton wrapper for MongoDB Java driver:
@@ -364,7 +364,7 @@ When you run the application, you'll see a console login prompt:
 
 ### GUI Interface
 
-The Swing-based GUI (`SaleSyncApp`) provides a graphical interface for managing store operations with buttons and forms for employee and product management.
+The JavaFx-based GUI provides a modern graphical interface for managing store operations with buttons and forms for employee and product management.
 
 ## 🧪 Testing
 
@@ -422,7 +422,6 @@ Contributions are welcome! Here's how you can help improve SaleSync:
 ### Areas for Contribution
 
 - 🧪 Add unit tests for operations and models
-- 🎨 Improve the Swing UI with modern components
 - 🔐 Implement authentication and authorization
 - 📊 Add reporting and analytics features
 - 🌐 Internationalization (i18n) support

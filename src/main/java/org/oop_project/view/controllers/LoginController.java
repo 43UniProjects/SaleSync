@@ -79,8 +79,8 @@ public class LoginController {
             Scene scene = new Scene(loader.load(), 900, 600);
             Stage stage = (Stage) btnSubmit.getScene().getWindow();
             stage.setScene(scene);
-            stage.setWidth(900);
-            stage.setHeight(600);
+            stage.setWidth(930);
+            stage.setHeight(900);
             stage.setTitle("SaleSync - Cashier Portal");
         } catch (Exception e) {
             loginStatus.setText("Error loading cashier portal!");

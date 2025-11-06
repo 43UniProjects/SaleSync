@@ -1,21 +1,26 @@
 package org.oop_project.view.controllers;
 
+import java.io.IOException;
+import java.util.List;
+
+import org.oop_project.DatabaseHandler.enums.UnitType;
+import org.oop_project.DatabaseHandler.models.Product;
+import org.oop_project.DatabaseHandler.operations.ProductOperations;
+import static org.oop_project.utils.Generate.generateProductId;
+import org.oop_project.view.helpers.ProductRow;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-import org.oop_project.DatabaseHandler.enums.UnitType;
-import org.oop_project.DatabaseHandler.models.Product;
-import org.oop_project.DatabaseHandler.operations.ProductOperations;
-import org.oop_project.view.helpers.ProductRow;
-
-import java.io.IOException;
-
-import static org.oop_project.utils.Generate.generateProductId;
 
 
 
@@ -82,12 +87,45 @@ public class ProductController {
                 quantityField.setText(sel.getQuantity());
             }
         });
+
+        List<Product> dbProduct = productManager.getAll();
+
+        products.clear();
+
+        if (dbProduct != null) {
+
+            for (Product prod : dbProduct) {
+                
+                products.add(new ProductRow(
+                        prod.getId(),
+                        prod.getName(),
+                        prod.getDescription(),
+                        prod.getProductType().name(),
+                        prod.getFamily(),
+                        prod.getSubFamily(),
+                        prod.getUnitPrice(),
+                        prod.getTaxRate(),
+                        prod.getDiscountRate(),
+                        calcRetail(prod.getUnitPrice(), prod.getTaxRate(), prod.getDiscountRate()),
+                        prod.getStockQuantity()
+                ));
+            }
+
+            productTable.setItems(products);
+        }
     }
 
     @FXML
     protected void addProduct() {
 
         String id = generateProductId(productManager, safe(familyField), safe(subFamilyField));
+
+        // checks whether all fields are filled to prevent exceptions
+        if(safe(nameField).isEmpty() || safe(descriptionField).isEmpty() || safe(unitPriceField).isEmpty() || safe(quantityField).isEmpty() || safe(taxRateField).isEmpty() || safe(discountRateField).isEmpty() || unitTypeCombo.getValue() == null || safe(familyField).isEmpty() || safe(subFamilyField).isEmpty()) {
+            status("Please fill in all required fields!", false);
+            return;
+        }
+        
         String name = safe(nameField);
         String desc = safe(descriptionField);
         String type = unitTypeCombo.getValue() != null ? unitTypeCombo.getValue() : "";
@@ -105,13 +143,13 @@ public class ProductController {
         products.add(new ProductRow(id, name, desc, type, family, subFamily, unitPrice, tax, discount, retail, qty));
 
 
-        status("Product added! (Demo mode)", true);
+        status("Product added!", true);
         clearFields();
     }
 
     @FXML
     protected void updateProduct() {
-        // TODO: Replace with DB update by ID
+
         ProductRow sel = productTable.getSelectionModel().getSelectedItem();
         if (sel == null) { status("Select a row to update", false); return; }
         sel.setName(safe(nameField));
@@ -128,21 +166,25 @@ public class ProductController {
         sel.setRetailPrice(calcRetail(unitPrice, tax, discount));
         sel.setQuantity(parseDouble(quantityField));
         productTable.refresh();
-        status("Product updated! (Demo mode)", true);
+        status("Product updated!", true);
     }
 
     @FXML
     protected void removeProduct() {
-        // TODO: Replace with DB delete by ID
+
         ProductRow sel = productTable.getSelectionModel().getSelectedItem();
         if (sel == null) { status("Select a row to remove", false); return; }
+
+        productManager.delete(sel.getId());
+
         products.remove(sel);
-        status("Product removed! (Demo mode)", true);
+        status("Product removed!", true);
         clearFields();
     }
 
     @FXML
     protected void clearFields() {
+        productIdField.clear();
         nameField.clear();
         descriptionField.clear();
         unitTypeCombo.setValue(null);
@@ -157,8 +199,20 @@ public class ProductController {
 
     @FXML
     protected void searchProduct() {
-        // TODO: Implement server-side or DB-backed search
-        status("Search not implemented yet (Demo)", false);
+        // Search done through filtering the table observable list
+
+        String query = safe(searchField).toLowerCase();
+        if (query.isEmpty()) {
+            productTable.setItems(products);
+            return;
+        }
+        // Implement search filtering logic here
+        ObservableList<ProductRow> filtered = products.filtered(p -> p.getName().toLowerCase().contains(query) || 
+                                                                p.getId().toLowerCase().contains(query) ||
+                                                                p.getFamily().toLowerCase().contains(query) ||
+                                                                p.getSubFamily().toLowerCase().contains(query));
+        productTable.setItems(filtered);    
+
     }
 
     @FXML

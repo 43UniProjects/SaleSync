@@ -2,7 +2,7 @@ package org.oop_project.view.helpers;
 
 // Lightweight row model for the TableView (UI-only)
 public class ProductRow {
-    private final String id;
+    private String id;
     private String name;
     private String description;
     private String type;
@@ -12,7 +12,7 @@ public class ProductRow {
     private double taxRate;
     private double discountRate;
     private double retailPrice;
-    private String supplierId;
+    //private String supplierId;
     private double quantity;
 
     public ProductRow(String id, String name, String description, String type, String family, String subFamily, double unitPrice, double taxRate, double discountRate, double retailPrice, double quantity) {

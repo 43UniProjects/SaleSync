@@ -40,6 +40,7 @@ public class Generate {
     * */
     public static String generateUserId(EmployeeOperations employeeOps, Role role) {
         String lastId = employeeOps.getLastId();
+        //System.out.println(lastId);
 
         if (lastId == null) {
             return String.format("%s-01", role.getLabel());
@@ -60,7 +61,7 @@ public class Generate {
         }
 
         int idNumber = Integer.parseInt(lastId.split("-")[2]) + 1;
-        return itemFamily + itemSubFamily + "-" + (idNumber < 10 ? "0" + idNumber : idNumber);
+        return itemFamily + "-" + itemSubFamily + "-" + (idNumber < 10 ? "0" + String.valueOf(idNumber) : String.valueOf(idNumber));
     }
 
 

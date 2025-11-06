@@ -86,6 +86,24 @@ public class AdminController {
             colRole.setCellValueFactory(new PropertyValueFactory<>("role"));
             colStartDate.setCellValueFactory(new PropertyValueFactory<>("startDate"));
 
+            // When a row is selected, populate form fields
+            employeeTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSel, sel) -> {
+                if (sel != null) {
+                    if (employeeNumberField != null)
+                        employeeNumberField.setText(String.valueOf(sel.getEmployeeNumber()));
+                    if (firstNameField != null) firstNameField.setText(sel.getFirstName());
+                    if (lastNameField != null) lastNameField.setText(sel.getLastName());
+                    if (phoneNumberField != null) phoneNumberField.setText(sel.getPhone());
+                    if (emailField != null) emailField.setText(sel.getEmail());
+                    if (usernameField != null) usernameField.setText(sel.getUsername());
+                    if (roleComboBox != null) roleComboBox.setValue(sel.getRole());
+                    if (dobPicker != null) dobPicker.setValue(LocalDate.parse(sel.getDob()));
+                    if (startDatePicker != null) startDatePicker.setValue(LocalDate.parse(sel.getStartDate()));
+                    String pass = employeeManager.get(sel.getUsername()).getPassword();
+                    if (passwordField != null) passwordField.setText(pass);
+                }
+            });
+
             List<Employee> dbEmployees = employeeManager.getAll();
 
             // Convert database employees to EmployeeRow objects for the table
@@ -107,23 +125,6 @@ public class AdminController {
 
             employeeTable.setItems(employees);
 
-            // When a row is selected, populate form fields
-            employeeTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSel, sel) -> {
-                if (sel != null) {
-                    if (employeeNumberField != null)
-                        employeeNumberField.setText(String.valueOf(sel.getEmployeeNumber()));
-                    if (firstNameField != null) firstNameField.setText(sel.getFirstName());
-                    if (lastNameField != null) lastNameField.setText(sel.getLastName());
-                    if (phoneNumberField != null) phoneNumberField.setText(sel.getPhone());
-                    if (emailField != null) emailField.setText(sel.getEmail());
-                    if (usernameField != null) usernameField.setText(sel.getUsername());
-                    if (roleComboBox != null) roleComboBox.setValue(sel.getRole());
-                    if (dobPicker != null) dobPicker.setValue(LocalDate.parse(sel.getDob()));
-                    if (startDatePicker != null) startDatePicker.setValue(LocalDate.parse(sel.getStartDate()));
-                    String pass = employeeManager.get(sel.getUsername()).getPassword();
-                    if (passwordField != null) passwordField.setText(pass);
-                }
-            });
         }
     }
 
@@ -175,7 +176,13 @@ public class AdminController {
 
     @FXML
     protected void updateEmployee() {
-        // TODO: Replace with DB update by ID
+        if (!(employeeManager.find(safeText(usernameField)))) {
+            statusLabel.setText("Username already exists");
+            statusLabel.setStyle("-fx-text-fill: red;");
+            return;
+        }
+
+
         EmployeeRow sel = employeeTable != null ? employeeTable.getSelectionModel().getSelectedItem() : null;
         if (sel != null) {
 
@@ -228,7 +235,7 @@ public class AdminController {
 
     @FXML
     protected void deleteEmployee() {
-        // TODO: Replace with DB delete by ID
+
         EmployeeRow sel = employeeTable != null ? employeeTable.getSelectionModel().getSelectedItem() : null;
         if (sel != null) {
             employees.remove(sel);
@@ -287,6 +294,5 @@ public class AdminController {
         return tf != null && tf.getText() != null ? tf.getText().trim() : "";
     }
 
-    // Lightweight row model for TableView (UI-only)
 
 }

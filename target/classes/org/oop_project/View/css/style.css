@@ -290,3 +290,21 @@
     -fx-text-fill: #23272b;
     color: #23272b; /* compat */
 }
+
+/* cashier portal styles */
+
+#scannedStatusField {
+    -fx-text-fill: black;
+    -fx-background-color: lavender;
+    -fx-prompt-text-fill: black;
+    -fx-alignment: center;
+    -fx-text-alignment: center; /* Ensures text alignment */
+    /* -fx-border-color: red;
+    -fx-border-width: 2px;
+    -fx-background-radius: 5; */
+    -fx-border-radius: 5;
+}
+
+.text-area .content {
+    -fx-alignment: center;
+}
