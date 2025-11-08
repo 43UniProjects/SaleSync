@@ -35,7 +35,7 @@ public class gui extends Application {
 
         stage.setTitle("SaleSync");
         stage.setResizable(false);
-
+        stage.centerOnScreen();
 
         stage.setScene(scene);
         stage.show();
