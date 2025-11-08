@@ -1,7 +1,9 @@
 package org.oop_project.utils;
 
 import org.oop_project.DatabaseHandler.enums.Role;
+import org.oop_project.DatabaseHandler.models.Employee;
 import org.oop_project.DatabaseHandler.operations.EmployeeOperations;
+import org.oop_project.DatabaseHandler.operations.Operations;
 import org.oop_project.DatabaseHandler.operations.ProductOperations;
 
 import java.security.MessageDigest;
@@ -38,7 +40,7 @@ public class Generate {
     /*
     * Ex: ADMIN-01 > (FORMAT Role AssignedId)
     * */
-    public static String generateUserId(EmployeeOperations employeeOps, Role role) {
+    public static String generateUserId(Operations<Employee> employeeOps, Role role) {
         String lastId = employeeOps.getLastId();
         //System.out.println(lastId);
 

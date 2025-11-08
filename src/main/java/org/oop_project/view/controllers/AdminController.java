@@ -10,6 +10,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import org.oop_project.DatabaseHandler.enums.Role;
 import org.oop_project.DatabaseHandler.models.Employee;
+import org.oop_project.DatabaseHandler.operations.Operations;
 import org.oop_project.DatabaseHandler.operations.EmployeeOperations;
 import org.oop_project.utils.Generate;
 import org.oop_project.view.helpers.EmployeeRow;
@@ -21,7 +22,7 @@ import java.util.List;
 
 public class AdminController {
 
-    private final static EmployeeOperations employeeManager = new EmployeeOperations();
+    private final static Operations<Employee> employeeManager = new EmployeeOperations();
     // In-memory list to simulate DB (demo mode)
     private final ObservableList<EmployeeRow> employees = FXCollections.observableArrayList();
     @FXML
@@ -283,6 +284,7 @@ public class AdminController {
             stage.setWidth(588);
             stage.setHeight(441);
             stage.setResizable(false);
+            stage.centerOnScreen();
         } catch (Exception e) {
             statusLabel.setText("Error loading login!");
             statusLabel.setStyle("-fx-text-fill: red;");
