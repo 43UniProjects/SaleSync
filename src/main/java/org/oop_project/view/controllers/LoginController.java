@@ -41,19 +41,24 @@ public class LoginController {
         if (emp == null || !emp.getPassword().equals(pass)) {
             loginStatus.setText("Invalid credentials!");
             loginStatus.setStyle("-fx-text-fill: red;");
-        } else {
-            Role role = emp.getRole();
-            if (role == Role.ADMIN) {
+            return;
+        } 
+
+        switch (emp.getRole()) {
+            case ADMIN:
                 navigateToAdminPanel();
-            } else if (role == Role.CASHIER) {
-                navigateToCashierPortal();
-            } else if (role == Role.PRODUCT_MANAGER) {
+                break;
+            case PRODUCT_MANAGER:
                 navigateToProductManagerPanel();
-            } else {
+                break;
+            case CASHIER:
+                navigateToCashierPortal();
+                break;
+            default:
                 loginStatus.setText("Invalid role!");
                 loginStatus.setStyle("-fx-text-fill: red;");
-            }
-        }
+                break;
+        }    
     }
 
     private void navigateToAdminPanel() {

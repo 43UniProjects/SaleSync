@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.oop_project.DatabaseHandler.enums.UnitType;
 import org.oop_project.DatabaseHandler.models.Product;
+import org.oop_project.DatabaseHandler.operations.Operations;
 import org.oop_project.DatabaseHandler.operations.ProductOperations;
 import static org.oop_project.utils.Generate.generateProductId;
 import org.oop_project.view.helpers.ProductRow;
@@ -22,43 +23,68 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
-
-
 public class ProductController {
 
-    @FXML private TextField productIdField;
-    @FXML private TextField nameField;
-    @FXML private TextField descriptionField;
-    @FXML private ComboBox<String> unitTypeCombo;
-    @FXML private TextField familyField;
-    @FXML private TextField subFamilyField;
-    @FXML private TextField unitPriceField;
-    @FXML private TextField taxRateField;
-    @FXML private TextField discountRateField;
-    @FXML private TextField quantityField;
-    @FXML private Label statusLabel;
+    @FXML
+    private TextField productIdField;
+    @FXML
+    private TextField nameField;
+    @FXML
+    private TextField descriptionField;
+    @FXML
+    private ComboBox<String> unitTypeCombo;
+    @FXML
+    private TextField familyField;
+    @FXML
+    private TextField subFamilyField;
+    @FXML
+    private TextField unitPriceField;
+    @FXML
+    private TextField taxRateField;
+    @FXML
+    private TextField discountRateField;
+    @FXML
+    private TextField quantityField;
+    @FXML
+    private Label statusLabel;
 
-    @FXML private TextField searchField;
+    @FXML
+    private TextField searchField;
 
-    @FXML private TableView<ProductRow> productTable;
-    @FXML private TableColumn<ProductRow, String> colId;
-    @FXML private TableColumn<ProductRow, String> colName;
-    @FXML private TableColumn<ProductRow, String> colType;
-    @FXML private TableColumn<ProductRow, String> colFamily;
-    @FXML private TableColumn<ProductRow, String> colSubFamily;
-    @FXML private TableColumn<ProductRow, String> colUnitPrice;
-    @FXML private TableColumn<ProductRow, String> colTax;
-    @FXML private TableColumn<ProductRow, String> colDiscount;
-    @FXML private TableColumn<ProductRow, String> colRetail;
-    @FXML private TableColumn<ProductRow, String> colQty;
+    @FXML
+    private TableView<ProductRow> productTable;
+    @FXML
+    private TableColumn<ProductRow, String> colId;
+    @FXML
+    private TableColumn<ProductRow, String> colName;
+    @FXML
+    private TableColumn<ProductRow, String> colType;
+    @FXML
+    private TableColumn<ProductRow, String> colFamily;
+    @FXML
+    private TableColumn<ProductRow, String> colSubFamily;
+    @FXML
+    private TableColumn<ProductRow, String> colUnitPrice;
+    @FXML
+    private TableColumn<ProductRow, String> colTax;
+    @FXML
+    private TableColumn<ProductRow, String> colDiscount;
+    @FXML
+    private TableColumn<ProductRow, String> colRetail;
+    @FXML
+    private TableColumn<ProductRow, String> colQty;
 
-    private final ObservableList<ProductRow> products = FXCollections.observableArrayList();
+    private final ObservableList<ProductRow> productTableRows = FXCollections.observableArrayList();
 
-    private final static ProductOperations productManager = new ProductOperations();
+    private final static Operations<Product> productManager = new ProductOperations();
 
     @FXML
     public void initialize() {
-        unitTypeCombo.getItems().addAll("UNIT", "KILOS", "LITERS");
+
+        unitTypeCombo.getItems().addAll(
+                UnitType.UNIT.getLabel(),
+                UnitType.KILOS.getLabel(),
+                UnitType.LITERS.getLabel());
 
         colId.setCellValueFactory(new PropertyValueFactory<>("id"));
         colName.setCellValueFactory(new PropertyValueFactory<>("name"));
@@ -70,80 +96,80 @@ public class ProductController {
         colDiscount.setCellValueFactory(new PropertyValueFactory<>("discountRate"));
         colRetail.setCellValueFactory(new PropertyValueFactory<>("retailPrice"));
         colQty.setCellValueFactory(new PropertyValueFactory<>("quantity"));
-        productTable.setItems(products);
 
         // Populate form when row selected
         productTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSel, sel) -> {
-            if (sel != null) {
-                productIdField.setText(sel.getId());
-                nameField.setText(sel.getName());
-                descriptionField.setText(sel.getDescription());
-                unitTypeCombo.setValue(sel.getType());
-                familyField.setText(sel.getFamily());
-                subFamilyField.setText(sel.getSubFamily());
-                unitPriceField.setText(sel.getUnitPrice());
-                taxRateField.setText(sel.getTaxRate());
-                discountRateField.setText(sel.getDiscountRate());
-                quantityField.setText(sel.getQuantity());
-            }
+
+            if (sel == null)
+                return;
+
+            productIdField.setText(sel.getId());
+            nameField.setText(sel.getName());
+            descriptionField.setText(sel.getDescription());
+            unitTypeCombo.setValue(sel.getType());
+            familyField.setText(sel.getFamily());
+            subFamilyField.setText(sel.getSubFamily());
+            unitPriceField.setText(sel.getUnitPrice());
+            taxRateField.setText(sel.getTaxRate());
+            discountRateField.setText(sel.getDiscountRate());
+            quantityField.setText(sel.getQuantity());
+
         });
 
-        List<Product> dbProduct = productManager.getAll();
+        List<Product> productList = productManager.getAll();
 
-        products.clear();
+        productTableRows.clear();
 
-        if (dbProduct != null) {
+        productTableRows.addAll(productList.stream().map(Product::mapProductRow).toList());
 
-            for (Product prod : dbProduct) {
-                
-                products.add(new ProductRow(
-                        prod.getId(),
-                        prod.getName(),
-                        prod.getDescription(),
-                        prod.getProductType().name(),
-                        prod.getFamily(),
-                        prod.getSubFamily(),
-                        prod.getUnitPrice(),
-                        prod.getTaxRate(),
-                        prod.getDiscountRate(),
-                        calcRetail(prod.getUnitPrice(), prod.getTaxRate(), prod.getDiscountRate()),
-                        prod.getStockQuantity()
-                ));
-            }
+        productTable.setItems(productTableRows);
 
-            productTable.setItems(products);
-        }
     }
 
     @FXML
     protected void addProduct() {
 
-        String id = generateProductId(productManager, safe(familyField), safe(subFamilyField));
-
-        // checks whether all fields are filled to prevent exceptions
-        if(safe(nameField).isEmpty() || safe(descriptionField).isEmpty() || safe(unitPriceField).isEmpty() || safe(quantityField).isEmpty() || safe(taxRateField).isEmpty() || safe(discountRateField).isEmpty() || unitTypeCombo.getValue() == null || safe(familyField).isEmpty() || safe(subFamilyField).isEmpty()) {
-            status("Please fill in all required fields!", false);
-            return;
-        }
-        
         String name = safe(nameField);
         String desc = safe(descriptionField);
         String type = unitTypeCombo.getValue() != null ? unitTypeCombo.getValue() : "";
         String family = safe(familyField);
         String subFamily = safe(subFamilyField);
         double unitPrice = parseDouble(unitPriceField);
+        String unitType = unitTypeCombo.getValue();
         double tax = parseDouble(taxRateField);
         double discount = parseDouble(discountRateField);
         double qty = parseDouble(quantityField);
-        double retail = calcRetail(unitPrice, tax, discount);
 
-        Product product = new Product(id, name, desc, UnitType.valueOf(type), family, subFamily, unitPrice, tax, discount, qty);
+        String id = generateProductId(productManager, family, subFamily);
+
+        // checks whether all fields are filled to prevent exceptions
+
+
+        if (unitPrice <= 0) {
+            status("Invalid Unit Price", false);
+            return;
+        }
+
+        if (qty <= 0) {
+            status("Invalid Quantity", false);
+            return;
+        }
+
+        if (name.isEmpty() || desc.isEmpty() || unitType == null || family.isEmpty() || subFamily.isEmpty()) {
+            status("Please fill in all required fields!", false);
+            return;
+        }
+
+        Product product = new Product(
+            id, name, desc, UnitType.valueOf(type), family, subFamily, unitPrice, tax, discount, qty
+        );
+
         productManager.add(product);
 
-        products.add(new ProductRow(id, name, desc, type, family, subFamily, unitPrice, tax, discount, retail, qty));
-
+        productTableRows.add(Product.mapProductRow(product));
 
         status("Product added!", true);
+
         clearFields();
     }
 
@@ -151,7 +177,12 @@ public class ProductController {
     protected void updateProduct() {
 
         ProductRow sel = productTable.getSelectionModel().getSelectedItem();
-        if (sel == null) { status("Select a row to update", false); return; }
+
+        if (sel == null) {
+            status("Select a row to update", false);
+            return;
+        }
+
         sel.setName(safe(nameField));
         sel.setDescription(safe(descriptionField));
         sel.setType(unitTypeCombo.getValue() != null ? unitTypeCombo.getValue() : "");
@@ -165,7 +196,9 @@ public class ProductController {
         sel.setDiscountRate(discount);
         sel.setRetailPrice(calcRetail(unitPrice, tax, discount));
         sel.setQuantity(parseDouble(quantityField));
+        
         productTable.refresh();
+
         status("Product updated!", true);
     }
 
@@ -173,11 +206,13 @@ public class ProductController {
     protected void removeProduct() {
 
         ProductRow sel = productTable.getSelectionModel().getSelectedItem();
-        if (sel == null) { status("Select a row to remove", false); return; }
 
+        if (sel == null) {
+            status("Select a row to remove", false);
+            return;
+        }
         productManager.delete(sel.getId());
-
-        products.remove(sel);
+        productTableRows.remove(sel);
         status("Product removed!", true);
         clearFields();
     }
@@ -203,22 +238,23 @@ public class ProductController {
 
         String query = safe(searchField).toLowerCase();
         if (query.isEmpty()) {
-            productTable.setItems(products);
+            productTable.setItems(productTableRows);
             return;
         }
         // Implement search filtering logic here
-        ObservableList<ProductRow> filtered = products.filtered(p -> p.getName().toLowerCase().contains(query) || 
-                                                                p.getId().toLowerCase().contains(query) ||
-                                                                p.getFamily().toLowerCase().contains(query) ||
-                                                                p.getSubFamily().toLowerCase().contains(query));
-        productTable.setItems(filtered);    
+        ObservableList<ProductRow> filtered = productTableRows
+                .filtered(p -> p.getName().toLowerCase().contains(query) ||
+                        p.getId().toLowerCase().contains(query) ||
+                        p.getFamily().toLowerCase().contains(query) ||
+                        p.getSubFamily().toLowerCase().contains(query));
+        productTable.setItems(filtered);
 
     }
 
     @FXML
     protected void resetSearch() {
         searchField.clear();
-        productTable.setItems(products);
+        productTable.setItems(productTableRows);
     }
 
     @FXML
@@ -236,7 +272,9 @@ public class ProductController {
             stage.setResizable(false);
             stage.centerOnScreen();
         } catch (IOException e) {
-            if (statusLabel != null) { statusLabel.setText("Error loading login!"); }
+            if (statusLabel != null) {
+                statusLabel.setText("Error loading login!");
+            }
         }
     }
 
@@ -247,14 +285,30 @@ public class ProductController {
         }
     }
 
-    private String safe(TextField tf) { return tf != null && tf.getText() != null ? tf.getText().trim() : ""; }
-    private double parseDouble(TextField tf) { try { return Double.parseDouble(safe(tf)); } catch (NumberFormatException e) { return 0.0; } }
-    private int parseInt(TextField tf) { try { return Integer.parseInt(safe(tf)); } catch (NumberFormatException e) { return 0; } }
+    private String safe(TextField tf) {
+        return tf != null && tf.getText() != null ? tf.getText().trim() : "";
+    }
+
+    private double parseDouble(TextField tf) {
+        try {
+            return Double.parseDouble(safe(tf));
+        } catch (NumberFormatException e) {
+            return 0.0;
+        }
+    }
+
+    private int parseInt(TextField tf) {
+        try {
+            return Integer.parseInt(safe(tf));
+        } catch (NumberFormatException e) {
+            return 0;
+        }
+    }
+
     private double calcRetail(double unitPrice, double taxRate, double discountRate) {
         double tax = unitPrice * (taxRate / 100.0);
         double discount = unitPrice * (discountRate / 100.0);
         return unitPrice + tax - discount;
     }
-
 
 }

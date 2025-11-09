@@ -7,14 +7,12 @@ import org.oop_project.view.gui;
 
 public class Main {
 
-    // initialize DB operations
-    static Operations<Employee> employeeManager = new EmployeeOperations();
-
     public static void main(String[] args) {
 
+        Operations<Employee> employeeManager = new EmployeeOperations();
+        
         gui.main(args);
 
-        // Close database connection
         employeeManager.closeConnection();
     }
 

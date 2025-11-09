@@ -1,14 +1,10 @@
 package org.oop_project.view.controllers;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import org.oop_project.DatabaseHandler.models.Product;
 import org.oop_project.DatabaseHandler.operations.ProductOperations;
@@ -34,21 +30,24 @@ public class CashierController {
             stage.setHeight(450);
             stage.setResizable(false);
             stage.centerOnScreen();
-        } catch (Exception e) {
-            // ignore for demo
-        }
+        } catch (Exception e) {}
     }
 
     @FXML
     public void showDetails() {
         String id = productManager.getLastId();
+
         Product prod = productManager.get(id);
-        String text = "ID: " + prod.getId() + "\nName: " + prod.getName() + "\nDescription: " + prod.getDescription()
-        + "\nPrice: " + prod.getUnitPrice();
-        scannedStatusField.setText(text);
+
+        String text = "Id: %s\nName: %s\nDescription: %s\nPrice: %.2f";
+        scannedStatusField.setText(text.formatted(prod.getId(), prod.getName(), prod.getDescription(), prod.getUnitPrice()));
     }
 
     public void clearField() {
         scannedStatusField.setText("Waiting product to be scanned...");
+    }
+
+    @FXML
+    private void initialize() {
     }
 }
