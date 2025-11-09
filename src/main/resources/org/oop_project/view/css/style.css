@@ -180,7 +180,7 @@
     -fx-background-color: #4c46b8;
 }
 
-#btnSubmit {
+#btnSubmit, #btnCheckout {
     background-color: #5a52d5; /* compat */
     -fx-background-color: #5a52d5;
     -fx-text-fill: white;
@@ -189,7 +189,7 @@
     -fx-cursor: hand;
 }
 
-#btnSubmit:hover {
+#btnSubmit:hover, #btnCheckout:hover {
     background-color: #4c46b8; /* compat */
     -fx-background-color: #4c46b8;
 }
@@ -293,16 +293,16 @@
 
 /* cashier portal styles */
 
-#scannedStatusField {
+#productDescArea {
     -fx-text-fill: black;
-    -fx-background-color: lavender;
-    -fx-prompt-text-fill: black;
     -fx-alignment: center;
     -fx-text-alignment: center; /* Ensures text alignment */
+    /*-fx-font-family: 'Helvetica';
     /* -fx-border-color: red;
     -fx-border-width: 2px;
     -fx-background-radius: 5; */
     -fx-border-radius: 5;
+    
 }
 
 .text-area .content {

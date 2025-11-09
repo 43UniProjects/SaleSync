@@ -2,11 +2,16 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorMain" prefHeight="602.0" prefWidth="923.0" styleClass="root-dark" stylesheets="@/org/oop_project/view/css/style.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.oop_project.view.controllers.CashierController">
+<AnchorPane id="AnchorMain" prefHeight="637.0" prefWidth="923.0" styleClass="root-dark" stylesheets="@/org/oop_project/view/css/style.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.oop_project.view.controllers.CashierController">
   <children>
     <AnchorPane id="AnchorHead" prefHeight="138.0" prefWidth="923.0" styleClass="header-dark">
       <children>
@@ -15,14 +20,91 @@
         </Label>
         <Label fx:id="subHeadAdminPanel" alignment="CENTER" layoutY="93.0" prefHeight="19.0" prefWidth="923.0" text="Manage Transactions and Billing" textAlignment="CENTER" />
       
-          <Button fx:id="btnLogout" layoutX="804.0" layoutY="23.0" onAction="#backToLogin" prefHeight="30.0" prefWidth="100.0" text="Logout" />
+          <Button fx:id="btnLogout" layoutX="804.0" layoutY="23.0" onAction="#backToLogin" prefHeight="19.0" prefWidth="100.0" text="Logout">
+              <graphic>
+                  <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@/org/oop_project/view/images/sign-out.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+          </Button>
       </children>
     </AnchorPane>
-      <TextArea fx:id="scannedStatusField" editable="false" layoutX="48.0" layoutY="170.0" onMouseClicked="#showDetails" prefHeight="374.0" prefWidth="298.0" promptText="Waiting product to be scanned...">
+      <!-- Product summary panel -->
+      <AnchorPane fx:id="detailsPane" layoutX="29.0" layoutY="205.0" prefHeight="365.0" prefWidth="366.0">
+        <children>
+          <Label layoutX="10.0" layoutY="0.0" text="Product Details">
+            <font>
+              <Font name="System Bold" size="18.0" />
+            </font>
+          </Label>
+          <Label layoutX="10.0" layoutY="40.0" text="Name:" />
+          <Label fx:id="productNameLabel" layoutX="120.0" layoutY="40.0" text="-" />
+
+          <Label layoutX="10.0" layoutY="70.0" text="Price:" />
+          <Label fx:id="productPriceLabel" layoutX="120.0" layoutY="70.0" text="-" />
+
+          <Label layoutX="10.0" layoutY="100.0" text="Available:" />
+          <Label fx:id="productQtyLabel" layoutX="120.0" layoutY="100.0" text="-" />
+
+          <Label layoutX="10.0" layoutY="130.0" text="Description:" />
+          <TextArea fx:id="productDescArea" editable="false" layoutX="10.0" layoutY="155.0" prefHeight="110.0" prefWidth="345.0" wrapText="true" />
+            <Label fx:id="statusLabel" alignment="CENTER" layoutY="279.0" prefHeight="27.0" prefWidth="366.0">
+               <font>
+                  <Font name="System Bold" size="12.800000190734863" />
+               </font>
+            </Label>
+            <TextField fx:id="amountField" layoutX="12.0" layoutY="319.0" onAction="#addProductToBill" prefHeight="30.0" prefWidth="141.0" />
+            
+            <Button fx:id="btnAdd" layoutX="163.0" layoutY="319.0" mnemonicParsing="false" onAction="#addProductToBill" prefHeight="30.0" prefWidth="90.0" text="Add">
+              <graphic>
+                <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                      <Image url="@/org/oop_project/view/images/add.png" />
+                  </image>
+                </ImageView>
+              </graphic>
+            </Button>
+            <Button fx:id="btnReset" layoutX="261.0" layoutY="319.0" mnemonicParsing="false" onAction="#clearField" prefHeight="30.0" prefWidth="90.0" text="Cancel">
+            <graphic>
+                <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                      <Image url="@/org/oop_project/view/images/trash.png" />
+                  </image>
+                </ImageView>
+            </graphic>
+            </Button>
+        </children>
+      </AnchorPane>
+      <TextField fx:id="scanInputField" layoutX="38.0" layoutY="166.0" onAction="#onScanComplete" prefHeight="27.0" prefWidth="298.0" promptText="Waiting product to be scanned..." />
+    <TableView fx:id="itemsList" layoutX="430.0" layoutY="166.0" prefHeight="331.0" prefWidth="455.0">
+      <columns>
+        <TableColumn fx:id="colNo" prefWidth="54.39996337890625" text="No" />
+        <TableColumn fx:id="colItem" prefWidth="165.60000610351562" text="Item" />
+        <TableColumn fx:id="colPrice" prefWidth="79.2000732421875" text="Price" />
+        <TableColumn fx:id="colQty" prefWidth="72.800048828125" text="Quantity" />
+        <TableColumn fx:id="colTotal" prefWidth="77.60007324218748" text="Total" />
+      </columns>
+    </TableView>
+      <Label fx:id="netTotalMsg" layoutX="430.0" layoutY="505.0" prefHeight="30.0" prefWidth="90.0" text="Net Total:">
          <font>
-            <Font name="System Bold" size="12.800000190734863" />
+            <Font name="System Bold" size="18.0" />
          </font>
-      </TextArea>
-      <Button fx:id="btnClear" layoutX="370.0" layoutY="517.0" mnemonicParsing="false" onAction="#clearField" text="Clear" />
+      </Label>
+      <Label fx:id="lblNetTotal" layoutX="520.0" layoutY="506.0" prefHeight="27.0" prefWidth="148.0" text="Rs. 0.00">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Button fx:id="btnCheckout" layoutX="784.0" layoutY="506.0" mnemonicParsing="false" onAction="#checkout" prefHeight="27.0" prefWidth="100.0" text="Checkout">
+       <graphic>
+          <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@/org/oop_project/view/images/checkout.png" />
+            </image>
+          </ImageView>
+        </graphic>
+      </Button>
   </children>
 </AnchorPane>
