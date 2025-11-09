@@ -103,6 +103,7 @@ public class CashierController implements Initializable {
             stage.setWidth(600);
             stage.setHeight(450);
             stage.setResizable(false);
+            stage.centerOnScreen();
         } catch (Exception e) {
             // ignore for demo
         }

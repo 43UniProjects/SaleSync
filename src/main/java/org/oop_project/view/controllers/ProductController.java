@@ -234,6 +234,7 @@ public class ProductController {
             stage.setWidth(600);
             stage.setHeight(450);
             stage.setResizable(false);
+            stage.centerOnScreen();
         } catch (IOException e) {
             if (statusLabel != null) { statusLabel.setText("Error loading login!"); }
         }

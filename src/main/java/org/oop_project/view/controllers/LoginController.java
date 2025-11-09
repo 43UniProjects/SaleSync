@@ -11,10 +11,11 @@ import javafx.stage.Stage;
 import org.oop_project.DatabaseHandler.enums.Role;
 import org.oop_project.DatabaseHandler.models.Employee;
 import org.oop_project.DatabaseHandler.operations.EmployeeOperations;
+import org.oop_project.DatabaseHandler.operations.Operations;
 
 public class LoginController {
 
-    static EmployeeOperations employeeManager = new EmployeeOperations();
+    static Operations<Employee> employeeManager = new EmployeeOperations();
     @FXML
     private TextField usernameField;
     @FXML
@@ -63,6 +64,7 @@ public class LoginController {
             stage.setScene(scene);
             stage.setWidth(1100);
             stage.setHeight(750);
+            stage.centerOnScreen();
             stage.setTitle("SaleSync - Admin Panel");
 
 
@@ -80,7 +82,10 @@ public class LoginController {
             Stage stage = (Stage) btnSubmit.getScene().getWindow();
             stage.setScene(scene);
             stage.setWidth(930);
-            stage.setHeight(750);
+
+            stage.setHeight(900);
+            stage.centerOnScreen();
+
             stage.setTitle("SaleSync - Cashier Portal");
         } catch (Exception e) {
             System.out.println(e.getMessage());
