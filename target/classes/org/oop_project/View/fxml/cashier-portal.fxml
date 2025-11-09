@@ -20,7 +20,7 @@
         </Label>
         <Label fx:id="subHeadAdminPanel" alignment="CENTER" layoutY="93.0" prefHeight="19.0" prefWidth="923.0" text="Manage Transactions and Billing" textAlignment="CENTER" />
       
-          <Button fx:id="btnLogout" layoutX="804.0" layoutY="23.0" onAction="#backToLogin" prefHeight="30.0" prefWidth="100.0" text="Logout">
+          <Button fx:id="btnLogout" layoutX="804.0" layoutY="23.0" onAction="#backToLogin" prefHeight="19.0" prefWidth="100.0" text="Logout">
               <graphic>
                   <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -97,6 +97,14 @@
             <Font size="18.0" />
          </font>
       </Label>
-      <Button fx:id="btnCheckout" layoutX="805.0" layoutY="506.0" mnemonicParsing="false" onAction="#checkout" prefHeight="27.0" prefWidth="79.0" text="Checkout" />
+      <Button fx:id="btnCheckout" layoutX="784.0" layoutY="506.0" mnemonicParsing="false" onAction="#checkout" prefHeight="27.0" prefWidth="100.0" text="Checkout">
+       <graphic>
+          <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@/org/oop_project/view/images/checkout.png" />
+            </image>
+          </ImageView>
+        </graphic>
+      </Button>
   </children>
 </AnchorPane>
