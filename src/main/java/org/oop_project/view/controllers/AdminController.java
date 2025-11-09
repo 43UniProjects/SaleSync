@@ -176,7 +176,7 @@ public class AdminController {
 
     @FXML
     protected void updateEmployee() {
-        if (!(employeeManager.find(safeText(usernameField)))) {
+        if ((employeeManager.find(safeText(usernameField)))) {
             statusLabel.setText("Username already exists");
             statusLabel.setStyle("-fx-text-fill: red;");
             return;
@@ -280,8 +280,8 @@ public class AdminController {
             Stage stage = (Stage) btnLogout.getScene().getWindow();
             stage.setScene(scene);
             stage.setTitle("SaleSync - Login");
-            stage.setWidth(588);
-            stage.setHeight(441);
+            stage.setWidth(600);
+            stage.setHeight(450);
             stage.setResizable(false);
         } catch (Exception e) {
             statusLabel.setText("Error loading login!");
