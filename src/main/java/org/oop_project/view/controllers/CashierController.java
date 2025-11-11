@@ -319,18 +319,18 @@ public class CashierController implements Initializable {
 
         // Build simple bill text
         StringBuilder sb = new StringBuilder();
-        sb.append("SaleSync - Bill\n");
-        sb.append("------------------------------------------------------------\n");
+        sb.append("                SaleSync - Bill\n");
+        sb.append("--------------------------------------------------------------------------\n");
         sb.append("Date: ")
           .append(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")))
           .append("\n\n");
-        sb.append(String.format("%-4s %-22s %8s %6s %10s%n", "No", "Item", "Price", "Qty", "Total"));
-        sb.append("------------------------------------------------------------\n");
+        sb.append(String.format("%-4s %-22s %8s %8s %10s%n", "No", "Item", "Price", "Qty", "Total"));
+        sb.append("--------------------------------------------------------------------------\n");
         for (BillRow r : totalProductsList) {
-            sb.append(String.format("%-4d %-22.22s %8.2f %6.2f %10.2f%n",
-                    r.getItemNo(), r.getItemName(), r.getPrice(), r.getQuantity(), r.getTotal()));
+            sb.append(String.format("%-4d %-22.22s %8.2f %8.2f %10.2f%n",
+                r.getItemNo(), r.getItemName(), r.getPrice(), r.getQuantity(), r.getTotal()));
         }
-        sb.append("------------------------------------------------------------\n");
+        sb.append("--------------------------------------------------------------------------\n");
         sb.append(String.format("%-30s %20s%n", "Subtotal:", String.format("Rs. %.2f", total)));
         sb.append(String.format("%-30s %20s%n", "Cash:", String.format("Rs. %.2f", cash)));
         sb.append(String.format("%-30s %20s%n", "Balance:", String.format("Rs. %.2f", balance)));
@@ -339,14 +339,13 @@ public class CashierController implements Initializable {
 
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/oop_project/view/fxml/checkout.fxml"));
-            Scene scene = new Scene(loader.load(), 630, 600);
+            Scene scene = new Scene(loader.load());
             String css = getClass().getResource("/org/oop_project/view/css/style.css").toExternalForm();
             scene.getStylesheets().add(css);
             Stage stage = new Stage();
             stage.setScene(scene);
             stage.setTitle("SaleSync - Checkout");
-            stage.setWidth(630);
-            stage.setHeight(600);
+            
             stage.setResizable(false);
             stage.centerOnScreen();
             
