@@ -1,5 +1,10 @@
 package org.oop_project.view.controllers;
 
+import org.oop_project.DatabaseHandler.enums.Role;
+import org.oop_project.DatabaseHandler.models.Employee;
+import org.oop_project.DatabaseHandler.operations.EmployeeOperations;
+import org.oop_project.DatabaseHandler.operations.Operations;
+
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -8,10 +13,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import org.oop_project.DatabaseHandler.enums.Role;
-import org.oop_project.DatabaseHandler.models.Employee;
-import org.oop_project.DatabaseHandler.operations.EmployeeOperations;
-import org.oop_project.DatabaseHandler.operations.Operations;
 
 public class LoginController {
 
@@ -83,7 +84,7 @@ public class LoginController {
             stage.setScene(scene);
             stage.setWidth(930);
 
-            stage.setHeight(900);
+            stage.setHeight(750);
             stage.centerOnScreen();
 
             stage.setTitle("SaleSync - Cashier Portal");
