@@ -3,6 +3,9 @@ package org.oop_project.view.controllers;
 import static org.oop_project.view.helpers.Navigators.navigateToLoginPanel;
 
 import java.net.URL;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import org.oop_project.DatabaseHandler.models.Product;
@@ -17,15 +20,16 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn; // Import URL
-import javafx.scene.control.TableView; // Import ResourceBundle
-import javafx.scene.control.TextArea;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView; // Import URL
+import javafx.scene.control.TextArea; // Import ResourceBundle
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-import java.util.ArrayList;
 
 public class CashierController implements Initializable {
    
@@ -55,6 +59,9 @@ public class CashierController implements Initializable {
     private ArrayList<BillRow> totalProductsList = new ArrayList<>(); 
     private int itemNo = 1;
     private double netTotal = 0.0;
+    @FXML private TextArea billArea;
+    @FXML private Button btnPrint;
+
 
 
     @Override
@@ -140,9 +147,11 @@ public class CashierController implements Initializable {
         productPriceLabel.setText("-");
         productQtyLabel.setText("-");
         productDescArea.setText("");
-        scanInputField.clear();
-        scanInputField.setPromptText("Waiting product to be scanned...");
-        scanInputField.requestFocus();
+        if (scanInputField != null) {
+            scanInputField.clear();
+            scanInputField.setPromptText("Waiting product to be scanned...");
+            scanInputField.requestFocus();
+        }
 
 
 
@@ -217,16 +226,17 @@ public class CashierController implements Initializable {
 
         netTotal += qty * currentPrice;
 
-        // Reset fields for next scan
-        clearField();
-        scanInputField.requestFocus();
+    // Reset fields for next scan
+    clearField();
+    if (scanInputField != null) scanInputField.requestFocus();
     }
 
 
     @FXML
     public void checkout(ActionEvent actionEvent) {
         if (totalProductsList == null || totalProductsList.isEmpty()) {
-            javafx.scene.control.Alert alert = new javafx.scene.control.Alert(javafx.scene.control.Alert.AlertType.INFORMATION, "No items to checkout.");
+            Alert alert = new Alert(Alert.AlertType.INFORMATION, "No items to checkout.");
+            alert.setTitle("Warning");
             alert.setHeaderText(null);
             alert.showAndWait();
             return;
@@ -239,11 +249,13 @@ public class CashierController implements Initializable {
         }
 
         // Ask for cash received
-        javafx.scene.control.TextInputDialog cashDialog =
-                new javafx.scene.control.TextInputDialog(String.format("%.2f", total));
-        cashDialog.setTitle("Cash Received");
-        cashDialog.setHeaderText("Enter cash amount received");
+        TextInputDialog cashDialog =
+                new TextInputDialog(String.format("%.2f", total));
+        cashDialog.setTitle("Checkout");
+        cashDialog.setHeaderText("Net total: Rs. "+ netTotal + "\nEnter cash amount received");
         cashDialog.setContentText("Cash (Rs.):");
+
+        cashDialog.setGraphic(null);
         java.util.Optional<String> result = cashDialog.showAndWait();
         if (!result.isPresent()) return;
 
@@ -251,14 +263,15 @@ public class CashierController implements Initializable {
         try {
             cash = Double.parseDouble(result.get().trim());
         } catch (NumberFormatException ex) {
-            javafx.scene.control.Alert alert = new javafx.scene.control.Alert(javafx.scene.control.Alert.AlertType.ERROR, "Invalid cash amount.");
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Invalid cash amount.");
+            alert.setTitle("Warning");
             alert.setHeaderText(null);
             alert.showAndWait();
             return;
         }
 
         if (cash < total) {
-            javafx.scene.control.Alert alert = new javafx.scene.control.Alert(javafx.scene.control.Alert.AlertType.ERROR,
+            Alert alert = new Alert(Alert.AlertType.ERROR,
                     "Insufficient cash. Required: Rs. " + String.format("%.2f", total));
             alert.setHeaderText(null);
             alert.showAndWait();
@@ -268,37 +281,49 @@ public class CashierController implements Initializable {
 
         // Build simple bill text
         StringBuilder sb = new StringBuilder();
-        sb.append("SaleSync - Bill\n");
-        sb.append("------------------------------------------------------------\n");
+        sb.append("                SaleSync - Bill\n");
+        sb.append("--------------------------------------------------------------------------\n");
         sb.append("Date: ")
-          .append(java.time.LocalDateTime.now().format(java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")))
+          .append(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")))
           .append("\n\n");
-        sb.append(String.format("%-4s %-22s %8s %6s %10s%n", "No", "Item", "Price", "Qty", "Total"));
-        sb.append("------------------------------------------------------------\n");
+        sb.append(String.format("%-4s %-22s %8s %8s %10s%n", "No", "Item", "Price", "Qty", "Total"));
+        sb.append("--------------------------------------------------------------------------\n");
         for (BillRow r : totalProductsList) {
-            sb.append(String.format("%-4d %-22.22s %8.2f %6.2f %10.2f%n",
-                    r.getItemNo(), r.getItemName(), r.getPrice(), r.getQuantity(), r.getTotal()));
+            sb.append(String.format("%-4d %-22.22s %8.2f %8.2f %10.2f%n",
+                r.getItemNo(), r.getItemName(), r.getPrice(), r.getQuantity(), r.getTotal()));
         }
-        sb.append("------------------------------------------------------------\n");
+        sb.append("--------------------------------------------------------------------------\n");
         sb.append(String.format("%-30s %20s%n", "Subtotal:", String.format("Rs. %.2f", total)));
         sb.append(String.format("%-30s %20s%n", "Cash:", String.format("Rs. %.2f", cash)));
         sb.append(String.format("%-30s %20s%n", "Balance:", String.format("Rs. %.2f", balance)));
 
         // Show minimal bill interface
-        javafx.scene.control.TextArea billArea = new javafx.scene.control.TextArea(sb.toString());
-        billArea.setEditable(false);
-        billArea.setWrapText(false);
-        billArea.setStyle("-fx-font-family: 'Consolas'; -fx-font-size: 12px;");
 
-        javafx.scene.layout.VBox root = new javafx.scene.layout.VBox(10, billArea);
-        root.setStyle("-fx-padding: 10;");
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/oop_project/view/fxml/checkout.fxml"));
+            Scene scene = new Scene(loader.load());
+            String css = getClass().getResource("/org/oop_project/view/css/style.css").toExternalForm();
+            scene.getStylesheets().add(css);
+            Stage stage = new Stage();
+            stage.setScene(scene);
+            stage.setTitle("SaleSync - Checkout");
+            
+            stage.setResizable(false);
+            stage.centerOnScreen();
+            
+            // Pass the bill text into the checkout controller before showing
+            Object ctrl = loader.getController();
+            if (ctrl instanceof org.oop_project.view.controllers.CheckoutController) {
+                ((org.oop_project.view.controllers.CheckoutController) ctrl).setBillText(sb.toString());
+            }
 
-        javafx.scene.Scene scene = new javafx.scene.Scene(root, 640, 480);
-        javafx.stage.Stage billStage = new javafx.stage.Stage();
-        billStage.setTitle("Bill");
-        billStage.setScene(scene);
-        billStage.initOwner(btnCheckout.getScene().getWindow());
-        billStage.show();
+            stage.show();
+
+            
+        } catch (Exception e) {
+            System.err.println("Error displaying bill: " + e.getMessage());
+        }
+        
 
         // Reset for next transaction
         billRows.clear();
@@ -309,7 +334,5 @@ public class CashierController implements Initializable {
         clearField();
     }
 
-    @FXML
-    private void initialize() {
-    }
+   
 }

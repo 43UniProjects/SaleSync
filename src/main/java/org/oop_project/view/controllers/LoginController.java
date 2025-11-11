@@ -1,5 +1,10 @@
 package org.oop_project.view.controllers;
 
+import org.oop_project.DatabaseHandler.enums.Role;
+import org.oop_project.DatabaseHandler.models.Employee;
+import org.oop_project.DatabaseHandler.operations.EmployeeOperations;
+import org.oop_project.DatabaseHandler.operations.Operations;
+
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;

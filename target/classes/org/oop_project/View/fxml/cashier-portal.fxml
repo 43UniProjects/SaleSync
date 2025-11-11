@@ -105,6 +105,9 @@
             </image>
           </ImageView>
         </graphic>
+         <font>
+            <Font name="System Bold" size="12.800000190734863" />
+         </font>
       </Button>
   </children>
 </AnchorPane>
