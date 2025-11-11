@@ -34,7 +34,7 @@
 
 /* heading styles */
 
-#headLogin, #headAdminPanel, #productHead  {
+#headLogin, #headAdminPanel, #productHead, #headCashierPanel  {
     -fx-text-fill: rgb(192, 192, 243);
     -fx-font-size: 36px;
 }
@@ -81,7 +81,7 @@
 }
 
 /* Admin Panel Button Styles */
-#btnAdd, #btnSearch{
+#btnAdd, #btnSearch, #btnPrint{
     background-color: #4CAF50; /* compat */
     -fx-background-color: #4CAF50;
     -fx-text-fill: white;
@@ -92,7 +92,7 @@
     -fx-graphic-text-gap: 5; /* Adjusts spacing between text and image */
 }
 
-#btnAdd:hover, #btnSearch:hover {
+#btnAdd:hover, #btnSearch:hover, #btnPrint:hover {
     background-color: #45a049; /* compat */
     -fx-background-color: #45a049;
 }
@@ -307,4 +307,17 @@
 
 .text-area .content {
     -fx-alignment: center;
+}
+
+
+/* for Checkout Portal */
+#mainAnchor {
+    background-color: #333333; /* compat */
+    -fx-background-color: #333333;
+    -fx-font-family: 'Ubuntu', 'Roboto', 'Arial', sans-serif;
+    -fx-text-fill: #e0e0e0;
+}
+
+#billArea {
+    -fx-text-fill: black;
 }
