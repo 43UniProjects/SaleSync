@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorMain" prefHeight="637.0" prefWidth="923.0" styleClass="root-dark" stylesheets="@/org/oop_project/view/css/style.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.oop_project.view.controllers.CashierController">
+<AnchorPane id="AnchorMain" prefHeight="571.0" prefWidth="915.0" styleClass="root-dark" stylesheets="@/org/oop_project/view/css/style.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.oop_project.view.controllers.CashierController">
   <children>
     <AnchorPane id="AnchorHead" prefHeight="138.0" prefWidth="923.0" styleClass="header-dark">
       <children>
@@ -20,7 +20,7 @@
         </Label>
         <Label fx:id="subHeadAdminPanel" alignment="CENTER" layoutY="93.0" prefHeight="19.0" prefWidth="923.0" text="Manage Transactions and Billing" textAlignment="CENTER" />
       
-          <Button fx:id="btnLogout" layoutX="804.0" layoutY="23.0" onAction="#backToLogin" prefHeight="19.0" prefWidth="100.0" text="Logout">
+          <Button fx:id="btnLogout" layoutX="804.0" layoutY="23.0" onAction="#backToLogin" prefHeight="30.0" prefWidth="100.0" text="Logout">
               <graphic>
                   <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
                      <image>

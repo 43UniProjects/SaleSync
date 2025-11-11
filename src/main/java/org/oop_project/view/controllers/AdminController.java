@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+
 import org.oop_project.DatabaseHandler.enums.Role;
 import org.oop_project.DatabaseHandler.models.Employee;
 import org.oop_project.DatabaseHandler.operations.Operations;
@@ -16,11 +17,12 @@ import org.oop_project.utils.Generate;
 import org.oop_project.view.helpers.EmployeeRow;
 import org.oop_project.view.helpers.Validator;
 
+import static org.oop_project.view.helpers.Navigators.navigateToLoginPanel;
+import static org.oop_project.view.helpers.Validator.safeText;
+
 import java.time.LocalDate;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Optional;
 
 public class AdminController {
 
@@ -128,7 +130,8 @@ public class AdminController {
 
         employeeTableRows.clear();
 
-        employeeTableRows.addAll(employeeList.stream().map(Employee::mapEmployeeRow).toList());
+        if(employeeList != null && !employeeList.isEmpty())
+            employeeTableRows.addAll(employeeList.stream().map(Employee::mapEmployeeRow).toList());
 
         employeeTable.setItems(employeeTableRows);
 
@@ -303,36 +306,6 @@ public class AdminController {
 
     @FXML
     protected void logout() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/oop_project/view/fxml/login.fxml"));
-            Scene scene = new Scene(loader.load());
-            // Apply dark mode stylesheet
-            try {
-                String cssPath = getClass().getResource("/org/oop_project/view/css/style.css").toExternalForm();
-                scene.getStylesheets().add(cssPath);
-            } catch (Exception e) {
-                System.out.println("Warning: style.css not found, continuing without styling.");
-            }
-            Stage stage = (Stage) btnLogout.getScene().getWindow();
-            stage.setScene(scene);
-            stage.setTitle("SaleSync - Login");
-            stage.setWidth(600);
-            stage.setHeight(450);
-            stage.setResizable(false);
-            stage.centerOnScreen();
-        } catch (Exception e) {
-            statusLabel.setText("Error loading login!");
-            statusLabel.setStyle("-fx-text-fill: red;");
-        }
+        navigateToLoginPanel((Stage) btnLogout.getScene().getWindow(), statusLabel);
     }
-
-    // Helpers
-    private String safeText(TextField tf) {
-        return tf != null && tf.getText() != null ? tf.getText().trim() : "";
-    }
-
-    private String safeText(ComboBox<String> cb) {
-        return cb != null && cb.getValue() != null ? cb.getValue().trim() : "";
-    }
-
 }

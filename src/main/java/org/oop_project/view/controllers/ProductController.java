@@ -10,6 +10,11 @@ import org.oop_project.DatabaseHandler.operations.ProductOperations;
 import static org.oop_project.utils.Generate.generateProductId;
 import org.oop_project.view.helpers.ProductRow;
 
+import static org.oop_project.view.helpers.Navigators.navigateToLoginPanel;
+import static org.oop_project.view.helpers.Validator.safeText;
+
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -120,20 +125,41 @@ public class ProductController {
 
         productTableRows.clear();
 
-        productTableRows.addAll(productList.stream().map(Product::mapProductRow).toList());
+        if (productList != null && !productList.isEmpty())
+            productTableRows.addAll(productList.stream().map(Product::mapProductRow).toList());
 
         productTable.setItems(productTableRows);
+
+         searchField.textProperty().addListener(new ChangeListener<String>() {
+        @Override
+        public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+            String query = newValue.toLowerCase();
+            ObservableList<ProductRow> filtered = productTableRows
+                    .filtered(row -> {
+
+                        boolean queryContainsName = row.getName().toLowerCase().contains(query);
+                        boolean queryContainsId = row.getId().toLowerCase().contains(query);
+                        boolean queryContainsFamily = row.getFamily().toLowerCase().contains(query);
+                        boolean queryContainsSubFamily = row.getSubFamily().toLowerCase().contains(query);
+
+                        return queryContainsName || queryContainsId || queryContainsFamily || queryContainsSubFamily;
+
+                    });
+
+            productTable.setItems(filtered);
+        }
+    });
 
     }
 
     @FXML
     protected void addProduct() {
 
-        String name = safe(nameField);
-        String desc = safe(descriptionField);
+        String name = safeText(nameField);
+        String desc = safeText(descriptionField);
         String type = unitTypeCombo.getValue() != null ? unitTypeCombo.getValue() : "";
-        String family = safe(familyField);
-        String subFamily = safe(subFamilyField);
+        String family = safeText(familyField);
+        String subFamily = safeText(subFamilyField);
         double unitPrice = parseDouble(unitPriceField);
         String unitType = unitTypeCombo.getValue();
         double tax = parseDouble(taxRateField);
@@ -143,7 +169,6 @@ public class ProductController {
         String id = generateProductId(productManager, family, subFamily);
 
         // checks whether all fields are filled to prevent exceptions
-
 
         if (unitPrice <= 0) {
             status("Invalid Unit Price", false);
@@ -161,8 +186,7 @@ public class ProductController {
         }
 
         Product product = new Product(
-            id, name, desc, UnitType.valueOf(type), family, subFamily, unitPrice, tax, discount, qty
-        );
+                id, name, desc, UnitType.valueOf(type), family, subFamily, unitPrice, tax, discount, qty);
 
         productManager.add(product);
 
@@ -183,11 +207,11 @@ public class ProductController {
             return;
         }
 
-        sel.setName(safe(nameField));
-        sel.setDescription(safe(descriptionField));
+        sel.setName(safeText(nameField));
+        sel.setDescription(safeText(descriptionField));
         sel.setType(unitTypeCombo.getValue() != null ? unitTypeCombo.getValue() : "");
-        sel.setFamily(safe(familyField));
-        sel.setSubFamily(safe(subFamilyField));
+        sel.setFamily(safeText(familyField));
+        sel.setSubFamily(safeText(subFamilyField));
         double unitPrice = parseDouble(unitPriceField);
         double tax = parseDouble(taxRateField);
         double discount = parseDouble(discountRateField);
@@ -196,7 +220,7 @@ public class ProductController {
         sel.setDiscountRate(discount);
         sel.setRetailPrice(calcRetail(unitPrice, tax, discount));
         sel.setQuantity(parseDouble(quantityField));
-        
+
         productTable.refresh();
 
         status("Product updated!", true);
@@ -232,24 +256,6 @@ public class ProductController {
         productTable.getSelectionModel().clearSelection();
     }
 
-    @FXML
-    protected void searchProduct() {
-        // Search done through filtering the table observable list
-
-        String query = safe(searchField).toLowerCase();
-        if (query.isEmpty()) {
-            productTable.setItems(productTableRows);
-            return;
-        }
-        // Implement search filtering logic here
-        ObservableList<ProductRow> filtered = productTableRows
-                .filtered(p -> p.getName().toLowerCase().contains(query) ||
-                        p.getId().toLowerCase().contains(query) ||
-                        p.getFamily().toLowerCase().contains(query) ||
-                        p.getSubFamily().toLowerCase().contains(query));
-        productTable.setItems(filtered);
-
-    }
 
     @FXML
     protected void resetSearch() {
@@ -259,23 +265,7 @@ public class ProductController {
 
     @FXML
     protected void backToLogin() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/oop_project/view/fxml/login.fxml"));
-            Scene scene = new Scene(loader.load(), 600, 450);
-            String css = getClass().getResource("/org/oop_project/view/css/style.css").toExternalForm();
-            scene.getStylesheets().add(css);
-            Stage stage = (Stage) productTable.getScene().getWindow();
-            stage.setScene(scene);
-            stage.setTitle("SaleSync - Login");
-            stage.setWidth(600);
-            stage.setHeight(450);
-            stage.setResizable(false);
-            stage.centerOnScreen();
-        } catch (IOException e) {
-            if (statusLabel != null) {
-                statusLabel.setText("Error loading login!");
-            }
-        }
+        navigateToLoginPanel((Stage) productTable.getScene().getWindow(), statusLabel);
     }
 
     private void status(String msg, boolean ok) {
@@ -285,13 +275,9 @@ public class ProductController {
         }
     }
 
-    private String safe(TextField tf) {
-        return tf != null && tf.getText() != null ? tf.getText().trim() : "";
-    }
-
     private double parseDouble(TextField tf) {
         try {
-            return Double.parseDouble(safe(tf));
+            return Double.parseDouble(safeText(tf));
         } catch (NumberFormatException e) {
             return 0.0;
         }
@@ -299,7 +285,7 @@ public class ProductController {
 
     private int parseInt(TextField tf) {
         try {
-            return Integer.parseInt(safe(tf));
+            return Integer.parseInt(safeText(tf));
         } catch (NumberFormatException e) {
             return 0;
         }
