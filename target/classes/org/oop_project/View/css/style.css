@@ -34,9 +34,15 @@
 
 /* heading styles */
 
-#headLogin, #headAdminPanel, #productHead, #headCashierPanel  {
+#headLogin, #headAdminPanel, #productHead  {
     -fx-text-fill: rgb(192, 192, 243);
     -fx-font-size: 36px;
+}
+
+#headCashierPanel {
+    -fx-text-fill: rgb(192, 192, 243);
+    -fx-font-size: 30px;
+
 }
 
 #subHeadLogin, #subHeadAdminPanel, #productSubHead  {

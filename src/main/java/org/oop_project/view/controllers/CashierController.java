@@ -290,7 +290,7 @@ public class CashierController implements Initializable {
         TextInputDialog cashDialog =
                 new TextInputDialog(String.format("%.2f", total));
         cashDialog.setTitle("Checkout");
-        cashDialog.setHeaderText("Net total: Rs. "+ netTotal + "\nEnter cash amount received");
+        cashDialog.setHeaderText(String.format("Total amount due: Rs. %.2f", total));
         cashDialog.setContentText("Cash (Rs.):");
 
         cashDialog.setGraphic(null);
