@@ -184,7 +184,7 @@ SaleSync/
 ## UI
 
 
-**Login Panel** 
+<p align="center">**Login Panel** </p>
 
 
 <img width="744" height="553" align="center" alt="login-panel" src="https://github.com/user-attachments/assets/85eaac3a-6954-4cc3-966d-bc524e6764d5" />
