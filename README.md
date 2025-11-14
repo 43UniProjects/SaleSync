@@ -77,6 +77,7 @@ Before running the application, ensure you have the following installed:
 | :--- | :--- |
 | ☕ **Java JDK** | Version 17 or higher. |
 | 📦 **Maven** | Version 3.6+ for building and dependency management. |
+| 🤖 **Mongock** | Version 5.5+ for managing database |
 | 🗄️ **MongoDB** | Running locally or accessible via a connection string. |
 
 > **Note**: If your installed JDK version differs from the project's default, update the `<source>` and `<target>` values in the `maven-compiler-plugin` section of `pom.xml`.
