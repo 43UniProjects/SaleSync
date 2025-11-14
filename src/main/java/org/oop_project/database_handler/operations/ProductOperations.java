@@ -1,18 +1,18 @@
-package org.oop_project.DatabaseHandler.operations;
+package org.oop_project.database_handler.operations;
 
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Sorts;
 import org.bson.Document;
 import org.bson.conversions.Bson;
-import org.oop_project.DatabaseHandler.models.Product;
+import org.oop_project.database_handler.models.Product;
+
+import static org.oop_project.database_handler.DatabaseConnectionManager.PRODUCT_COLLECTION_NAME;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import static org.oop_project.DatabaseHandler.DatabaseConnectionManager.PRODUCT_COLLECTION_NAME;
 
 
 public class ProductOperations implements Operations<Product> {

@@ -1,8 +1,8 @@
-package org.oop_project.DatabaseHandler.models;
+package org.oop_project.database_handler.models;
 
 import org.bson.codecs.pojo.annotations.BsonId;
 import org.bson.codecs.pojo.annotations.BsonProperty;
-import org.oop_project.DatabaseHandler.enums.Role;
+import org.oop_project.database_handler.enums.Role;
 import org.oop_project.view.helpers.EmployeeRow;
 
 import java.time.LocalDate;

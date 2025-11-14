@@ -55,6 +55,7 @@ public class Navigators {
 
             stage.setTitle("SaleSync - Cashier Portal");
         } catch (Exception e) {
+            e.printStackTrace();
             label.setText("Error loading cashier portal!");
             label.setStyle("-fx-text-fill: red;");
         }

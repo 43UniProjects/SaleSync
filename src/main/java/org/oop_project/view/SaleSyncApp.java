@@ -12,30 +12,27 @@ public class SaleSyncApp extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/oop_project/view/fxml/login.fxml"));
-
-        Scene scene = new Scene(fxmlLoader.load());
 
         try {
+            FXMLLoader fxmlLoader = new FXMLLoader(
+                    SaleSyncApp.class.getResource("/org/oop_project/view/fxml/login.fxml"));
+
+            Scene scene = new Scene(fxmlLoader.load());
             String cssPath = getClass().getResource("/org/oop_project/view/css/style.css").toExternalForm();
             scene.getStylesheets().add(cssPath);
-        } catch (NullPointerException e) {
-            System.out.println("Warning: style.css not found, continuing without styling.");
-        }
 
-        try {
             Image icon = new Image(getClass().getResourceAsStream("/org/oop_project/view/images/icon.png"));
             stage.getIcons().add(icon);
+
+            stage.setTitle("SaleSync");
+            stage.setResizable(false);
+            stage.centerOnScreen();
+
+            stage.setScene(scene);
+            stage.show();
         } catch (Exception e) {
-            System.out.println("Warning: icon.png not found, continuing without icon.");
+            e.printStackTrace();
         }
-
-        stage.setTitle("SaleSync");
-        stage.setResizable(false);
-        stage.centerOnScreen();
-
-        stage.setScene(scene);
-        stage.show();
     }
 
     public static void run(String[] args) {

@@ -3,19 +3,16 @@ package org.oop_project.view.controllers;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
-import org.oop_project.DatabaseHandler.enums.Role;
-import org.oop_project.DatabaseHandler.models.Employee;
-import org.oop_project.DatabaseHandler.operations.Operations;
-import org.oop_project.DatabaseHandler.operations.EmployeeOperations;
+import org.oop_project.database_handler.enums.Role;
+import org.oop_project.database_handler.models.Employee;
+import org.oop_project.database_handler.operations.EmployeeOperations;
+import org.oop_project.database_handler.operations.Operations;
 import org.oop_project.utils.Generate;
 import org.oop_project.view.helpers.EmployeeRow;
-import org.oop_project.view.helpers.Validator;
 
 import static org.oop_project.view.helpers.Navigators.navigateToLoginPanel;
 import static org.oop_project.view.helpers.Validator.safeText;
@@ -86,11 +83,11 @@ public class AdminController {
                 Role.PRODUCT_MANAGER.getLabel(),
                 Role.CASHIER.getLabel());
 
-        if (employeeTable == null)
+        if (employeeTable == null) {
             return;
+        }
 
-        // Setup table columns
-
+        // Table column setup
         colEmployeeNumber.setCellValueFactory(new PropertyValueFactory<>("employeeNumber"));
         colFirstName.setCellValueFactory(new PropertyValueFactory<>("firstName"));
         colLastName.setCellValueFactory(new PropertyValueFactory<>("lastName"));
@@ -104,8 +101,9 @@ public class AdminController {
         // When a row is selected, populate form fields
         employeeTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSel, sel) -> {
 
-            if (sel == null)
+            if (sel == null) {
                 return;
+            }
 
             try {
                 employeeNumberField.setText(String.valueOf(sel.getEmployeeNumber()));
@@ -120,7 +118,7 @@ public class AdminController {
                 String pass = employeeManager.get(sel.getUsername()).getPassword();
                 passwordField.setText(pass);
 
-            } catch (NullPointerException e) {
+            } catch (Exception e) {
                 return;
             }
 
@@ -130,8 +128,9 @@ public class AdminController {
 
         employeeTableRows.clear();
 
-        if(employeeList != null && !employeeList.isEmpty())
+        if (employeeList != null && !employeeList.isEmpty()) {
             employeeTableRows.addAll(employeeList.stream().map(Employee::mapEmployeeRow).toList());
+        }
 
         employeeTable.setItems(employeeTableRows);
 
@@ -140,34 +139,34 @@ public class AdminController {
     @FXML
     protected void addEmployee() {
 
-        String id = Generate.generateUserId(employeeManager, Role.valueOf(roleComboBox.getValue()));
-        String fn = safeText(firstNameField);
-        String ln = safeText(lastNameField);
-        String phone = safeText(phoneNumberField);
+        String newId = Generate.generateUserId(employeeManager, Role.valueOf(roleComboBox.getValue()));
+        String firstName = safeText(firstNameField);
+        String lastName = safeText(lastNameField);
+        String phoneNumber = safeText(phoneNumberField);
         String email = safeText(emailField);
-        String user = safeText(usernameField);
+        String uname = safeText(usernameField);
         String role = roleComboBox.getValue();
         LocalDate dob = dobPicker.getValue();
-        LocalDate start = startDatePicker.getValue();
+        LocalDate startDate = startDatePicker.getValue();
         String pwd = safeText(passwordField);
 
         // checks whether all fields are filled to prevent exceptions
 
-        if (fn.isEmpty() || ln.isEmpty() || phone.isEmpty() || email.isEmpty() || user.isEmpty() || role == null
-                || dob == null || start == null) {
+        if (firstName.isEmpty() || lastName.isEmpty() || phoneNumber.isEmpty() || email.isEmpty() || uname.isEmpty() || role == null
+                || dob == null || startDate == null) {
 
             statusLabel.setText("Please fill all the fileds");
             statusLabel.setStyle("-fx-text-fill: red;");
             return;
         }
 
-        if ((employeeManager.find(user))) {
+        if ((employeeManager.find(uname))) {
             statusLabel.setText("Username already exists");
             statusLabel.setStyle("-fx-text-fill: red;");
             return;
         }
 
-        Employee emp = new Employee(id, fn, ln, dob, phone, email, user, Role.valueOf(role), start);
+        Employee emp = new Employee(newId, firstName, lastName, dob, phoneNumber, email, uname, Role.valueOf(role), startDate);
         emp.setPassword(pwd);
         employeeManager.add(emp);
         employeeTableRows.add(Employee.mapEmployeeRow(emp));
@@ -182,19 +181,20 @@ public class AdminController {
     @FXML
     protected void updateEmployee() {
 
-        if(employeeTable == null) return;
+        if (employeeTable == null)
+            return;
 
-        String fn = safeText(firstNameField);
-        String ln = safeText(lastNameField);
-        String phone = safeText(phoneNumberField);
+        String firstName = safeText(firstNameField);
+        String lastName = safeText(lastNameField);
+        String phoneNumber = safeText(phoneNumberField);
         String email = safeText(emailField);
-        String user = safeText(usernameField);
+        String uname = safeText(usernameField);
         String role = safeText(roleComboBox);
         LocalDate dob = dobPicker.getValue();
-        LocalDate start = startDatePicker.getValue();
+        LocalDate startDate = startDatePicker.getValue();
         String pwd = safeText(passwordField);
 
-        if (!(employeeManager.find(user))) {
+        if (!(employeeManager.find(uname))) {
             statusLabel.setText("Username already exists");
             statusLabel.setStyle("-fx-text-fill: red;");
             return;
@@ -210,45 +210,51 @@ public class AdminController {
 
         HashMap<String, Object> updatedRecords = new HashMap<>();
 
-        if (Validator.isChanged(selectedEmployee.getFirstName(), fn)) {
-            updatedRecords.put("firstName", fn);
-            selectedEmployee.setFirstName(fn);
+        if (selectedEmployee.getFirstName().equals(firstName)){
+            updatedRecords.put("firstName", firstName);
+            selectedEmployee.setFirstName(firstName);
         }
-
-        if (Validator.isChanged(selectedEmployee.getLastName(), ln)) {
-            updatedRecords.put("lastName", ln);
-            selectedEmployee.setLastName(ln);
+        
+        if (selectedEmployee.getLastName().equals(lastName)) {
+            updatedRecords.put("lastName", lastName);
+            selectedEmployee.setLastName(lastName);
         }
-        if (Validator.isChanged(selectedEmployee.getPhone(), phone)) {
-            updatedRecords.put("phoneNumber", phone);
-            selectedEmployee.setPhone(phone);
+        
+        if (selectedEmployee.getPhone().equals(phoneNumber)) {
+            updatedRecords.put("phoneNumber", phoneNumber);
+            selectedEmployee.setPhone(phoneNumber);
         }
-        if (Validator.isChanged(selectedEmployee.getEmail(), email)) {
+        
+        if (selectedEmployee.getEmail().equals(email)) {
             updatedRecords.put("email", email);
             selectedEmployee.setEmail(email);
         }
-        if (Validator.isChanged(selectedEmployee.getUsername(), user)) {
-            updatedRecords.put("username", user);
-            selectedEmployee.setUsername(user);
+        
+        if (selectedEmployee.getUsername().equals(uname)) {
+            updatedRecords.put("username", uname);
+            selectedEmployee.setUsername(uname);
         }
-
-        if (Validator.isChanged(selectedEmployee.getRole(), role)) {
+        
+        if (selectedEmployee.getRole().equals(role)) {
             updatedRecords.put("role", role);
             selectedEmployee.setRole(role);
         }
-        if (dob != null && Validator.isChanged(selectedEmployee.getDob(), dobPicker.getValue().toString())) {
+        
+        if (dob != null && selectedEmployee.getDob().equals(dobPicker.getValue().toString())) {
             updatedRecords.put("dob", dob);
             selectedEmployee.setDob(dob);
         }
-        if (start != null && Validator.isChanged(selectedEmployee.getStartDate(), startDatePicker.getValue().toString())) {
-            updatedRecords.put("startDate", start);
-            selectedEmployee.setStartDate(start);
+        
+        if (startDate != null
+                && selectedEmployee.getStartDate().equals(startDatePicker.getValue().toString())) {
+            updatedRecords.put("startDate", startDate);
+            selectedEmployee.setStartDate(startDate);
         }
-        String prevPwd = employeeManager.get(selectedEmployee.getUsername()).getPassword();
-        if (Validator.isChanged(prevPwd, pwd)){   
-             updatedRecords.put("password", pwd);
-            }
 
+        String prevPwd = employeeManager.get(selectedEmployee.getUsername()).getPassword();
+        if (prevPwd.equals(pwd)) {
+            updatedRecords.put("password", pwd);
+        }
 
         if (updatedRecords.isEmpty()) {
             statusLabel.setText("No changes were made");
@@ -258,19 +264,17 @@ public class AdminController {
 
         employeeManager.update(selectedEmployee.getEmployeeNumber(), updatedRecords);
         employeeTable.refresh();
+
         statusLabel.setText("Employee updated!");
         statusLabel.setStyle("-fx-text-fill: green;");
 
-        // clearing employee form data fields
         clearFields();
-
     }
 
     @FXML
     protected void deleteEmployee() {
 
-        if (employeeTable == null)
-            return;
+        if (employeeTable == null){return;}
 
         EmployeeRow selectedEmployee = employeeTable.getSelectionModel().getSelectedItem();
 
@@ -282,9 +286,12 @@ public class AdminController {
         employeeTableRows.remove(selectedEmployee);
 
         String username = safeText(usernameField);
+        
         employeeManager.delete(username);
+        
         statusLabel.setText("Employee deleted!");
         statusLabel.setStyle("-fx-text-fill: green;");
+
         clearFields();
 
     }

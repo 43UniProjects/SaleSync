@@ -1,4 +1,4 @@
-package org.oop_project.DatabaseHandler.models;
+package org.oop_project.database_handler.models;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -6,7 +6,7 @@ import java.util.HashMap;
 import org.bson.codecs.pojo.annotations.BsonId;
 import org.bson.codecs.pojo.annotations.BsonProperty;
 import org.bson.types.ObjectId;
-import org.oop_project.DatabaseHandler.enums.UnitType;
+import org.oop_project.database_handler.enums.UnitType;
 import org.oop_project.view.helpers.ProductRow;
 
 /*

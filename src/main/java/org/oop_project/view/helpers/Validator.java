@@ -4,10 +4,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 
 public class Validator {
-    public static boolean isChanged(String oldValue, String newValue) {
-        return !oldValue.equals(newValue);
-    }
-
+  
      public static String safeText(TextField tf) {
         return tf != null && tf.getText() != null ? tf.getText().trim() : "";
     }

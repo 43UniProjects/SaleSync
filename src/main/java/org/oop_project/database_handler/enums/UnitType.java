@@ -1,4 +1,4 @@
-package org.oop_project.DatabaseHandler.enums;
+package org.oop_project.database_handler.enums;
 
 public enum UnitType {
     UNIT("UNIT"),

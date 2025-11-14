@@ -1,15 +1,15 @@
 package org.oop_project.utils;
 
-import org.oop_project.DatabaseHandler.enums.Role;
-import org.oop_project.DatabaseHandler.models.Employee;
-import org.oop_project.DatabaseHandler.models.Product;
-import org.oop_project.DatabaseHandler.operations.EmployeeOperations;
-import org.oop_project.DatabaseHandler.operations.Operations;
-import org.oop_project.DatabaseHandler.operations.ProductOperations;
-
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Random;
+
+import org.oop_project.database_handler.enums.Role;
+import org.oop_project.database_handler.models.Employee;
+import org.oop_project.database_handler.models.Product;
+import org.oop_project.database_handler.operations.EmployeeOperations;
+import org.oop_project.database_handler.operations.Operations;
+import org.oop_project.database_handler.operations.ProductOperations;
 
 public class Generate {
 

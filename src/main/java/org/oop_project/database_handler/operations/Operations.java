@@ -1,9 +1,9 @@
-package org.oop_project.DatabaseHandler.operations;
-
-import org.oop_project.DatabaseHandler.DatabaseConnectionManager;
+package org.oop_project.database_handler.operations;
 
 import java.util.HashMap;
 import java.util.List;
+
+import org.oop_project.database_handler.DatabaseConnectionManager;
 
 /*
 * Base class for the collection operations in the database

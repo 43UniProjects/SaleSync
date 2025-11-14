@@ -1,13 +1,6 @@
 package org.oop_project.view.controllers;
 
-import org.oop_project.DatabaseHandler.enums.Role;
-import org.oop_project.DatabaseHandler.models.Employee;
-import org.oop_project.DatabaseHandler.operations.EmployeeOperations;
-import org.oop_project.DatabaseHandler.operations.Operations;
-
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -18,10 +11,10 @@ import static org.oop_project.view.helpers.Navigators.navigateToAdminPanel;
 import static org.oop_project.view.helpers.Navigators.navigateToCashierPortal;
 import static org.oop_project.view.helpers.Navigators.navigateToProductManagerPanel;
 
-import org.oop_project.DatabaseHandler.enums.Role;
-import org.oop_project.DatabaseHandler.models.Employee;
-import org.oop_project.DatabaseHandler.operations.EmployeeOperations;
-import org.oop_project.DatabaseHandler.operations.Operations;
+import org.oop_project.database_handler.models.Employee;
+import org.oop_project.database_handler.operations.EmployeeOperations;
+import org.oop_project.database_handler.operations.Operations;
+
 
 public class LoginController {
 

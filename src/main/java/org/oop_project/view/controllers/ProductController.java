@@ -1,15 +1,14 @@
 package org.oop_project.view.controllers;
 
-import java.io.IOException;
 import java.util.List;
 
-import org.oop_project.DatabaseHandler.enums.UnitType;
-import org.oop_project.DatabaseHandler.models.Product;
-import org.oop_project.DatabaseHandler.operations.Operations;
-import org.oop_project.DatabaseHandler.operations.ProductOperations;
-import static org.oop_project.utils.Generate.generateProductId;
+import org.oop_project.database_handler.enums.UnitType;
+import org.oop_project.database_handler.models.Product;
+import org.oop_project.database_handler.operations.Operations;
+import org.oop_project.database_handler.operations.ProductOperations;
 import org.oop_project.view.helpers.ProductRow;
 
+import static org.oop_project.utils.Generate.generateProductId;
 import static org.oop_project.view.helpers.Navigators.navigateToLoginPanel;
 import static org.oop_project.view.helpers.Validator.safeText;
 
@@ -18,8 +17,6 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -130,7 +127,7 @@ public class ProductController {
 
         productTable.setItems(productTableRows);
 
-         searchField.textProperty().addListener(new ChangeListener<String>() {
+        searchField.textProperty().addListener(new ChangeListener<String>() {
         @Override
         public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
             String query = newValue.toLowerCase();
