@@ -6,7 +6,7 @@
 
 This project was developed to fulfill the requirements of the **Object Oriented Programming** course module **(IIC 1153)** at the University of Sri Jayewardenepura, Faculty of Technology
 
-[Assignment Requirements](#-assignment-requirements) • [Features](#-features) • [Quick Start](#-quick-start) • [Project Structure](#-project-structure) • [UI](#-ui)
+[Assignment Requirements](#-assignment-requirements) • [Features](#-features) • [Quick Start](#-quick-start) • [Project Structure](#-project-structure) • [User Interface](#-user-interface)
 
 </div>
 
@@ -181,7 +181,7 @@ SaleSync/
                         └── 📁 images/                  # Image assets (filenames omitted)
 ```
 
-## UI
+## User Interface
 
 <br/>
 <br/>
