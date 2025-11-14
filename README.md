@@ -9,7 +9,10 @@ This project was developed to fulfill the requirements of the **Object Oriented 
 [Assignment Requirements](#-assignment-requirements) • [Features](#-features) • [Quick Start](#-quick-start) • [Project Structure](#-project-structure) • [User Interface](#-user-interface)
 
 </div>
-
+```
+### Pronunciation
+**SaleSync** — “sales sync”  
+Phonetic: **/seɪlz sɪŋk/**
 ---
 
 ## 🎯 Overview
@@ -223,8 +226,7 @@ SaleSync/
 
 <img width="744" height="553" align="center" alt="cashier-portal" src="https://github.com/user-attachments/assets/759bf579-941e-40cf-af8b-2cc53d649a58" />
 
-
-
+```
 
 ### 💻 Usage
 
@@ -243,7 +245,7 @@ As a collaborative group assignment, effective use of Git and GitHub is mandator
 Follow these steps to ensure proper Version Control System (VCS) usage:
 
 Work on a Feature Branch: Create a new branch for each task to isolate changes and allow for merging demonstrations.
-
+```
 ```Bash
 git checkout -b feature/implement-login
 ```
