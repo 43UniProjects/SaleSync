@@ -10,7 +10,7 @@ This project was developed to fulfill the requirements of the **Object Oriented 
 
 </div>
 
-### Pronunciation
+## 💁‍♂️ Pronunciation
 
 **SaleSync** — “sales sync”  
 Phonetic: **/seɪlz sɪŋk/**
