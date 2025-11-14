@@ -1,47 +1,52 @@
 package org.oop_project.view.helpers;
 
-
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
-import org.oop_project.database_handler.models.Admin;
-import org.oop_project.database_handler.models.Cashier;
 import org.oop_project.database_handler.models.Employee;
-import org.oop_project.database_handler.models.ProductManager;
+import org.oop_project.view.SaleSyncApp;
 import org.oop_project.view.controllers.AdminController;
 import org.oop_project.view.controllers.CashierController;
-import org.oop_project.view.controllers.LoginController;
 import org.oop_project.view.controllers.ProductController;
 
 public class Navigators {
 
     public static void navigateToLoginPanel(Stage stage, Label label) {
         try {
-            FXMLLoader loader = new FXMLLoader(Navigators.class.getResource("/org/oop_project/view/fxml/login.fxml"));
-            Scene scene = new Scene(loader.load());
-            // Apply dark mode stylesheet
-            try {
-                String cssPath = Navigators.class.getResource("/org/oop_project/view/css/style.css").toExternalForm();
-                scene.getStylesheets().add(cssPath);
-            } catch (Exception e) {
-                System.out.println("Warning: style.css not found, continuing without styling.");
-            }
+            FXMLLoader fxmlLoader = new FXMLLoader(
+                    SaleSyncApp.class.getResource("/org/oop_project/view/fxml/login.fxml"));
 
-            stage.setScene(scene);
+            Scene scene = new Scene(fxmlLoader.load());
+            String cssPath = Navigators.class.getResource("/org/oop_project/view/css/style.css").toExternalForm();
+            scene.getStylesheets().add(cssPath);
+
+            Image icon = new Image(Navigators.class.getResourceAsStream("/org/oop_project/view/images/icon.png"));
+            stage.getIcons().add(icon);
+
             stage.setTitle("SaleSync - Login");
             stage.setResizable(false);
             stage.centerOnScreen();
+
+            stage.setScene(scene);
+            stage.show();
         } catch (Exception e) {
-            label.setText("Error loading login!");
-            label.setStyle("-fx-text-fill: red;");
+            if (label != null) {
+                
+                label.setText("Error loading login!");
+                label.setStyle("-fx-text-fill: red;");
+            } else {
+                e.printStackTrace();
+            }
         }
     }
 
     public static void navigateToAdminPanel(Stage stage, Label label, Employee admin) {
         try {
-            FXMLLoader loader = new FXMLLoader(Navigators.class.getResource("/org/oop_project/view/fxml/admin-panel.fxml"));
+            FXMLLoader loader = new FXMLLoader(
+                    Navigators.class.getResource("/org/oop_project/view/fxml/admin-panel.fxml"));
             Scene scene = new Scene(loader.load());
             AdminController ac = loader.getController();
             ac.setAdmin(admin);
@@ -89,5 +94,4 @@ public class Navigators {
         }
     }
 
-    
 }
