@@ -188,12 +188,8 @@ SaleSync/
 ## User Interface
 
 <br/>
-<br/>
 
 **Login Panel** 
-
-<br/>
-<br/>
 
 <img width="744" height="553" align="center" alt="login-panel" src="https://github.com/user-attachments/assets/85eaac3a-6954-4cc3-966d-bc524e6764d5" />
 
@@ -202,9 +198,6 @@ SaleSync/
 
 **Admin Panel**
 
-<br/>
-<br/>
-
 <img width="744" height="553" align="center" alt="admin-panel" src="https://github.com/user-attachments/assets/598e9d37-eca7-496a-bf37-ce3d22de6850" />
 
 <br/>
@@ -212,18 +205,12 @@ SaleSync/
 
 **Inventory Manager**
 
-<br/>
-<br/>
-
 <img width="744" height="553" align="center" alt="inventory-manager" src="https://github.com/user-attachments/assets/2dd18392-29a6-4915-a75c-c37145fd7ba5" />
 
 <br/>
 <br/>
 
 **Cashier Portal**
-
-<br/>
-<br/>
 
 <img width="744" height="553" align="center" alt="cashier-portal" src="https://github.com/user-attachments/assets/759bf579-941e-40cf-af8b-2cc53d649a58" />
 
