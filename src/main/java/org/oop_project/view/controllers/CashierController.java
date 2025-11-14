@@ -1,6 +1,5 @@
 package org.oop_project.view.controllers;
 
-import static org.oop_project.view.helpers.Navigators.navigateToLoginPanel;
 
 import java.net.URL;
 import java.time.LocalDateTime;
@@ -10,10 +9,15 @@ import java.util.HashMap;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+import org.oop_project.database_handler.models.Cashier;
+import org.oop_project.database_handler.models.Employee;
 import org.oop_project.database_handler.models.Product;
 import org.oop_project.database_handler.operations.ProductOperations;
+import org.oop_project.utils.Text;
 import org.oop_project.view.helpers.BillRow;
+
 import static org.oop_project.view.helpers.Validator.safeText;
+import static org.oop_project.view.helpers.Navigators.navigateToLoginPanel;
 
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
@@ -86,6 +90,8 @@ public class CashierController implements Initializable {
     private double receivedCashAmount = 0.0;
     private double balance;
 
+    private Employee cashier;
+
     
     String TABLE_CELL_SPACE = "    ";
     int billViewLength;
@@ -115,6 +121,10 @@ public class CashierController implements Initializable {
 
         scanInputField.setPromptText("WAITING FOR SCAN..");
         Platform.runLater(() -> scanInputField.requestFocus());
+    }
+
+    public void setCashier(Employee c) {
+        cashier = c;
     }
 
     @FXML
@@ -180,8 +190,8 @@ public class CashierController implements Initializable {
 
         amountField.setVisible(true);
         amountField.requestFocus();
-        Platform.runLater(() -> scanInputField.clear());
 
+        Platform.runLater(() -> scanInputField.clear());
         Platform.runLater(() -> scanInputField.setPromptText("WAITING FOR SCAN..."));
     }
 
@@ -214,7 +224,7 @@ public class CashierController implements Initializable {
         }
 
         if (requiredQty > currentItemStockQty) {
-            statusLabel.setText("Insufficient stock available!");
+            statusLabel.setText("Insufficient stock!");
             statusLabel.setStyle("-fx-text-fill: red;");
             amountField.requestFocus();
             return;
@@ -227,11 +237,11 @@ public class CashierController implements Initializable {
                 requiredQty,
                 requiredQty * currentItemPrice);
 
-        Optional<BillRow> matchedBillRow = itemAddedBefore(newItem.getItemName());
+        Optional<BillRow> matchedPreviousBillRow = itemAddedBefore(newItem.getItemName());
 
-        if (matchedBillRow.isPresent()) {
+        if (matchedPreviousBillRow.isPresent()) {
 
-            BillRow matchedPrevItem = matchedBillRow.get();
+            BillRow matchedPrevItem = matchedPreviousBillRow.get();
 
             totalBillAmount = totalBillAmount - (matchedPrevItem.getQuantity() * matchedPrevItem.getPrice());
 
@@ -293,8 +303,6 @@ public class CashierController implements Initializable {
             return;
         }
 
-
-        // Ask for cash received
         TextInputDialog cashDialog = new TextInputDialog(String.format("%.2f", totalBillAmount));
         cashDialog.setTitle("Payment");
         cashDialog.setHeaderText("Net total: Rs. %.2f".formatted(totalBillAmount));
@@ -310,9 +318,7 @@ public class CashierController implements Initializable {
         }
 
         try {
-
             receivedCashAmount = Double.parseDouble(result.get().trim());
-
         } catch (NumberFormatException ex) {
             Alert alert = new Alert(Alert.AlertType.ERROR, "Invalid cash amount.");
             alert.setTitle("Warning");
@@ -344,7 +350,7 @@ public class CashierController implements Initializable {
 
             // Pass the bill text into the checkout controller before showing
             CheckoutController cc = (CheckoutController) loader.getController();
-            cc.setBillText(formatBill());
+            cc.setBillText(getFormattedBill());
             cc.setBillViewWidth(billViewLength * 7.5);
             
             stage.show();
@@ -362,7 +368,91 @@ public class CashierController implements Initializable {
         clearField();
     }
 
-    private HashMap<String, Integer> calculateCellWidths(String[] colNames) {
+   
+    private String getFormattedBill() {
+
+        String HEADER = "SaleSync - Bill";
+        String DATE = "DATE: %S".formatted(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
+        String CASHIER = "CASHIER: %s".formatted(Text.textCapitalize(cashier.getFirstName() + " " + cashier.getLastName()));
+        String COUNTER = "COUNTER: 01";
+        String NEW_LINE = "\n";
+        String[] tableHeaders = { "Item No", "Name", "Price", "QTY", "Total" };
+        HashMap<String, Integer> colLengths = calculateCellWidths(tableHeaders);
+        billViewLength = 0;
+        String currentSpacing;
+
+        for (int len : colLengths.values())
+            billViewLength += len;
+
+        String HRULE = "-".repeat(billViewLength);
+
+        StringBuilder tableBuilder = new StringBuilder();
+
+        tableBuilder.append(NEW_LINE + HRULE + NEW_LINE);
+        currentSpacing = " ".repeat((billViewLength - HEADER.length()) / 2);
+        tableBuilder.append(NEW_LINE + currentSpacing + HEADER + currentSpacing + NEW_LINE);
+        tableBuilder.append(NEW_LINE + HRULE + NEW_LINE);
+        tableBuilder.append(DATE + NEW_LINE);
+        tableBuilder.append(CASHIER + NEW_LINE);
+        tableBuilder.append(COUNTER);
+        tableBuilder.append(NEW_LINE + HRULE + NEW_LINE);
+
+        for (String tableHead : tableHeaders) {
+            tableBuilder.append(("%-" + colLengths.get(tableHead) + "s").formatted(tableHead));
+        }
+        
+        tableBuilder.append(NEW_LINE + HRULE + NEW_LINE);
+
+        for (BillRow item : productList) {
+
+            String itemNoStr = item.getItemNo() < 10 ? "0" + item.getItemNo() : String.valueOf(item.getItemNo());
+            String itemPriceStr = "%.2f".formatted(item.getPrice());
+            String itemQtyStr;
+
+            if (item.getQuantity() % 1 == 0) {
+                itemQtyStr = item.getQuantity() < 10 ? "0" + (int) item.getQuantity()
+                        : String.valueOf((int) item.getQuantity());
+            } else {
+                itemQtyStr = item.getQuantity() < 10 ? "0" + item.getQuantity() : String.valueOf(item.getQuantity());
+            }
+
+            String itemTotalStr = "%.2f".formatted(item.getTotal());
+
+            tableBuilder.append(("%-" + colLengths.get(tableHeaders[0]) + "s").formatted( itemNoStr));
+            tableBuilder.append(("%-" + colLengths.get(tableHeaders[1]) + "s").formatted(item.getItemName()));
+            tableBuilder.append(("%-" + colLengths.get(tableHeaders[2]) + "s").formatted(itemPriceStr));
+            tableBuilder.append(("%-" + colLengths.get(tableHeaders[3]) + "s").formatted(itemQtyStr));
+            tableBuilder.append(("%-" + colLengths.get(tableHeaders[4]) + "s").formatted(itemTotalStr));
+            
+            tableBuilder.append(NEW_LINE + HRULE + NEW_LINE);
+        }
+
+        int RIGHT_PADDING = 4;
+
+        String receivedCashAmountStr = String.valueOf("%.2f".formatted(receivedCashAmount));
+
+        System.out.println(receivedCashAmountStr);
+        System.out.println(receivedCashAmountStr.length());
+
+        String formattedTotalBillAmount = ("%" + receivedCashAmountStr.length() + ".2f").formatted(totalBillAmount);
+        String formatterReceivedCashAmount = ("%" + receivedCashAmountStr.length() + ".2f").formatted(receivedCashAmount);
+        String formattedBalance = ("%" + receivedCashAmountStr.length() + ".2f").formatted(balance);
+        
+
+        tableBuilder.append(("%" +( billViewLength - RIGHT_PADDING) + "s" + NEW_LINE).formatted("Subtotal: Rs. %s".formatted(formattedTotalBillAmount)));
+        tableBuilder.append(("%" + (billViewLength - RIGHT_PADDING) + "s" + NEW_LINE).formatted(" Payment: Rs. %s".formatted(formatterReceivedCashAmount)));
+        tableBuilder.append(("%" + (billViewLength - RIGHT_PADDING) + "s" + NEW_LINE).formatted(" Balance: Rs. %s".formatted(formattedBalance)));
+
+        
+        tableBuilder.append(HRULE + NEW_LINE);
+
+        System.out.println(tableBuilder.toString());
+
+        return tableBuilder.toString();
+
+    }
+
+     private HashMap<String, Integer> calculateCellWidths(String[] colNames) {
         int forItemNumber = colNames[0].length();
         int forItemName = colNames[1].length();
         int forItemPrice = colNames[2].length();
@@ -419,93 +509,6 @@ public class CashierController implements Initializable {
 
     }
 
-    private String formatBill() {
-
-        String HEADER = "SaleSync - Bill";
-        String DATE = "DATE: %S".formatted(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
-        String CASHIER = "CASHIER: Mr. Kamal Weerasinghe";
-        String COUNTER = "COUNTER: 01";
-        String NEW_LINE = "\n";
-        String currentSpacing;
-
-        String[] tableHeaders = { "Item No", "Name", "Price", "QTY", "Total" };
-
-        HashMap<String, Integer> colLengths = calculateCellWidths(tableHeaders);
-
-        billViewLength = 0;
-
-        for (int len : colLengths.values())
-            billViewLength += len;
-
-        String HRULE = "-".repeat(billViewLength);
-
-        StringBuilder tableBuilder = new StringBuilder();
-
-        tableBuilder.append(NEW_LINE + HRULE + NEW_LINE);
-        currentSpacing = " ".repeat((billViewLength - HEADER.length()) / 2);
-        tableBuilder.append(NEW_LINE + currentSpacing + HEADER + currentSpacing + NEW_LINE);
-        tableBuilder.append(NEW_LINE + HRULE + NEW_LINE);
-        tableBuilder.append(DATE + NEW_LINE);
-        tableBuilder.append(CASHIER + NEW_LINE);
-        tableBuilder.append(COUNTER);
-        tableBuilder.append(NEW_LINE + HRULE + NEW_LINE);
-        for (String tableHead : tableHeaders) {
-            tableBuilder.append(("%-" + colLengths.get(tableHead) + "s").formatted(tableHead));
-        }
-        tableBuilder.append(NEW_LINE + HRULE + NEW_LINE);
-
-        for (BillRow item : productList) {
-
-            String itemNoStr = item.getItemNo() < 10 ? "0" + item.getItemNo() : String.valueOf(item.getItemNo());
-            String itemPriceStr = "%.2f".formatted(item.getPrice());
-            String itemQtyStr;
-
-            if (item.getQuantity() % 1 == 0) {
-                itemQtyStr = item.getQuantity() < 10 ? "0" + (int) item.getQuantity()
-                        : String.valueOf((int) item.getQuantity());
-            } else {
-                itemQtyStr = item.getQuantity() < 10 ? "0" + item.getQuantity() : String.valueOf(item.getQuantity());
-            }
-
-            String itemTotalStr = "%.2f".formatted(item.getTotal());
-
-            tableBuilder.append(("%-" + colLengths.get(tableHeaders[0]) + "s").formatted( itemNoStr));
-
-            tableBuilder.append(("%-" + colLengths.get(tableHeaders[1]) + "s").formatted(item.getItemName()));
- ;
-            tableBuilder.append(("%-" + colLengths.get(tableHeaders[2]) + "s").formatted(itemPriceStr));
-
-            tableBuilder.append(("%-" + colLengths.get(tableHeaders[3]) + "s").formatted(itemQtyStr));
-
-            tableBuilder.append(("%-" + colLengths.get(tableHeaders[4]) + "s").formatted(itemTotalStr));
-
-            tableBuilder.append(NEW_LINE + HRULE + NEW_LINE);
-        }
-
-        int RIGHT_PADDING = 4;
-
-        String receivedCashAmountStr = String.valueOf("%.2f".formatted(receivedCashAmount));
-
-        System.out.println(receivedCashAmountStr);
-        System.out.println(receivedCashAmountStr.length());
-
-        String formattedTotalBillAmount = ("%" + receivedCashAmountStr.length() + ".2f").formatted(totalBillAmount);
-        String formatterReceivedCashAmount = ("%" + receivedCashAmountStr.length() + ".2f").formatted(receivedCashAmount);
-        String formattedBalance = ("%" + receivedCashAmountStr.length() + ".2f").formatted(balance);
-        
-
-        tableBuilder.append(("%" +( billViewLength - RIGHT_PADDING) + "s" + NEW_LINE).formatted("Subtotal: Rs. %s".formatted(formattedTotalBillAmount)));
-        tableBuilder.append(("%" + (billViewLength - RIGHT_PADDING) + "s" + NEW_LINE).formatted(" Payment: Rs. %s".formatted(formatterReceivedCashAmount)));
-        tableBuilder.append(("%" + (billViewLength - RIGHT_PADDING) + "s" + NEW_LINE).formatted(" Balance: Rs. %s".formatted(formattedBalance)));
-
-        
-        tableBuilder.append(HRULE + NEW_LINE);
-
-        System.out.println(tableBuilder.toString());
-
-        return tableBuilder.toString();
-
-    }
 
     public void clearField() {
 

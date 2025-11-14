@@ -8,6 +8,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 import org.oop_project.database_handler.enums.Role;
+import org.oop_project.database_handler.models.Admin;
 import org.oop_project.database_handler.models.Employee;
 import org.oop_project.database_handler.operations.EmployeeOperations;
 import org.oop_project.database_handler.operations.Operations;
@@ -75,6 +76,8 @@ public class AdminController {
     @FXML
     private TableColumn<EmployeeRow, String> colStartDate;
 
+    Employee admin;
+
     @FXML
     public void initialize() {
 
@@ -134,6 +137,10 @@ public class AdminController {
 
         employeeTable.setItems(employeeTableRows);
 
+    }
+
+    public void setAdmin(Employee a) {
+        admin = a;
     }
 
     @FXML

@@ -3,7 +3,9 @@ package org.oop_project.view.controllers;
 import java.util.List;
 
 import org.oop_project.database_handler.enums.UnitType;
+import org.oop_project.database_handler.models.Employee;
 import org.oop_project.database_handler.models.Product;
+import org.oop_project.database_handler.models.ProductManager;
 import org.oop_project.database_handler.operations.Operations;
 import org.oop_project.database_handler.operations.ProductOperations;
 import org.oop_project.view.helpers.ProductRow;
@@ -78,7 +80,9 @@ public class ProductController {
 
     private final ObservableList<ProductRow> productTableRows = FXCollections.observableArrayList();
 
-    private final static Operations<Product> productManager = new ProductOperations();
+    private final static Operations<Product> productOperations = new ProductOperations();
+ 
+    Employee productManager;
 
     @FXML
     public void initialize() {
@@ -118,7 +122,7 @@ public class ProductController {
 
         });
 
-        List<Product> productList = productManager.getAll();
+        List<Product> productList = productOperations.getAll();
 
         productTableRows.clear();
 
@@ -149,6 +153,10 @@ public class ProductController {
 
     }
 
+    public void setProductManager(Employee p) {
+        productManager = p;
+    }
+
     @FXML
     protected void addProduct() {
 
@@ -163,7 +171,7 @@ public class ProductController {
         double discount = parseDouble(discountRateField);
         double qty = parseDouble(quantityField);
 
-        String id = generateProductId(productManager, family, subFamily);
+        String id = generateProductId(productOperations, family, subFamily);
 
         // checks whether all fields are filled to prevent exceptions
 
@@ -185,7 +193,7 @@ public class ProductController {
         Product product = new Product(
                 id, name, desc, UnitType.valueOf(type), family, subFamily, unitPrice, tax, discount, qty);
 
-        productManager.add(product);
+        productOperations.add(product);
 
         productTableRows.add(Product.mapProductRow(product));
 
@@ -232,7 +240,7 @@ public class ProductController {
             status("Select a row to remove", false);
             return;
         }
-        productManager.delete(sel.getId());
+        productOperations.delete(sel.getId());
         productTableRows.remove(sel);
         status("Product removed!", true);
         clearFields();
