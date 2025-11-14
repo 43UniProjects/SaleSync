@@ -1,4 +1,4 @@
-package org.oop_project.DatabaseHandler.migrations;
+package org.oop_project.database_handler.migrations;
 
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;

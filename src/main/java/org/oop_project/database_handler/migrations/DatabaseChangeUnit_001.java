@@ -1,4 +1,4 @@
-package org.oop_project.DatabaseHandler.migrations;
+package org.oop_project.database_handler.migrations;
 
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.*;
@@ -6,11 +6,11 @@ import io.mongock.api.annotations.ChangeUnit;
 import io.mongock.api.annotations.Execution;
 import io.mongock.api.annotations.RollbackExecution;
 import org.bson.Document;
-import org.oop_project.DatabaseHandler.enums.Role;
+import org.oop_project.database_handler.enums.Role;
+
+import static org.oop_project.database_handler.DatabaseConnectionManager.EMPLOYEE_COLLECTION_NAME;
 
 import java.util.Arrays;
-
-import static org.oop_project.DatabaseHandler.DatabaseConnectionManager.EMPLOYEE_COLLECTION_NAME;
 
 // @ChangeUnit ensures this class runs once and its execution is recorded.
 @ChangeUnit(id = "EmployeeSetup", order = "001", author = "SaleSync")

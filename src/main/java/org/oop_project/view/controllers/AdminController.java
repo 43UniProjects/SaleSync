@@ -3,18 +3,19 @@ package org.oop_project.view.controllers;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-import org.oop_project.DatabaseHandler.enums.Role;
-import org.oop_project.DatabaseHandler.models.Employee;
-import org.oop_project.DatabaseHandler.operations.Operations;
-import org.oop_project.DatabaseHandler.operations.EmployeeOperations;
+
+import org.oop_project.database_handler.enums.Role;
+import org.oop_project.database_handler.models.Employee;
+import org.oop_project.database_handler.operations.EmployeeOperations;
+import org.oop_project.database_handler.operations.Operations;
 import org.oop_project.utils.Generate;
 import org.oop_project.view.helpers.EmployeeRow;
-import org.oop_project.view.helpers.Validator;
+
+import static org.oop_project.view.helpers.Navigators.navigateToLoginPanel;
+import static org.oop_project.view.helpers.Validator.safeText;
 
 import java.time.LocalDate;
 import java.util.HashMap;
@@ -23,8 +24,12 @@ import java.util.List;
 public class AdminController {
 
     private final static Operations<Employee> employeeManager = new EmployeeOperations();
-    // In-memory list to simulate DB (demo mode)
-    private final ObservableList<EmployeeRow> employees = FXCollections.observableArrayList();
+
+    private final ObservableList<EmployeeRow> employeeTableRows = FXCollections.observableArrayList();
+
+    @FXML
+    private TableView<EmployeeRow> employeeTable;
+
     @FXML
     private TextField employeeNumberField;
     @FXML
@@ -49,9 +54,8 @@ public class AdminController {
     private Label statusLabel;
     @FXML
     private DatePicker startDatePicker;
-    // TableView and columns
-    @FXML
-    private TableView<EmployeeRow> employeeTable;
+
+    // Table columns
     @FXML
     private TableColumn<EmployeeRow, String> colEmployeeNumber;
     @FXML
@@ -73,228 +77,242 @@ public class AdminController {
 
     @FXML
     public void initialize() {
-        roleComboBox.getItems().addAll("ADMIN", "PRODUCT_MANAGER", "CASHIER");
 
-        // Setup table columns
-        if (employeeTable != null) {
-            colEmployeeNumber.setCellValueFactory(new PropertyValueFactory<>("employeeNumber"));
-            colFirstName.setCellValueFactory(new PropertyValueFactory<>("firstName"));
-            colLastName.setCellValueFactory(new PropertyValueFactory<>("lastName"));
-            colDob.setCellValueFactory(new PropertyValueFactory<>("dob"));
-            colPhone.setCellValueFactory(new PropertyValueFactory<>("phone"));
-            colEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
-            colUsername.setCellValueFactory(new PropertyValueFactory<>("username"));
-            colRole.setCellValueFactory(new PropertyValueFactory<>("role"));
-            colStartDate.setCellValueFactory(new PropertyValueFactory<>("startDate"));
+        roleComboBox.getItems().addAll(
+                Role.ADMIN.getLabel(),
+                Role.PRODUCT_MANAGER.getLabel(),
+                Role.CASHIER.getLabel());
 
-            // When a row is selected, populate form fields
-            employeeTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSel, sel) -> {
-                if (sel != null) {
-                    if (employeeNumberField != null)
-                        employeeNumberField.setText(String.valueOf(sel.getEmployeeNumber()));
-                    if (firstNameField != null) firstNameField.setText(sel.getFirstName());
-                    if (lastNameField != null) lastNameField.setText(sel.getLastName());
-                    if (phoneNumberField != null) phoneNumberField.setText(sel.getPhone());
-                    if (emailField != null) emailField.setText(sel.getEmail());
-                    if (usernameField != null) usernameField.setText(sel.getUsername());
-                    if (roleComboBox != null) roleComboBox.setValue(sel.getRole());
-                    if (dobPicker != null) dobPicker.setValue(LocalDate.parse(sel.getDob()));
-                    if (startDatePicker != null) startDatePicker.setValue(LocalDate.parse(sel.getStartDate()));
-                    String pass = employeeManager.get(sel.getUsername()).getPassword();
-                    if (passwordField != null) passwordField.setText(pass);
-                }
-            });
+        if (employeeTable == null) {
+            return;
+        }
 
-            List<Employee> dbEmployees = employeeManager.getAll();
+        // Table column setup
+        colEmployeeNumber.setCellValueFactory(new PropertyValueFactory<>("employeeNumber"));
+        colFirstName.setCellValueFactory(new PropertyValueFactory<>("firstName"));
+        colLastName.setCellValueFactory(new PropertyValueFactory<>("lastName"));
+        colDob.setCellValueFactory(new PropertyValueFactory<>("dob"));
+        colPhone.setCellValueFactory(new PropertyValueFactory<>("phone"));
+        colEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
+        colUsername.setCellValueFactory(new PropertyValueFactory<>("username"));
+        colRole.setCellValueFactory(new PropertyValueFactory<>("role"));
+        colStartDate.setCellValueFactory(new PropertyValueFactory<>("startDate"));
 
-            // Convert database employees to EmployeeRow objects for the table
-            employees.clear();
-            for (Employee emp : dbEmployees) {
+        // When a row is selected, populate form fields
+        employeeTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSel, sel) -> {
 
-                employees.add(new EmployeeRow(
-                        emp.getId(),
-                        emp.getFirstName(),
-                        emp.getLastName(),
-                        emp.getDob() != null ? emp.getDob() : null,
-                        emp.getPhoneNumber(),
-                        emp.getEmail(),
-                        emp.getUsername(),
-                        emp.getRole().toString(),
-                        emp.getStartDate() != null ? emp.getStartDate() : null
-                ));
+            if (sel == null) {
+                return;
             }
 
-            employeeTable.setItems(employees);
+            try {
+                employeeNumberField.setText(String.valueOf(sel.getEmployeeNumber()));
+                firstNameField.setText(sel.getFirstName());
+                lastNameField.setText(sel.getLastName());
+                phoneNumberField.setText(sel.getPhone());
+                emailField.setText(sel.getEmail());
+                usernameField.setText(sel.getUsername());
+                roleComboBox.setValue(sel.getRole());
+                dobPicker.setValue(LocalDate.parse(sel.getDob()));
+                startDatePicker.setValue(LocalDate.parse(sel.getStartDate()));
+                String pass = employeeManager.get(sel.getUsername()).getPassword();
+                passwordField.setText(pass);
 
+            } catch (Exception e) {
+                return;
+            }
+
+        });
+
+        List<Employee> employeeList = employeeManager.getAll();
+
+        employeeTableRows.clear();
+
+        if (employeeList != null && !employeeList.isEmpty()) {
+            employeeTableRows.addAll(employeeList.stream().map(Employee::mapEmployeeRow).toList());
         }
+
+        employeeTable.setItems(employeeTableRows);
+
     }
 
     @FXML
     protected void addEmployee() {
 
-        String id = Generate.generateUserId(employeeManager, Role.valueOf(roleComboBox.getValue()));
+        String newId = Generate.generateUserId(employeeManager, Role.valueOf(roleComboBox.getValue()));
+        String firstName = safeText(firstNameField);
+        String lastName = safeText(lastNameField);
+        String phoneNumber = safeText(phoneNumberField);
+        String email = safeText(emailField);
+        String uname = safeText(usernameField);
+        String role = roleComboBox.getValue();
+        LocalDate dob = dobPicker.getValue();
+        LocalDate startDate = startDatePicker.getValue();
+        String pwd = safeText(passwordField);
 
         // checks whether all fields are filled to prevent exceptions
-        if (safeText(firstNameField).isEmpty() ||
-                safeText(lastNameField).isEmpty() ||
-                safeText(phoneNumberField).isEmpty() ||
-                safeText(emailField).isEmpty() ||
-                safeText(usernameField).isEmpty() ||
-                roleComboBox.getValue() == null ||
-                dobPicker.getValue() == null ||
-                startDatePicker.getValue() == null) {
+
+        if (firstName.isEmpty() || lastName.isEmpty() || phoneNumber.isEmpty() || email.isEmpty() || uname.isEmpty() || role == null
+                || dob == null || startDate == null) {
+
             statusLabel.setText("Please fill all the fileds");
             statusLabel.setStyle("-fx-text-fill: red;");
             return;
         }
 
-        String fn = safeText(firstNameField);
-        String ln = safeText(lastNameField);
-        String phone = safeText(phoneNumberField);
-        String email = safeText(emailField);
-        String user = safeText(usernameField);
-        String role = roleComboBox.getValue();
-        LocalDate dob = dobPicker.getValue();
-        LocalDate start = startDatePicker.getValue();
-
-        if (!(employeeManager.find(user))) {
-            Employee emp = new Employee(id, fn, ln, dob, phone, email, user, Role.valueOf(role), start);
-            emp.setPassword(safeText(passwordField));
-            employeeManager.add(emp);
-
-            employees.add(new EmployeeRow(id, fn, ln, dob, phone, email, user, role, start));
-            statusLabel.setText("Employee added!");
-            statusLabel.setStyle("-fx-text-fill: green;");
-            clearFields();
-        } else {
-            statusLabel.setText("Username already exists");
-            statusLabel.setStyle("-fx-text-fill: red;");
-        }
-
-
-    }
-
-
-    @FXML
-    protected void updateEmployee() {
-        if ((employeeManager.find(safeText(usernameField)))) {
+        if ((employeeManager.find(uname))) {
             statusLabel.setText("Username already exists");
             statusLabel.setStyle("-fx-text-fill: red;");
             return;
         }
 
+        Employee emp = new Employee(newId, firstName, lastName, dob, phoneNumber, email, uname, Role.valueOf(role), startDate);
+        emp.setPassword(pwd);
+        employeeManager.add(emp);
+        employeeTableRows.add(Employee.mapEmployeeRow(emp));
 
-        EmployeeRow sel = employeeTable != null ? employeeTable.getSelectionModel().getSelectedItem() : null;
-        if (sel != null) {
+        statusLabel.setText("Employee added!");
+        statusLabel.setStyle("-fx-text-fill: green;");
 
-            HashMap<String, Object> updatedRecords = new HashMap<>();
-            if(Validator.isChanged(sel.getFirstName(), safeText(firstNameField)))
-                updatedRecords.put("firstName", safeText(firstNameField));
-            if(Validator.isChanged(sel.getLastName(), safeText(lastNameField)))
-                updatedRecords.put("lastName", safeText(lastNameField));
-            if(Validator.isChanged(sel.getPhone(), safeText(phoneNumberField)))
-                updatedRecords.put("phoneNumber", safeText(phoneNumberField));
-            if(Validator.isChanged(sel.getEmail(), safeText(emailField)))
-                updatedRecords.put("email", safeText(emailField));
-            if(Validator.isChanged(sel.getUsername(), safeText(usernameField)))
-                updatedRecords.put("username", safeText(usernameField));
-            String roleComboBOxVal = roleComboBox != null && roleComboBox.getValue() != null ? roleComboBox.getValue() : "";
-            if(Validator.isChanged(sel.getRole(), roleComboBOxVal))
-                updatedRecords.put("role", roleComboBOxVal);
-            if(Validator.isChanged(sel.getDob(), dobPicker.getValue().toString()))
-                updatedRecords.put("dob", dobPicker.getValue());
-            if(Validator.isChanged(sel.getStartDate(), startDatePicker.getValue().toString()))
-                updatedRecords.put("startDate", startDatePicker.getValue());
-            if(Validator.isChanged(employeeManager.get(sel.getUsername()).getPassword(), safeText(passwordField)))
-                updatedRecords.put("password", safeText(passwordField));
+        clearFields();
 
-            if(!updatedRecords.isEmpty()) {
-                employeeManager.update(sel.getEmployeeNumber(), updatedRecords);
+    }
 
-                sel.setFirstName(safeText(firstNameField));
-                sel.setLastName(safeText(lastNameField));
-                sel.setPhone(safeText(phoneNumberField));
-                sel.setEmail(safeText(emailField));
-                sel.setUsername(safeText(usernameField));
-                sel.setRole(roleComboBox != null && roleComboBox.getValue() != null ? roleComboBox.getValue() : "");
-                sel.setDob(dobPicker != null && dobPicker.getValue() != null ? dobPicker.getValue() : null);
-                sel.setStartDate(startDatePicker != null && startDatePicker.getValue() != null ? startDatePicker.getValue() : null);
-                employeeTable.refresh();
-                statusLabel.setText("Employee updated!");
-                statusLabel.setStyle("-fx-text-fill: green;");
-                clearFields();
-            } else {
+    @FXML
+    protected void updateEmployee() {
 
-                statusLabel.setText("No changes were made");
-                statusLabel.setStyle("-fx-text-fill: blue;");
-            }
-        } else {
+        if (employeeTable == null)
+            return;
+
+        String firstName = safeText(firstNameField);
+        String lastName = safeText(lastNameField);
+        String phoneNumber = safeText(phoneNumberField);
+        String email = safeText(emailField);
+        String uname = safeText(usernameField);
+        String role = safeText(roleComboBox);
+        LocalDate dob = dobPicker.getValue();
+        LocalDate startDate = startDatePicker.getValue();
+        String pwd = safeText(passwordField);
+
+        if (!(employeeManager.find(uname))) {
+            statusLabel.setText("Username already exists");
+            statusLabel.setStyle("-fx-text-fill: red;");
+            return;
+        }
+
+        EmployeeRow selectedEmployee = employeeTable.getSelectionModel().getSelectedItem();
+
+        if (selectedEmployee == null) {
             statusLabel.setText("Select a row to update");
             statusLabel.setStyle("-fx-text-fill: orange;");
+            return;
         }
+
+        HashMap<String, Object> updatedRecords = new HashMap<>();
+
+        if (selectedEmployee.getFirstName().equals(firstName)){
+            updatedRecords.put("firstName", firstName);
+            selectedEmployee.setFirstName(firstName);
+        }
+        
+        if (selectedEmployee.getLastName().equals(lastName)) {
+            updatedRecords.put("lastName", lastName);
+            selectedEmployee.setLastName(lastName);
+        }
+        
+        if (selectedEmployee.getPhone().equals(phoneNumber)) {
+            updatedRecords.put("phoneNumber", phoneNumber);
+            selectedEmployee.setPhone(phoneNumber);
+        }
+        
+        if (selectedEmployee.getEmail().equals(email)) {
+            updatedRecords.put("email", email);
+            selectedEmployee.setEmail(email);
+        }
+        
+        if (selectedEmployee.getUsername().equals(uname)) {
+            updatedRecords.put("username", uname);
+            selectedEmployee.setUsername(uname);
+        }
+        
+        if (selectedEmployee.getRole().equals(role)) {
+            updatedRecords.put("role", role);
+            selectedEmployee.setRole(role);
+        }
+        
+        if (dob != null && selectedEmployee.getDob().equals(dobPicker.getValue().toString())) {
+            updatedRecords.put("dob", dob);
+            selectedEmployee.setDob(dob);
+        }
+        
+        if (startDate != null
+                && selectedEmployee.getStartDate().equals(startDatePicker.getValue().toString())) {
+            updatedRecords.put("startDate", startDate);
+            selectedEmployee.setStartDate(startDate);
+        }
+
+        String prevPwd = employeeManager.get(selectedEmployee.getUsername()).getPassword();
+        if (prevPwd.equals(pwd)) {
+            updatedRecords.put("password", pwd);
+        }
+
+        if (updatedRecords.isEmpty()) {
+            statusLabel.setText("No changes were made");
+            statusLabel.setStyle("-fx-text-fill: blue;");
+            return;
+        }
+
+        employeeManager.update(selectedEmployee.getEmployeeNumber(), updatedRecords);
+        employeeTable.refresh();
+
+        statusLabel.setText("Employee updated!");
+        statusLabel.setStyle("-fx-text-fill: green;");
+
+        clearFields();
     }
 
     @FXML
     protected void deleteEmployee() {
 
-        EmployeeRow sel = employeeTable != null ? employeeTable.getSelectionModel().getSelectedItem() : null;
-        if (sel != null) {
-            employees.remove(sel);
-            String username = safeText(usernameField);
-            employeeManager.delete(username);
-            statusLabel.setText("Employee deleted!");
-            statusLabel.setStyle("-fx-text-fill: green;");
-            clearFields();
-        } else {
+        if (employeeTable == null){return;}
+
+        EmployeeRow selectedEmployee = employeeTable.getSelectionModel().getSelectedItem();
+
+        if (selectedEmployee == null) {
             statusLabel.setText("Select a row to delete");
             statusLabel.setStyle("-fx-text-fill: orange;");
         }
+
+        employeeTableRows.remove(selectedEmployee);
+
+        String username = safeText(usernameField);
+        
+        employeeManager.delete(username);
+        
+        statusLabel.setText("Employee deleted!");
+        statusLabel.setStyle("-fx-text-fill: green;");
+
+        clearFields();
+
     }
 
     @FXML
     protected void clearFields() {
-        if (employeeNumberField != null) employeeNumberField.clear();
-        if (firstNameField != null) firstNameField.clear();
-        if (lastNameField != null) lastNameField.clear();
-        if (dobPicker != null) dobPicker.setValue(null);
-        if (startDatePicker != null) startDatePicker.setValue(null);
-        if (phoneNumberField != null) phoneNumberField.clear();
-        if (emailField != null) emailField.clear();
-        if (usernameField != null) usernameField.clear();
-        if (passwordField != null) passwordField.clear();
-        if (roleComboBox != null) roleComboBox.setValue(null);
-        if (statusLabel != null) statusLabel.setText("");
+        employeeNumberField.clear();
+        firstNameField.clear();
+        lastNameField.clear();
+        dobPicker.setValue(null);
+        startDatePicker.setValue(null);
+        phoneNumberField.clear();
+        emailField.clear();
+        usernameField.clear();
+        passwordField.clear();
+        roleComboBox.setValue(null);
+        statusLabel.setText("");
     }
 
     @FXML
     protected void logout() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/oop_project/view/fxml/login.fxml"));
-            Scene scene = new Scene(loader.load());
-            // Apply dark mode stylesheet
-            try {
-                String cssPath = getClass().getResource("/org/oop_project/view/css/style.css").toExternalForm();
-                scene.getStylesheets().add(cssPath);
-            } catch (Exception e) {
-                System.out.println("Warning: style.css not found, continuing without styling.");
-            }
-            Stage stage = (Stage) btnLogout.getScene().getWindow();
-            stage.setScene(scene);
-            stage.setTitle("SaleSync - Login");
-            stage.setWidth(600);
-            stage.setHeight(450);
-            stage.setResizable(false);
-            stage.centerOnScreen();
-        } catch (Exception e) {
-            statusLabel.setText("Error loading login!");
-            statusLabel.setStyle("-fx-text-fill: red;");
-        }
+        navigateToLoginPanel((Stage) btnLogout.getScene().getWindow(), statusLabel);
     }
-
-    // Helpers
-    private String safeText(TextField tf) {
-        return tf != null && tf.getText() != null ? tf.getText().trim() : "";
-    }
-
-
 }

@@ -1,4 +1,4 @@
-package org.oop_project.DatabaseHandler.migrations;
+package org.oop_project.database_handler.migrations;
 
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.*;
@@ -7,9 +7,9 @@ import io.mongock.api.annotations.Execution;
 import io.mongock.api.annotations.RollbackExecution;
 import org.bson.Document;
 
-import java.util.Arrays;
+import static org.oop_project.database_handler.DatabaseConnectionManager.ITEM_FAMILY_COLLECTION_NAME;
 
-import static org.oop_project.DatabaseHandler.DatabaseConnectionManager.ITEM_FAMILY_COLLECTION_NAME;
+import java.util.Arrays;
 
 // @ChangeUnit ensures this class runs once and its execution is recorded.
 @ChangeUnit(id = "ItemFamilySetup", order = "004", author = "SaleSync")

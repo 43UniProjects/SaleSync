@@ -1,4 +1,4 @@
-package org.oop_project.DatabaseHandler;
+package org.oop_project.database_handler;
 
 import com.mongodb.ConnectionString;
 import com.mongodb.MongoClientSettings;

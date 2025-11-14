@@ -1,17 +1,17 @@
-package org.oop_project.DatabaseHandler.models;
-
-import org.oop_project.DatabaseHandler.enums.Role;
+package org.oop_project.database_handler.models;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-class ProductManager extends Employee {
+import org.oop_project.database_handler.enums.Role;
 
-    private BigDecimal salary = BigDecimal.valueOf(55_000.00);
-    private BigDecimal otRate = BigDecimal.valueOf(0.25);
-    private int dayOffsPerMonth = 13;
 
-    public ProductManager(String userId, String firstName, String lastName, LocalDate dob, String phoneNumber, String email, String username, Role role, LocalDate startDate) {
+class Cashier extends Employee {
+    private BigDecimal salary = BigDecimal.valueOf(35_000.00);
+    private BigDecimal otRate = BigDecimal.valueOf(0.15);
+    private int dayOffsPerMonth = 15;
+
+    public Cashier(String userId, String firstName, String lastName, LocalDate dob, String phoneNumber, String email, String username, Role role, LocalDate startDate) {
         super(userId, firstName, lastName, dob, phoneNumber, email, username, role, startDate);
 
     }
@@ -39,7 +39,6 @@ class ProductManager extends Employee {
     public void setDayOffsPerMonth(int dayOffsPerMonth) {
         this.dayOffsPerMonth = dayOffsPerMonth;
     }
-
 
 
 }

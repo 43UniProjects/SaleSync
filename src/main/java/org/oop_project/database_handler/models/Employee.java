@@ -1,8 +1,9 @@
-package org.oop_project.DatabaseHandler.models;
+package org.oop_project.database_handler.models;
 
 import org.bson.codecs.pojo.annotations.BsonId;
 import org.bson.codecs.pojo.annotations.BsonProperty;
-import org.oop_project.DatabaseHandler.enums.Role;
+import org.oop_project.database_handler.enums.Role;
+import org.oop_project.view.helpers.EmployeeRow;
 
 import java.time.LocalDate;
 
@@ -37,7 +38,8 @@ public class Employee {
         // left empty intentionally
     }
 
-    public Employee(String userId, String firstName, String lastName, LocalDate dob, String phoneNumber, String email, String username, Role role, LocalDate startDate) {
+    public Employee(String userId, String firstName, String lastName, LocalDate dob, String phoneNumber, String email,
+            String username, Role role, LocalDate startDate) {
         this.id = userId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -48,7 +50,6 @@ public class Employee {
         this.role = role;
         this.startDate = startDate;
     }
-
 
     public void setId(String id) {
         this.id = id;
@@ -104,7 +105,7 @@ public class Employee {
 
     public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
-    }   
+    }
 
     public String getUsername() {
         return this.username;
@@ -130,5 +131,17 @@ public class Employee {
         this.role = role;
     }
 
+    public static EmployeeRow mapEmployeeRow(Employee emp) {
+        return new EmployeeRow(
+                emp.getId(),
+                emp.getFirstName(),
+                emp.getLastName(),
+                emp.getDob() != null ? emp.getDob() : null,
+                emp.getPhoneNumber(),
+                emp.getEmail(),
+                emp.getUsername(),
+                emp.getRole().toString(),
+                emp.getStartDate() != null ? emp.getStartDate() : null);
+    }
 
 }

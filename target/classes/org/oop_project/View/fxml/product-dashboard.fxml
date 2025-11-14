@@ -126,19 +126,8 @@
     </Label>
 
     <TextField fx:id="searchField" layoutX="400.0" layoutY="190.0" prefWidth="300.0" promptText="Search by ID, Name or Family" />
-    <Button fx:id="btnSearch" layoutX="710.0" layoutY="190.0" onAction="#searchProduct" prefHeight="27.0" prefWidth="100.0" text="Search">
-        <graphic>
-            <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
-                <image>
-                    <Image url="@/org/oop_project/view/images/search.png" />
-                </image>
-            </ImageView>
-        </graphic>
-         <font>
-            <Font name="System Bold" size="12.800000190734863" />
-         </font></Button>
     
-    <Button fx:id="btnReset" layoutX="819.0" layoutY="190.0" onAction="#resetSearch" prefHeight="27.0" prefWidth="100.0" text="Reset">
+    <Button fx:id="btnReset" layoutX="717.0" layoutY="190.0" onAction="#resetSearch" prefHeight="27.0" prefWidth="100.0" text="Reset">
         <graphic>
             <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
                 <image>

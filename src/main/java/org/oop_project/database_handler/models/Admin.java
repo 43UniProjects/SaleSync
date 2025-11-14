@@ -1,9 +1,9 @@
-package org.oop_project.DatabaseHandler.models;
-
-import org.oop_project.DatabaseHandler.enums.Role;
+package org.oop_project.database_handler.models;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+
+import org.oop_project.database_handler.enums.Role;
 
 class Admin extends Employee {
 

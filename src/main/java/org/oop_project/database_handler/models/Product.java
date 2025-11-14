@@ -1,4 +1,4 @@
-package org.oop_project.DatabaseHandler.models;
+package org.oop_project.database_handler.models;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -6,7 +6,8 @@ import java.util.HashMap;
 import org.bson.codecs.pojo.annotations.BsonId;
 import org.bson.codecs.pojo.annotations.BsonProperty;
 import org.bson.types.ObjectId;
-import org.oop_project.DatabaseHandler.enums.UnitType;
+import org.oop_project.database_handler.enums.UnitType;
+import org.oop_project.view.helpers.ProductRow;
 
 /*
  * Represents a Product entity in the MongoDB 'Product' collection.
@@ -52,8 +53,7 @@ public class Product {
             double unitPrice,
             double taxRate,
             double discountRate,
-            double stockQuantity
-    ) {
+            double stockQuantity) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -185,7 +185,6 @@ public class Product {
         return this.properties;
     }
 
-
     // Util methods
 
     public void setProperties(HashMap<String, Object> properties) {
@@ -212,6 +211,21 @@ public class Product {
         } else {
             this.discontinuedDate = new Date();
         }
+    }
+
+    public static ProductRow mapProductRow(Product prod) {
+        return new ProductRow(
+                prod.getId(),
+                prod.getName(),
+                prod.getDescription(),
+                prod.getProductType().name(),
+                prod.getFamily(),
+                prod.getSubFamily(),
+                prod.getUnitPrice(),
+                prod.getTaxRate(),
+                prod.getDiscountRate(),
+                prod.getRetailPrice(),
+                prod.getStockQuantity());
     }
 
 }
