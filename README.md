@@ -113,40 +113,72 @@ Ensure your MongoDB server is running. The application is configured by default 
 The project follows a standard package structure demonstrating the separation of concerns (MVC pattern elements) and the application of OOP principles:
 ```
 SaleSync/
+├── 📄 LICENSE
 ├── 📄 pom.xml                               # Maven build configuration
-├── 📄 README.md                             # This file
-└── src/
-    └── main/
-        └── java/
-            └── org/
-                └── oop_project/
-                    ├── 🎯 Main.java                       # Application Entry Point
-                    ├── gui.java                           # Main JavaFx application setup
-                    ├── 📁 DatabaseHandler/                # Data Access and Business Logic
-                    │   ├── DatabaseConnectionManager.java # MongoDB connection setup
-                    │   ├── 📁 migrations/                 # Database versioning (if used)
-                    │   ├── 📁 models/                     # Data Models (OOP: Inheritance)
-                    │   │   ├── Admin.java
-                    │   │   ├── Cashier.java
-                    │   │   ├── Employee.java              # Base class
-                    │   │   ├── Product.java
-                    │   │   └── ProductManager.java
-                    │   └── 📁 operations/                 # Business Logic (OOP: Abstraction, Encapsulation)
-                    │       └── Operations.java            # (Implied CRUD classes)
-                    ├── 📁 utils/                          # General utilities
-                    │   ├── Generate.java
-                    │   ├── JsonReader.java
-                    │   └── Text.java
-                    └── 📁 view/                           # User Interface (JavaFx GUI)
-                        ├── 📁 controllers/                # Logic for handling UI events
-                        │   ├── AdminController.java
-                        │   ├── CashierController.java
-                        │   ├── LoginController.java
-                        │   └── ProductController.java
-                        └── 📁 helpers/                    # UI utility classes
-                            ├── EmployeeRow.java
-                            ├── ProductRow.java
-                            └── Validator.java
+├── 📄 README.md
+├── 📁 lib/
+│   └── 📄 javafx.properties                 # JavaFX runtime configuration
+└── 📁 src/
+    └── 📁 main/
+        ├── 📁 java/
+        │   └── 📁 org/
+        │       └── 📁 oop_project/
+        │           ├── 🎯 Main.java                    # Launches JavaFX application
+        │           ├── 📁 database_handler/            # Data access and business logic
+        │           │   ├── DatabaseConnectionManager.java
+        │           │   ├── 📁 enums/
+        │           │   │   ├── Role.java
+        │           │   │   └── UnitType.java
+        │           │   ├── 📁 migrations/              # Database versioning
+        │           │   │   ├── DatabaseChangeUnit_001.java
+        │           │   │   ├── DatabaseChangeUnit_002.java
+        │           │   │   ├── DatabaseChangeUnit_003.java
+        │           │   │   ├── DatabaseChangeUnit_004.java
+        │           │   │   ├── DatabaseChangeUnit_006.java
+        │           │   │   └── DatabaseChangeUnit_007.java
+        │           │   ├── 📁 models/                  # Domain models (inheritance)
+        │           │   │   ├── Admin.java
+        │           │   │   ├── Cashier.java
+        │           │   │   ├── Employee.java           # Base class
+        │           │   │   ├── Product.java
+        │           │   │   └── ProductManager.java
+        │           │   └── 📁 operations/              # Business operations
+        │           │       ├── EmployeeOperations.java
+        │           │       ├── Operations.java
+        │           │       └── ProductOperations.java
+        │           ├── 📁 utils/                       # General utilities
+        │           │   ├── Generate.java
+        │           │   ├── JsonReader.java
+        │           │   └── Text.java
+        │           └── 📁 view/                        # JavaFX presentation layer
+        │               ├── SaleSyncApp.java            # JavaFX Application subclass
+        │               ├── 📁 controllers/             # UI event handlers
+        │               │   ├── AdminController.java
+        │               │   ├── CashierController.java
+        │               │   ├── CheckoutController.java
+        │               │   ├── LoginController.java
+        │               │   └── ProductController.java
+        │               ├── 📁 helpers/                 # UI helper classes
+        │               │   ├── BillRow.java
+        │               │   ├── EmployeeRow.java
+        │               │   ├── Navigators.java
+        │               │   ├── ProductRow.java
+        │               │   └── Validator.java
+        │               └── 📁 view/                    # Nested resources accessors
+        │                   └── (see resources section)
+        └── 📁 resources/
+            └── 📁 org/
+                └── 📁 oop_project/
+                    └── 📁 view/
+                        ├── 📁 css/
+                        │   └── style.css
+                        ├── 📁 fxml/
+                        │   ├── admin-panel.fxml
+                        │   ├── cashier-portal.fxml
+                        │   ├── checkout.fxml
+                        │   ├── login.fxml
+                        │   └── product-dashboard.fxml
+                        └── 📁 images/                  # Image assets (filenames omitted)
 ```
 
 ### 💻 Usage
