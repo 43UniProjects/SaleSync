@@ -11,7 +11,10 @@ import static org.oop_project.view.helpers.Navigators.navigateToAdminPanel;
 import static org.oop_project.view.helpers.Navigators.navigateToCashierPortal;
 import static org.oop_project.view.helpers.Navigators.navigateToProductManagerPanel;
 
+import org.oop_project.database_handler.models.Admin;
+import org.oop_project.database_handler.models.Cashier;
 import org.oop_project.database_handler.models.Employee;
+import org.oop_project.database_handler.models.ProductManager;
 import org.oop_project.database_handler.operations.EmployeeOperations;
 import org.oop_project.database_handler.operations.Operations;
 
@@ -48,13 +51,13 @@ public class LoginController {
 
         switch (emp.getRole()) {
             case ADMIN:
-                navigateToAdminPanel((Stage) btnSubmit.getScene().getWindow(), loginStatus);
+                navigateToAdminPanel((Stage) btnSubmit.getScene().getWindow(), loginStatus, emp);
                 break;
             case PRODUCT_MANAGER:
-                navigateToProductManagerPanel((Stage) btnSubmit.getScene().getWindow(), loginStatus);
+                navigateToProductManagerPanel((Stage) btnSubmit.getScene().getWindow(), loginStatus, emp);
                 break;
             case CASHIER:
-                navigateToCashierPortal((Stage) btnSubmit.getScene().getWindow(), loginStatus);
+                navigateToCashierPortal((Stage) btnSubmit.getScene().getWindow(), loginStatus, emp);
                 break;
             default:
                 loginStatus.setText("Invalid role!");

@@ -5,7 +5,7 @@ import java.time.LocalDate;
 
 import org.oop_project.database_handler.enums.Role;
 
-class Admin extends Employee {
+public class Admin extends Employee {
 
     private BigDecimal salary = BigDecimal.valueOf(75_000.00);
     private BigDecimal otRate = BigDecimal.valueOf(0.35);

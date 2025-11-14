@@ -6,6 +6,15 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
+import org.oop_project.database_handler.models.Admin;
+import org.oop_project.database_handler.models.Cashier;
+import org.oop_project.database_handler.models.Employee;
+import org.oop_project.database_handler.models.ProductManager;
+import org.oop_project.view.controllers.AdminController;
+import org.oop_project.view.controllers.CashierController;
+import org.oop_project.view.controllers.LoginController;
+import org.oop_project.view.controllers.ProductController;
+
 public class Navigators {
 
     public static void navigateToLoginPanel(Stage stage, Label label) {
@@ -30,10 +39,12 @@ public class Navigators {
         }
     }
 
-    public static void navigateToAdminPanel(Stage stage, Label label) {
+    public static void navigateToAdminPanel(Stage stage, Label label, Employee admin) {
         try {
             FXMLLoader loader = new FXMLLoader(Navigators.class.getResource("/org/oop_project/view/fxml/admin-panel.fxml"));
             Scene scene = new Scene(loader.load());
+            AdminController ac = loader.getController();
+            ac.setAdmin(admin);
             stage.setScene(scene);
             stage.centerOnScreen();
             stage.setTitle("SaleSync - Admin Panel");
@@ -45,14 +56,15 @@ public class Navigators {
         }
     }
 
-    public static void navigateToCashierPortal(Stage stage, Label label) {
+    public static void navigateToCashierPortal(Stage stage, Label label, Employee cashier) {
         try {
             FXMLLoader loader = new FXMLLoader(
                     Navigators.class.getResource("/org/oop_project/view/fxml/cashier-portal.fxml"));
             Scene scene = new Scene(loader.load());
+            CashierController cc = loader.getController();
+            cc.setCashier(cashier);
             stage.setScene(scene);
             stage.centerOnScreen();
-
             stage.setTitle("SaleSync - Cashier Portal");
         } catch (Exception e) {
             e.printStackTrace();
@@ -61,11 +73,13 @@ public class Navigators {
         }
     }
 
-    public static void navigateToProductManagerPanel(Stage stage, Label label) {
+    public static void navigateToProductManagerPanel(Stage stage, Label label, Employee productManager) {
         try {
             FXMLLoader loader = new FXMLLoader(
                     Navigators.class.getResource("/org/oop_project/view/fxml/product-dashboard.fxml"));
             Scene scene = new Scene(loader.load());
+            ProductController pc = loader.getController();
+            pc.setProductManager(productManager);
             stage.setScene(scene);
             stage.setTitle("SaleSync - Product Dashboard");
             stage.centerOnScreen();
