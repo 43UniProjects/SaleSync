@@ -14,11 +14,11 @@ import org.bson.codecs.configuration.CodecRegistry;
 import static org.bson.codecs.configuration.CodecRegistries.fromProviders;
 import static org.bson.codecs.configuration.CodecRegistries.fromRegistries;
 import static org.bson.codecs.pojo.PojoCodecProvider.builder;
+import static org.oop_project.Main.MIGRATION_PACKAGE;
 
 public class DatabaseConnectionManager {
 
     private static final String CONNECTION_STRING = "mongodb://localhost:27017/?retryWrites=false";
-    private static final String MIGRATION_PACKAGE = "org.oop_project.DatabaseHandler.migrations";
     private static final String DATABASE_NAME = "SaleSync";
     public static final String EMPLOYEE_COLLECTION_NAME = "Employee";
     public static final String PRODUCT_COLLECTION_NAME = "Product";
