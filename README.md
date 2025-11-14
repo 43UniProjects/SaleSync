@@ -1,4 +1,4 @@
-<img width="1377" height="983" alt="inventory-manager" src="https://github.com/user-attachments/assets/696da788-5b04-4ea7-ac60-5b7dba9aad62" /># 🛒 SaleSync
+# 🛒 SaleSync
 
 <div align="center">
 
@@ -183,21 +183,35 @@ SaleSync/
 
 ## UI
 
--- Login Panel 
+
+**Login Panel** 
+
 
 <img width="744" height="553" align="center" alt="login-panel" src="https://github.com/user-attachments/assets/85eaac3a-6954-4cc3-966d-bc524e6764d5" />
 
--- Admin Panel
 
-<img width="1377" height="971" align="center" alt="admin-panel" src="https://github.com/user-attachments/assets/598e9d37-eca7-496a-bf37-ce3d22de6850" />
+**Admin Panel**
 
--- Inventory Manager 
 
-<img width="1377" height="983" align="center" alt="inventory-manager" src="https://github.com/user-attachments/assets/2dd18392-29a6-4915-a75c-c37145fd7ba5" />
+<img width="744" height="553" align="center" alt="admin-panel" src="https://github.com/user-attachments/assets/598e9d37-eca7-496a-bf37-ce3d22de6850" />
 
--- Cashier Portal
 
-<img width="1156" height="761" align="center" alt="cashier-portal" src="https://github.com/user-attachments/assets/759bf579-941e-40cf-af8b-2cc53d649a58" />
+
+**Inventory Manager**
+
+
+
+<img width="744" height="553" align="center" alt="inventory-manager" src="https://github.com/user-attachments/assets/2dd18392-29a6-4915-a75c-c37145fd7ba5" />
+
+
+
+**Cashier Portal**
+
+
+
+<img width="744" height="553" align="center" alt="cashier-portal" src="https://github.com/user-attachments/assets/759bf579-941e-40cf-af8b-2cc53d649a58" />
+
+
 
 
 ### 💻 Usage
