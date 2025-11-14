@@ -60,7 +60,7 @@ The **SaleSync** application supports the following key functionalities:
 * ✅ **Employee Management**: CRUD (Create, Read, Update, Delete) operations for employee records.
 * ✅ **Product Inventory**: Full CRUD operations to manage product stock and details.
 * ✅ **Data Persistence**: Uses a NoSQL database (MongoDB) to store all application data.
-* ✅ **GUI Interface**: Provides a user-friendly graphical interface using JavaFx.
+* ✅ **GUI Interface**: Provides a user-friendly graphical interface using JavaFX.
 * ✅ **Robustness**: Utilizes **exception handling** techniques to build a robust, error-tolerant application[cite: 15].
 
 ---
@@ -101,12 +101,12 @@ mvn clean package
 You can run the application using the Maven exec plugin:
 
 ```PowerShell
-mvn exec:java -Dexec.mainClass="org.oop_project.Main"
+mvn exec: java -Dexec.mainClass="org.oop_project.Main"
 ```
 
 ### 4️⃣ Database Setup
 
-Ensure your MongoDB server is running. The application is configured by default to connect to mongodb://localhost:27017 with the database name SaleSync.
+Please make sure your MongoDB server is running. The application is configured by default to connect to mongodb://localhost:27017 with the database name SaleSync.
 
 ### 📁 Project Structure
 
@@ -183,31 +183,43 @@ SaleSync/
 
 ## UI
 
+<br/>
+<br/>
 
-<p align="center"> **Login Panel** </p>
+**Login Panel** 
 
+<br/>
+<br/>
 
 <img width="744" height="553" align="center" alt="login-panel" src="https://github.com/user-attachments/assets/85eaac3a-6954-4cc3-966d-bc524e6764d5" />
 
+<br/>
+<br/>
 
-<p align="center"> **Admin Panel** </p>
+**Admin Panel**
 
+<br/>
+<br/>
 
 <img width="744" height="553" align="center" alt="admin-panel" src="https://github.com/user-attachments/assets/598e9d37-eca7-496a-bf37-ce3d22de6850" />
 
+<br/>
+<br/>
 
+**Inventory Manager**
 
-<p align="center"> **Inventory Manager** </p>
-
-
+<br/>
+<br/>
 
 <img width="744" height="553" align="center" alt="inventory-manager" src="https://github.com/user-attachments/assets/2dd18392-29a6-4915-a75c-c37145fd7ba5" />
 
+<br/>
+<br/>
 
+**Cashier Portal**
 
-<p align="center"> **Cashier Portal** </p>
-
-
+<br/>
+<br/>
 
 <img width="744" height="553" align="center" alt="cashier-portal" src="https://github.com/user-attachments/assets/759bf579-941e-40cf-af8b-2cc53d649a58" />
 
@@ -216,7 +228,7 @@ SaleSync/
 
 ### 💻 Usage
 
-The application will launch the JavaFx GUI upon execution. You will first be prompted to log in. A default Admin user is created on the first run for initial access.
+The application will launch the JavaFX GUI upon execution. You will first be prompted to log in. A default Admin user is created on the first run for initial access.
 
 **Features Access**
 
@@ -230,7 +242,7 @@ As a collaborative group assignment, effective use of Git and GitHub is mandator
 
 Follow these steps to ensure proper Version Control System (VCS) usage:
 
-Work on a Feature Branch: Create a new branch for every task to isolate changes and allow for merging demonstrations.
+Work on a Feature Branch: Create a new branch for each task to isolate changes and allow for merging demonstrations.
 
 ```Bash
 git checkout -b feature/implement-login
@@ -242,7 +254,7 @@ Commit Regularly: Commit your changes frequently with descriptive commit message
 git commit -m "FEAT: Added basic validation logic to LoginController"
 ```
 
-Push to GitHub: Keep the collaborative project repository updated.
+Push to GitHub: Keep the collaborative project repository up to date.
 
 ```Bash
 git push origin feature/implement-login
