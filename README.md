@@ -9,6 +9,7 @@ This project was developed to fulfill the requirements of the **Object Oriented 
 [Assignment Requirements](#-assignment-requirements) • [Features](#-features) • [Quick Start](#-quick-start) • [Project Structure](#-project-structure) • [User Interface](#-user-interface)
 
 </div>
+
 ```
 ### Pronunciation
 **SaleSync** — “sales sync”  
