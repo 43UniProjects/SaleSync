@@ -35,19 +35,19 @@ public class ProfileController {
     @FXML
     private Label dayOffsLabel;
 
-    public void setCashierDetails(Employee cashier) {
-        profileHead.setText("Hello, " + cashier.getFirstName() + "!");
-        userIdLabel.setText(cashier.getId());
-        firstNameLabel.setText(cashier.getFirstName());
-        lastNameLabel.setText(cashier.getLastName());
-        dobLabel.setText(cashier.getDob().toString());
-        phoneNumberLabel.setText(cashier.getPhoneNumber());
-        emailLabel.setText(cashier.getEmail());
-        usernameLabel.setText(cashier.getUsername());
-        roleLabel.setText(cashier.getRole().toString());
-        startDateLabel.setText(cashier.getStartDate().toString());
-        //salaryLabel.setText(String.valueOf(cashier.getSalary()));
-        //otRateLabel.setText(String.valueOf(cashier.getOtRate()));
-        //dayOffsLabel.setText(String.valueOf(cashier.getDayOffsPerMonth()));
+    public void setDetails(Employee emp) {
+        profileHead.setText("Hello, " + emp.getFirstName() + "!");
+        userIdLabel.setText(emp.getId());
+        firstNameLabel.setText(emp.getFirstName());
+        lastNameLabel.setText(emp.getLastName());
+        dobLabel.setText(emp.getDob().toString());
+        phoneNumberLabel.setText(emp.getPhoneNumber());
+        emailLabel.setText(emp.getEmail());
+        usernameLabel.setText(emp.getUsername());
+        roleLabel.setText(emp.getRole().toString());
+        startDateLabel.setText(emp.getStartDate().toString());
+        //salaryLabel.setText(String.valueOf(emp.getSalary()));
+        //otRateLabel.setText(String.valueOf(emp.getOtRate()));
+        //dayOffsLabel.setText(String.valueOf(emp.getDayOffsPerMonth()));
     }
 }

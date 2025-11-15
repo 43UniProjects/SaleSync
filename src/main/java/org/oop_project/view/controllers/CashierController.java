@@ -564,7 +564,7 @@ public class CashierController implements Initializable {
             stage.centerOnScreen();
 
             ProfileController pc = (ProfileController) loader.getController();
-            pc.setCashierDetails(cashier);
+            pc.setDetails(cashier);
 
             stage.show();
 

@@ -1,26 +1,36 @@
 package org.oop_project.view.controllers;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.fxml.FXML;
-import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.stage.Stage;
+import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.List;
 
 import org.oop_project.database_handler.enums.Role;
-import org.oop_project.database_handler.models.Admin;
 import org.oop_project.database_handler.models.Employee;
 import org.oop_project.database_handler.operations.EmployeeOperations;
 import org.oop_project.database_handler.operations.Operations;
 import org.oop_project.utils.Generate;
 import org.oop_project.view.helpers.EmployeeRow;
-
+import org.oop_project.view.helpers.Navigators;
 import static org.oop_project.view.helpers.Navigators.navigateToLoginPanel;
 import static org.oop_project.view.helpers.Validator.safeText;
 
-import java.time.LocalDate;
-import java.util.HashMap;
-import java.util.List;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.stage.Stage;
 
 public class AdminController {
 
@@ -321,5 +331,31 @@ public class AdminController {
     @FXML
     protected void logout() {
         navigateToLoginPanel((Stage) btnLogout.getScene().getWindow(), statusLabel);
+    }
+
+    @FXML
+    public void showProfile(ActionEvent actionEvent) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/oop_project/view/fxml/profile.fxml"));
+            Scene scene = new Scene(loader.load());
+            String css = getClass().getResource("/org/oop_project/view/css/style.css").toExternalForm();
+            scene.getStylesheets().add(css);
+            Stage stage = new Stage();
+            Image icon = new Image(Navigators.class.getResourceAsStream("/org/oop_project/view/images/icon.png"));
+            stage.getIcons().add(icon);
+            stage.setScene(scene);
+            stage.setTitle("SaleSync - Profile");
+            stage.setResizable(false);
+            stage.centerOnScreen();
+
+            ProfileController pc = (ProfileController) loader.getController();
+            pc.setDetails(admin);
+
+            stage.show();
+
+        } catch (Exception e) {
+            System.err.println("Error displaying profile: " + e.getMessage());
+        }
+        actionEvent.consume();
     }
 }
