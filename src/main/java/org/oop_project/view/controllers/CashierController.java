@@ -568,9 +568,12 @@ public class CashierController implements Initializable {
 
             stage.show();
 
+            scanInputField.requestFocus();
+
         } catch (Exception e) {
             System.err.println("Error displaying profile: " + e.getMessage());
         }
+
         actionEvent.consume();
     }
 
