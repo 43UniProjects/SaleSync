@@ -1,14 +1,15 @@
 package org.oop_project.utils;
 
-import org.oop_project.DatabaseHandler.enums.Role;
-import org.oop_project.DatabaseHandler.models.Employee;
-import org.oop_project.DatabaseHandler.operations.EmployeeOperations;
-import org.oop_project.DatabaseHandler.operations.Operations;
-import org.oop_project.DatabaseHandler.operations.ProductOperations;
-
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Random;
+
+import org.oop_project.database_handler.enums.Role;
+import org.oop_project.database_handler.models.Employee;
+import org.oop_project.database_handler.models.Product;
+import org.oop_project.database_handler.operations.EmployeeOperations;
+import org.oop_project.database_handler.operations.Operations;
+import org.oop_project.database_handler.operations.ProductOperations;
 
 public class Generate {
 
@@ -55,7 +56,7 @@ public class Generate {
     /*
      * Ex: ELC-WIRE-01 > (FORMAT ItemFamily-ItemSubFamily-AssignedId)
      * */
-    public static String generateProductId(ProductOperations productOps, String itemFamily, String itemSubFamily) {
+    public static String generateProductId(Operations<Product> productOps, String itemFamily, String itemSubFamily) {
         String lastId = productOps.getLastId();
 
         if (lastId == null) {

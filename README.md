@@ -6,11 +6,15 @@
 
 This project was developed to fulfill the requirements of the **Object Oriented Programming** course module **(IIC 1153)** at the University of Sri Jayewardenepura, Faculty of Technology
 
-[Assignment Requirements](#-assignment-requirements) • [Features](#-features) • [Quick Start](#-quick-start) • [Project Structure](#-project-structure)
+[Assignment Requirements](#-assignment-requirements) • [Features](#-features) • [Quick Start](#-quick-start) • [Project Structure](#-project-structure) • [User Interface](#-user-interface)
 
 </div>
 
----
+## 💁‍♂️ Pronunciation
+
+**SaleSync** — “sales sync”  
+Phonetic: **/seɪlz sɪŋk/**
+
 
 ## 🎯 Overview
 
@@ -60,7 +64,7 @@ The **SaleSync** application supports the following key functionalities:
 * ✅ **Employee Management**: CRUD (Create, Read, Update, Delete) operations for employee records.
 * ✅ **Product Inventory**: Full CRUD operations to manage product stock and details.
 * ✅ **Data Persistence**: Uses a NoSQL database (MongoDB) to store all application data.
-* ✅ **GUI Interface**: Provides a user-friendly graphical interface using JavaFx.
+* ✅ **GUI Interface**: Provides a user-friendly graphical interface using JavaFX.
 * ✅ **Robustness**: Utilizes **exception handling** techniques to build a robust, error-tolerant application[cite: 15].
 
 ---
@@ -73,6 +77,7 @@ Before running the application, ensure you have the following installed:
 | :--- | :--- |
 | ☕ **Java JDK** | Version 17 or higher. |
 | 📦 **Maven** | Version 3.6+ for building and dependency management. |
+| 🤖 **Mongock** | Version 5.5+ for managing database migration |
 | 🗄️ **MongoDB** | Running locally or accessible via a connection string. |
 
 > **Note**: If your installed JDK version differs from the project's default, update the `<source>` and `<target>` values in the `maven-compiler-plugin` section of `pom.xml`.
@@ -101,57 +106,120 @@ mvn clean package
 You can run the application using the Maven exec plugin:
 
 ```PowerShell
-mvn exec:java -Dexec.mainClass="org.oop_project.Main"
+mvn exec: java -Dexec.mainClass="org.oop_project.Main"
 ```
 
 ### 4️⃣ Database Setup
 
-Ensure your MongoDB server is running. The application is configured by default to connect to mongodb://localhost:27017 with the database name SaleSync.
+Please make sure your MongoDB server is running. The application is configured by default to connect to mongodb://localhost:27017 with the database name SaleSync.
 
 ### 📁 Project Structure
 
 The project follows a standard package structure demonstrating the separation of concerns (MVC pattern elements) and the application of OOP principles:
 ```
 SaleSync/
+├── 📄 LICENSE
 ├── 📄 pom.xml                               # Maven build configuration
-├── 📄 README.md                             # This file
-└── src/
-    └── main/
-        └── java/
-            └── org/
-                └── oop_project/
-                    ├── 🎯 Main.java                       # Application Entry Point
-                    ├── gui.java                           # Main JavaFx application setup
-                    ├── 📁 DatabaseHandler/                # Data Access and Business Logic
-                    │   ├── DatabaseConnectionManager.java # MongoDB connection setup
-                    │   ├── 📁 migrations/                 # Database versioning (if used)
-                    │   ├── 📁 models/                     # Data Models (OOP: Inheritance)
-                    │   │   ├── Admin.java
-                    │   │   ├── Cashier.java
-                    │   │   ├── Employee.java              # Base class
-                    │   │   ├── Product.java
-                    │   │   └── ProductManager.java
-                    │   └── 📁 operations/                 # Business Logic (OOP: Abstraction, Encapsulation)
-                    │       └── Operations.java            # (Implied CRUD classes)
-                    ├── 📁 utils/                          # General utilities
-                    │   ├── Generate.java
-                    │   ├── JsonReader.java
-                    │   └── Text.java
-                    └── 📁 view/                           # User Interface (JavaFx GUI)
-                        ├── 📁 controllers/                # Logic for handling UI events
-                        │   ├── AdminController.java
-                        │   ├── CashierController.java
-                        │   ├── LoginController.java
-                        │   └── ProductController.java
-                        └── 📁 helpers/                    # UI utility classes
-                            ├── EmployeeRow.java
-                            ├── ProductRow.java
-                            └── Validator.java
+├── 📄 README.md
+├── 📁 lib/
+│   └── 📄 javafx.properties                 # JavaFX runtime configuration
+└── 📁 src/
+    └── 📁 main/
+        ├── 📁 java/
+        │   └── 📁 org/
+        │       └── 📁 oop_project/
+        │           ├── 🎯 Main.java                    # Launches JavaFX application
+        │           ├── 📁 database_handler/            # Data access and business logic
+        │           │   ├── DatabaseConnectionManager.java
+        │           │   ├── 📁 enums/
+        │           │   │   ├── Role.java
+        │           │   │   └── UnitType.java
+        │           │   ├── 📁 migrations/              # Database versioning
+        │           │   │   ├── DatabaseChangeUnit_001.java
+        │           │   │   ├── DatabaseChangeUnit_002.java
+        │           │   │   ├── DatabaseChangeUnit_003.java
+        │           │   │   ├── DatabaseChangeUnit_004.java
+        │           │   │   ├── DatabaseChangeUnit_006.java
+        │           │   │   └── DatabaseChangeUnit_007.java
+        │           │   ├── 📁 models/                  # Domain models (inheritance)
+        │           │   │   ├── Admin.java
+        │           │   │   ├── Cashier.java
+        │           │   │   ├── Employee.java           # Base class
+        │           │   │   ├── Product.java
+        │           │   │   └── ProductManager.java
+        │           │   └── 📁 operations/              # Business operations
+        │           │       ├── EmployeeOperations.java
+        │           │       ├── Operations.java
+        │           │       └── ProductOperations.java
+        │           ├── 📁 utils/                       # General utilities
+        │           │   ├── Generate.java
+        │           │   ├── JsonReader.java
+        │           │   └── Text.java
+        │           └── 📁 view/                        # JavaFX presentation layer
+        │               ├── SaleSyncApp.java            # JavaFX Application subclass
+        │               ├── 📁 controllers/             # UI event handlers
+        │               │   ├── AdminController.java
+        │               │   ├── CashierController.java
+        │               │   ├── CheckoutController.java
+        │               │   ├── LoginController.java
+        │               │   └── ProductController.java
+        │               ├── 📁 helpers/                 # UI helper classes
+        │               │   ├── BillRow.java
+        │               │   ├── EmployeeRow.java
+        │               │   ├── Navigators.java
+        │               │   ├── ProductRow.java
+        │               │   └── Validator.java
+        │               └── 📁 view/                    # Nested resources accessors
+        │                   └── (see resources section)
+        └── 📁 resources/
+            └── 📁 org/
+                └── 📁 oop_project/
+                    └── 📁 view/
+                        ├── 📁 css/
+                        │   └── style.css
+                        ├── 📁 fxml/
+                        │   ├── admin-panel.fxml
+                        │   ├── cashier-portal.fxml
+                        │   ├── checkout.fxml
+                        │   ├── login.fxml
+                        │   └── product-dashboard.fxml
+                        └── 📁 images/                  # Image assets (filenames omitted)
 ```
+
+## User Interface
+
+<br/>
+
+**Login Panel** 
+
+<img width="744" height="553" align="center" alt="login-panel" src="https://github.com/user-attachments/assets/85eaac3a-6954-4cc3-966d-bc524e6764d5" />
+
+<br/>
+<br/>
+
+**Admin Panel**
+
+<img width="744" height="553" align="center" alt="admin-panel" src="https://github.com/user-attachments/assets/598e9d37-eca7-496a-bf37-ce3d22de6850" />
+
+<br/>
+<br/>
+
+**Inventory Manager**
+
+<img width="744" height="553" align="center" alt="inventory-manager" src="https://github.com/user-attachments/assets/2dd18392-29a6-4915-a75c-c37145fd7ba5" />
+
+<br/>
+<br/>
+
+**Cashier Portal**
+
+<img width="744" height="553" align="center" alt="cashier-portal" src="https://github.com/user-attachments/assets/759bf579-941e-40cf-af8b-2cc53d649a58" />
+
+
 
 ### 💻 Usage
 
-The application will launch the JavaFx GUI upon execution. You will first be prompted to log in. A default Admin user is created on the first run for initial access.
+The application will launch the JavaFX GUI upon execution. You will first be prompted to log in. A default Admin user is created on the first run for initial access.
 
 **Features Access**
 
@@ -165,7 +233,7 @@ As a collaborative group assignment, effective use of Git and GitHub is mandator
 
 Follow these steps to ensure proper Version Control System (VCS) usage:
 
-Work on a Feature Branch: Create a new branch for every task to isolate changes and allow for merging demonstrations.
+Work on a Feature Branch: Create a new branch for each task to isolate changes and allow for merging demonstrations.
 
 ```Bash
 git checkout -b feature/implement-login
@@ -177,7 +245,7 @@ Commit Regularly: Commit your changes frequently with descriptive commit message
 git commit -m "FEAT: Added basic validation logic to LoginController"
 ```
 
-Push to GitHub: Keep the collaborative project repository updated.
+Push to GitHub: Keep the collaborative project repository up to date.
 
 ```Bash
 git push origin feature/implement-login
