@@ -29,6 +29,15 @@
                   </ImageView>
                </graphic>
           </Button>
+            <Button fx:id="btnAccount" layoutX="804.0" layoutY="67.0" prefHeight="30.0" prefWidth="100.0" text="Profile">
+               <graphic>
+                  <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@/org/oop_project/view/images/user.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
       </children>
     </AnchorPane>
       <!-- Product summary panel -->
