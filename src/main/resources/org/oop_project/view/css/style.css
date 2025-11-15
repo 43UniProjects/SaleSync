@@ -163,6 +163,23 @@
     -fx-background-color: #f1a22b;
 }
 
+#btnAccount {
+    background-color: #1c9856; /* compat */
+    -fx-background-color: #1c9856;
+    -fx-background-radius: 5;
+    cursor: hand; /* compat */
+    -fx-cursor: hand;
+    -fx-alignment: CENTER; /* Centers both text and image */
+    -fx-graphic-text-gap: 5; /* Adjusts spacing between text and image */
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+
+#btnAccount:hover {
+    background-color: #1a9f70; /* compat */
+    -fx-background-color: #1a9f70;
+}
+
 #btnLogin {
     background-color: #5a52d5; /* compat */
     -fx-background-color: #5a52d5;
