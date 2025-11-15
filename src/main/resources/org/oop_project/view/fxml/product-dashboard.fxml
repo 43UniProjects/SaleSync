@@ -21,6 +21,18 @@
         <Label fx:id="productSubHead" alignment="CENTER" layoutY="94.0" prefWidth="1100.0" text="Manage Inventory Items" textAlignment="CENTER">
           <font><Font name="Georgia" size="19.0" /></font>
         </Label>
+            <Button fx:id="btnAccount" layoutX="970.0" layoutY="67.0" mnemonicParsing="false" onAction="#showProfile" prefHeight="30.0" prefWidth="100.0" text="Profile">
+               <font>
+                  <Font name="System Bold" size="12.800000190734863" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@/org/oop_project/view/images/user.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
       </children>
     </AnchorPane>
 

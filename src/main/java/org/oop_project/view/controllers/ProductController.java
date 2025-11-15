@@ -8,6 +8,7 @@ import org.oop_project.database_handler.models.Product;
 import org.oop_project.database_handler.models.ProductManager;
 import org.oop_project.database_handler.operations.Operations;
 import org.oop_project.database_handler.operations.ProductOperations;
+import org.oop_project.view.helpers.Navigators;
 import org.oop_project.view.helpers.ProductRow;
 
 import static org.oop_project.utils.Generate.generateProductId;
@@ -18,13 +19,17 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 public class ProductController {
@@ -300,6 +305,32 @@ public class ProductController {
         double tax = unitPrice * (taxRate / 100.0);
         double discount = unitPrice * (discountRate / 100.0);
         return unitPrice + tax - discount;
+    }
+
+    @FXML
+    public void showProfile(ActionEvent actionEvent) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/oop_project/view/fxml/profile.fxml"));
+            Scene scene = new Scene(loader.load());
+            String css = getClass().getResource("/org/oop_project/view/css/style.css").toExternalForm();
+            scene.getStylesheets().add(css);
+            Stage stage = new Stage();
+            Image icon = new Image(Navigators.class.getResourceAsStream("/org/oop_project/view/images/icon.png"));
+            stage.getIcons().add(icon);
+            stage.setScene(scene);
+            stage.setTitle("SaleSync - Profile");
+            stage.setResizable(false);
+            stage.centerOnScreen();
+
+            ProfileController pc = (ProfileController) loader.getController();
+            pc.setDetails(productManager);
+
+            stage.show();
+
+        } catch (Exception e) {
+            System.err.println("Error displaying profile: " + e.getMessage());
+        }
+        actionEvent.consume();
     }
 
 }
