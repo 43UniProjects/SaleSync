@@ -345,7 +345,8 @@ public class CashierController implements Initializable {
             String css = getClass().getResource("/org/oop_project/view/css/style.css").toExternalForm();
             scene.getStylesheets().add(css);
             Stage stage = new Stage();
-            
+            Image icon = new Image(Navigators.class.getResourceAsStream("/org/oop_project/view/images/icon.png"));
+            stage.getIcons().add(icon);
             stage.setScene(scene);
             stage.setTitle("SaleSync - Checkout");
             stage.setResizable(false);
