@@ -344,3 +344,15 @@
 #billArea {
     -fx-text-fill: black;
 }
+
+/* for profile page */
+
+#profileHead {
+    -fx-text-fill: rgb(167, 167, 221);
+    -fx-font-size: 28px;
+    -fx-font-weight: bold;
+}
+
+#lblDetails {
+    -fx-underline: true;
+}

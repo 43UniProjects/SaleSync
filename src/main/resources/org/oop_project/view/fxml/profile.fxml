@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorMain" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="512.0" prefWidth="418.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.oop_project.view.controllers.ProfileController">
+   <children>
+      <Label fx:id="lblDetails" layoutX="21.0" layoutY="85.0" text="Employee Details">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+      <AnchorPane id="AnchorHead" prefHeight="70.0" prefWidth="418.0">
+         <children>
+            <Label fx:id="profileHead" alignment="CENTER" layoutX="3.0" layoutY="17.0" prefHeight="35.0" prefWidth="410.0" text="Hello, {name}">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="detailsPane" layoutX="-4.0" layoutY="113.0" prefHeight="435.0" prefWidth="426.0">
+         <children>
+
+            <Label layoutX="28.0" layoutY="8.0" text="Employee ID:" />
+            <Label fx:id="userIdLabel" layoutX="152.0" layoutY="8.0" text="{userId}" />
+
+            <Label layoutX="28.0" layoutY="38.0" text="First Name:" />
+            <Label fx:id="firstNameLabel" layoutX="152.0" layoutY="38.0" text="{firstName}" />
+
+            <Label layoutX="28.0" layoutY="68.0" text="Last Name:" />
+            <Label fx:id="lastNameLabel" layoutX="152.0" layoutY="68.0" text="{lastName}" />
+
+            <Label layoutX="28.0" layoutY="98.0" text="Date of Birth:" />
+            <Label fx:id="dobLabel" layoutX="152.0" layoutY="98.0" text="{dob}" />
+
+            <Label layoutX="28.0" layoutY="128.0" text="Phone Number:" />
+            <Label fx:id="phoneNumberLabel" layoutX="152.0" layoutY="128.0" text="{phoneNumber}" />
+
+            <Label layoutX="28.0" layoutY="158.0" text="Email:" />
+            <Label fx:id="emailLabel" layoutX="152.0" layoutY="158.0" text="{email}" />
+
+            <Label layoutX="28.0" layoutY="188.0" text="Username:" />
+            <Label fx:id="usernameLabel" layoutX="152.0" layoutY="188.0" text="{username}" />
+
+            <Label layoutX="28.0" layoutY="218.0" text="Role:" />
+            <Label fx:id="roleLabel" layoutX="152.0" layoutY="218.0" text="{role}" />
+
+            <Label layoutX="28.0" layoutY="248.0" text="Start Date:" />
+            <Label fx:id="startDateLabel" layoutX="152.0" layoutY="248.0" text="{startDate}" />
+
+            <Label layoutX="28.0" layoutY="278.0" text="Salary:" />
+            <Label fx:id="salaryLabel" layoutX="152.0" layoutY="278.0" text="{salary}" />
+
+            <Label layoutX="28.0" layoutY="308.0" text="OT Rate:" />
+            <Label fx:id="otRateLabel" layoutX="152.0" layoutY="308.0" text="{otRate}" />
+
+            <Label layoutX="28.0" layoutY="338.0" text="Day Offs/Month:" />
+            <Label fx:id="dayOffsLabel" layoutX="152.0" layoutY="338.0" text="{dayOffsPerMonth}" />
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

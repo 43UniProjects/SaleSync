@@ -1,16 +1,16 @@
 package org.oop_project.view.helpers;
 
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.image.Image;
-import javafx.stage.Stage;
-
 import org.oop_project.database_handler.models.Employee;
 import org.oop_project.view.SaleSyncApp;
 import org.oop_project.view.controllers.AdminController;
 import org.oop_project.view.controllers.CashierController;
 import org.oop_project.view.controllers.ProductController;
+
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.stage.Stage;
 
 public class Navigators {
 
@@ -48,6 +48,8 @@ public class Navigators {
             FXMLLoader loader = new FXMLLoader(
                     Navigators.class.getResource("/org/oop_project/view/fxml/admin-panel.fxml"));
             Scene scene = new Scene(loader.load());
+            Image icon = new Image(Navigators.class.getResourceAsStream("/org/oop_project/view/images/icon.png"));
+            stage.getIcons().add(icon);
             AdminController ac = loader.getController();
             ac.setAdmin(admin);
             stage.setScene(scene);
@@ -66,6 +68,8 @@ public class Navigators {
             FXMLLoader loader = new FXMLLoader(
                     Navigators.class.getResource("/org/oop_project/view/fxml/cashier-portal.fxml"));
             Scene scene = new Scene(loader.load());
+            Image icon = new Image(Navigators.class.getResourceAsStream("/org/oop_project/view/images/icon.png"));
+            stage.getIcons().add(icon);
             CashierController cc = loader.getController();
             cc.setCashier(cashier);
             stage.setScene(scene);
@@ -83,6 +87,8 @@ public class Navigators {
             FXMLLoader loader = new FXMLLoader(
                     Navigators.class.getResource("/org/oop_project/view/fxml/product-dashboard.fxml"));
             Scene scene = new Scene(loader.load());
+            Image icon = new Image(Navigators.class.getResourceAsStream("/org/oop_project/view/images/icon.png"));
+            stage.getIcons().add(icon);
             ProductController pc = loader.getController();
             pc.setProductManager(productManager);
             stage.setScene(scene);
