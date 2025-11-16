@@ -1,6 +1,9 @@
 package org.oop_project.view.helpers;
 
+import org.oop_project.database_handler.models.Admin;
+import org.oop_project.database_handler.models.Cashier;
 import org.oop_project.database_handler.models.Employee;
+import org.oop_project.database_handler.models.ProductManager;
 import org.oop_project.view.SaleSyncApp;
 import org.oop_project.view.controllers.AdminController;
 import org.oop_project.view.controllers.CashierController;
@@ -51,7 +54,7 @@ public class Navigators {
             Image icon = new Image(Navigators.class.getResourceAsStream("/org/oop_project/view/images/icon.png"));
             stage.getIcons().add(icon);
             AdminController ac = loader.getController();
-            ac.setAdmin(admin);
+            ac.setAdmin((Admin) admin);
             stage.setScene(scene);
             stage.centerOnScreen();
             stage.setTitle("SaleSync - Admin Panel");
@@ -71,7 +74,7 @@ public class Navigators {
             Image icon = new Image(Navigators.class.getResourceAsStream("/org/oop_project/view/images/icon.png"));
             stage.getIcons().add(icon);
             CashierController cc = loader.getController();
-            cc.setCashier(cashier);
+            cc.setCashier((Cashier) cashier);
             stage.setScene(scene);
             stage.centerOnScreen();
             stage.setTitle("SaleSync - Cashier Portal");
@@ -90,7 +93,7 @@ public class Navigators {
             Image icon = new Image(Navigators.class.getResourceAsStream("/org/oop_project/view/images/icon.png"));
             stage.getIcons().add(icon);
             ProductController pc = loader.getController();
-            pc.setProductManager(productManager);
+            pc.setProductManager((ProductManager) productManager);
             stage.setScene(scene);
             stage.setTitle("SaleSync - Product Dashboard");
             stage.centerOnScreen();

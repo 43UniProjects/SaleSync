@@ -25,22 +25,19 @@ public class DatabaseConnectionManager {
     public static final String SUPPLIER_COLLECTION_NAME = "Supplier";
     public static final String ITEM_FAMILY_COLLECTION_NAME = "ItemFamily";
 
-
     private static DatabaseConnectionManager INSTANCE; // Keep a single shared instance (simple singleton pattern)
     private MongoClient mongoClient;
     private MongoDatabase database;
 
-    private int i = 0;
-
     public DatabaseConnectionManager() {
 
         try {
+
             CodecProvider pojoCodecProvider = builder().automatic(true).build();
             // Combines default codec registry with pojo codec registry
             CodecRegistry pojoCodecRegistry = fromRegistries(
                     MongoClientSettings.getDefaultCodecRegistry(),
-                    fromProviders(pojoCodecProvider)
-            );
+                    fromProviders(pojoCodecProvider));
 
             ConnectionString connStr = new ConnectionString(CONNECTION_STRING);
             // Building mongo client settings builder obj
@@ -52,13 +49,36 @@ public class DatabaseConnectionManager {
             // Building mongo client settings obj
             MongoClientSettings settings = mongoClientSettingsBuilder.build();
 
+            System.out.println(
+                    """
+
+                            █████╗█████╗█████╗█████╗█████╗█████╗█████╗█████╗█████╗█████╗█████╗█████╗█████╗█████╗
+                            ╚════╝╚════╝╚════╝╚════╝╚════╝╚════╝╚════╝╚════╝╚════╝╚════╝╚════╝╚════╝╚════╝╚════╝
+
+                            """);
+
+            System.out.println(
+                    """
+
+                            ███████╗ █████╗ ██╗     ███████╗███████╗██╗   ██╗███╗   ██╗ ██████╗
+                            ██╔════╝██╔══██╗██║     ██╔════╝██╔════╝╚██╗ ██╔╝████╗  ██║██╔════╝
+                            ███████╗███████║██║     █████╗  ███████╗ ╚████╔╝ ██╔██╗ ██║██║
+                            ╚════██║██╔══██║██║     ██╔══╝  ╚════██║  ╚██╔╝  ██║╚██╗██║██║
+                            ███████║██║  ██║███████╗███████╗███████║   ██║   ██║ ╚████║╚██████╗
+                            ╚══════╝╚═╝  ╚═╝╚══════╝╚══════╝╚══════╝   ╚═╝   ╚═╝  ╚═══╝ ╚═════╝
+
+
+                            """);
+
+            System.out.print("Connecting to MongoDB...");
+
             mongoClient = MongoClients.create(settings);
 
             this.database = mongoClient.getDatabase(DATABASE_NAME);
 
-            System.out.println("Connected to MongoDB successfully!" + ++i);
+            System.out.println("OK");
 
-            System.out.println("Application starting. Initializing Mongock migration...");
+            System.out.print("Initializing Mongock migration...");
 
             // 2. Build the Mongock Driver
             MongoSync4Driver driver = MongoSync4Driver.withDefaultLock(mongoClient, DATABASE_NAME);
@@ -71,15 +91,24 @@ public class DatabaseConnectionManager {
                     .buildRunner()
                     .execute();
 
-            System.out.println("✅ Mongock migration completed successfully.");
+            System.out.println("OK");
 
             // --- Application continues here after database is migrated ---
-            System.out.println("Application is now fully initialized and starting up...");
+            System.out.println("\nStarting up...");
 
         } catch (Exception e) {
-            System.err.println("❌ An error occurred during Mongock execution. Application failed to start.");
+            System.err.println("An error occurred during Mongock execution. Application failed to start.");
             e.printStackTrace();
         }
+
+        System.out.println(
+                """
+
+                        █████╗█████╗█████╗█████╗█████╗█████╗█████╗█████╗█████╗█████╗█████╗█████╗█████╗█████╗
+                        ╚════╝╚════╝╚════╝╚════╝╚════╝╚════╝╚════╝╚════╝╚════╝╚════╝╚════╝╚════╝╚════╝╚════╝
+
+                        """);
+
     }
 
     public static synchronized DatabaseConnectionManager getInstance() {
@@ -98,7 +127,22 @@ public class DatabaseConnectionManager {
     public void close() {
         if (mongoClient != null) {
             mongoClient.close();
+
+            System.out.println("\n\n---------------------------------------------------------------------\n\n");
+
             System.out.println("MongoDB connection closed.");
+
+            System.out.println(
+                    """
+
+                            ░        ░░░      ░░░  ░░░░  ░
+                            ▒  ▒▒▒▒▒▒▒▒  ▒▒▒▒▒▒▒▒  ▒▒▒▒  ▒
+                            ▓      ▓▓▓▓▓      ▓▓▓  ▓▓▓▓  ▓
+                            █  ██████████████  ██  ████  █
+                            █  █████████      ████      ██""");
+
+            System.out.println("\n\n---------------------------------------------------------------------\n\n");
+
         }
 
     }

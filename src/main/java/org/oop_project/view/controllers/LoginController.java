@@ -11,15 +11,20 @@ import static org.oop_project.view.helpers.Navigators.navigateToAdminPanel;
 import static org.oop_project.view.helpers.Navigators.navigateToCashierPortal;
 import static org.oop_project.view.helpers.Navigators.navigateToProductManagerPanel;
 
-import org.oop_project.database_handler.models.Admin;
-import org.oop_project.database_handler.models.Cashier;
+import java.io.IOException;
+
 import org.oop_project.database_handler.models.Employee;
-import org.oop_project.database_handler.models.ProductManager;
 import org.oop_project.database_handler.operations.EmployeeOperations;
 import org.oop_project.database_handler.operations.Operations;
 
 
 public class LoginController {
+    @FXML
+    private Label headLogin;
+
+    @FXML
+    private Label subHeadLogin;
+
 
     static Operations<Employee> employeeManager = new EmployeeOperations();
     @FXML
@@ -36,7 +41,7 @@ public class LoginController {
     }
 
     @FXML
-    protected void submit() {
+    protected void submit() throws IOException {
 
         String user = usernameField.getText();
         String pass = passwordField.getText();

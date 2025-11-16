@@ -1,42 +1,12 @@
 package org.oop_project.utils;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.util.Random;
-
 import org.oop_project.database_handler.enums.Role;
 import org.oop_project.database_handler.models.Employee;
 import org.oop_project.database_handler.models.Product;
-import org.oop_project.database_handler.operations.EmployeeOperations;
 import org.oop_project.database_handler.operations.Operations;
-import org.oop_project.database_handler.operations.ProductOperations;
 
 public class Generate {
 
-    private static final Random random = new Random();
-    private static final MessageDigest sha224;
-
-    static {
-        try {
-            sha224 = MessageDigest.getInstance("SHA-224");
-        } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public static String hashPassword(String password) {
-        byte[] hashBytes = sha224.digest(password.getBytes());
-        // Convert byte array to hex string
-        StringBuilder hexStr = new StringBuilder();
-        for (byte _byte : hashBytes) {
-            String hex = Integer.toHexString(0xff & _byte);
-            if (hex.length() == 1) {
-                hexStr.append('0');
-            }
-            hexStr.append(hex);
-        }
-        return hexStr.toString();
-    }
 
     /*
     * Ex: ADMIN-01 > (FORMAT Role AssignedId)

@@ -8,6 +8,9 @@ import org.bson.Document;
 import org.bson.conversions.Bson;
 import static org.oop_project.database_handler.DatabaseConnectionManager.EMPLOYEE_COLLECTION_NAME;
 import org.oop_project.database_handler.models.Employee;
+import static org.oop_project.utils.EmployeeMapper.mapEmployee;
+import static org.oop_project.utils.EmployeeMapper.mapEmployees;
+
 
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Filters;
@@ -32,14 +35,14 @@ public class EmployeeOperations implements Operations<Employee> {
 
     @Override
     public Employee get(String username) {
-        return employeeCollection.find(eq("username", username)).first();
+        return mapEmployee(employeeCollection.find(eq("username", username)).first());
     }
 
     @Override
     public List<Employee> getAll() {
         List<Employee> employees = new ArrayList<>();
         employeeCollection.find().into(employees);
-        return employees.isEmpty() ? null : employees;
+        return employees.isEmpty() ? null : mapEmployees(employees);
     }
 
     @Override
