@@ -3,7 +3,6 @@ package org.oop_project.view.controllers;
 import java.util.List;
 
 import org.oop_project.database_handler.enums.UnitType;
-import org.oop_project.database_handler.models.Employee;
 import org.oop_project.database_handler.models.Product;
 import org.oop_project.database_handler.models.ProductManager;
 import org.oop_project.database_handler.operations.Operations;
@@ -23,6 +22,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -33,6 +33,36 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 public class ProductController {
+    @FXML
+    private Label productHead;
+
+    @FXML
+    private Label productSubHead;
+
+    @FXML
+    private Button btnAccount;
+
+    @FXML
+    private Button btnLogout;
+
+    @FXML
+    private Button btnAdd;
+
+    @FXML
+    private Button btnUpdate;
+
+    @FXML
+    private Button btnDelete;
+
+    @FXML
+    private Button btnClear;
+
+    @FXML
+    private Button btnReset;
+
+    @FXML
+    private TableColumn<Product, String> colSupplier;
+
 
     @FXML
     private TextField productIdField;
@@ -87,7 +117,7 @@ public class ProductController {
 
     private final static Operations<Product> productOperations = new ProductOperations();
  
-    Employee productManager;
+    private ProductManager productManager;
 
     @FXML
     public void initialize() {
@@ -158,7 +188,7 @@ public class ProductController {
 
     }
 
-    public void setProductManager(Employee p) {
+    public void setProductManager(ProductManager p) {
         productManager = p;
     }
 
@@ -290,14 +320,6 @@ public class ProductController {
             return Double.parseDouble(safeText(tf));
         } catch (NumberFormatException e) {
             return 0.0;
-        }
-    }
-
-    private int parseInt(TextField tf) {
-        try {
-            return Integer.parseInt(safeText(tf));
-        } catch (NumberFormatException e) {
-            return 0;
         }
     }
 

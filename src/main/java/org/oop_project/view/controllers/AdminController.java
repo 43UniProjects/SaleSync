@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.oop_project.database_handler.enums.Role;
 import org.oop_project.database_handler.models.Employee;
+import org.oop_project.database_handler.models.Admin;
 import org.oop_project.database_handler.operations.EmployeeOperations;
 import org.oop_project.database_handler.operations.Operations;
 import org.oop_project.utils.Generate;
@@ -33,6 +34,27 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 public class AdminController {
+    @FXML
+    private Label headAdminPanel;
+
+    @FXML
+    private Label subHeadAdminPanel;
+
+    @FXML
+    private Button btnAccount;
+
+    @FXML
+    private Button btnAdd;
+
+    @FXML
+    private Button btnUpdate;
+
+    @FXML
+    private Button btnDelete;
+
+    @FXML
+    private Button btnClear;
+
 
     private final static Operations<Employee> employeeManager = new EmployeeOperations();
 
@@ -86,7 +108,7 @@ public class AdminController {
     @FXML
     private TableColumn<EmployeeRow, String> colStartDate;
 
-    Employee admin;
+    private Admin admin;
 
     @FXML
     public void initialize() {
@@ -149,7 +171,7 @@ public class AdminController {
 
     }
 
-    public void setAdmin(Employee a) {
+    public void setAdmin(Admin a) {
         admin = a;
     }
 

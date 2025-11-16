@@ -10,7 +10,6 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 import org.oop_project.database_handler.models.Cashier;
-import org.oop_project.database_handler.models.Employee;
 import org.oop_project.database_handler.models.Product;
 import org.oop_project.database_handler.operations.ProductOperations;
 import org.oop_project.utils.Text;
@@ -40,9 +39,25 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 public class CashierController implements Initializable {
+    @FXML
+    private Label headAdminPanel;
+
+    @FXML
+    private Label subHeadAdminPanel;
+
+    @FXML
+    private Button btnAccount;
+
+    @FXML
+    private AnchorPane detailsPane;
+
+    @FXML
+    private Label netTotalMsg;
+
 
     @FXML
     private Button btnLogout;
@@ -92,7 +107,7 @@ public class CashierController implements Initializable {
     private double receivedCashAmount = 0.0;
     private double balance;
 
-    private Employee cashier;
+    private Cashier cashier;
 
     
     String TABLE_CELL_SPACE = "    ";
@@ -125,7 +140,7 @@ public class CashierController implements Initializable {
         Platform.runLater(() -> scanInputField.requestFocus());
     }
 
-    public void setCashier(Employee c) {
+    public void setCashier(Cashier c) {
         cashier = c;
     }
 
