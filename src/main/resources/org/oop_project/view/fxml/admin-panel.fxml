@@ -27,9 +27,9 @@
                   <Font name="Georgia" size="19.0" />
                </font>
             </Label>
-            <Button fx:id="btnLogout" layoutX="970.0" layoutY="20.0" onAction="#logout" prefHeight="30.0" prefWidth="100.0" text="Logout" contentDisplay="LEFT" alignment="CENTER" style="-fx-graphic-text-gap:10; -fx-padding:4 8 4 8;">
+            <Button fx:id="btnLogout" alignment="CENTER" contentDisplay="LEFT" layoutX="970.0" layoutY="20.0" onAction="#logout" prefHeight="30.0" prefWidth="100.0" style="-fx-graphic-text-gap:10; -fx-padding:4 8 4 8;" text="Logout">
                 <graphic>
-                  <ImageView fitWidth="16.0" fitHeight="16.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@/org/oop_project/view/images/sign-out.png" />
                      </image>
@@ -39,6 +39,18 @@
             <Font name="System Bold" size="12.800000190734863" />
          </font>
       </Button>
+            <Button fx:id="btnAccount" layoutX="970.0" layoutY="66.0" mnemonicParsing="false" onAction="#showProfile" prefHeight="30.0" prefWidth="100.0" text="Profile">
+               <font>
+                  <Font name="System Bold" size="12.800000190734863" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@/org/oop_project/view/images/user.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
          </children>
       </AnchorPane>
 

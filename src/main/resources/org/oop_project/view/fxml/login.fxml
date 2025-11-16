@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorMain" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" styleClass="root-dark" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.oop_project.view.controllers.LoginController">
+<AnchorPane id="AnchorMain" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="419.0" prefWidth="592.0" styleClass="root-dark" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.oop_project.view.controllers.LoginController">
    <children>
       <AnchorPane id="AnchorHead" layoutX="-3.0" prefHeight="146.0" prefWidth="595.0" stylesheets="@../css/style.css">
          <children>
@@ -40,12 +40,12 @@
          </font>
       </Label>
       <PasswordField fx:id="passwordField" layoutX="267.0" layoutY="279.0" prefHeight="27.0" prefWidth="190.0" />
-      <Button id="btnLogin" fx:id="btnSubmit" layoutX="251.0" layoutY="330.0" mnemonicParsing="false" onAction="#submit" prefHeight="30.0" prefWidth="130.0" text="Login">
+      <Button id="btnLogin" fx:id="btnSubmit" layoutX="245.0" layoutY="332.0" mnemonicParsing="false" onAction="#submit" prefHeight="30.0" prefWidth="130.0" text="Login">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
       </Button>
-      <Label id="loginStatus" fx:id="loginStatus" alignment="CENTER" contentDisplay="CENTER" layoutX="127.0" layoutY="382.0" prefHeight="27.0" prefWidth="346.0" textAlignment="CENTER">
+      <Label id="loginStatus" fx:id="loginStatus" alignment="CENTER" contentDisplay="CENTER" layoutX="130.0" layoutY="376.0" prefHeight="27.0" prefWidth="346.0" textAlignment="CENTER">
          <font>
          <Font size="16.0" />
          </font>

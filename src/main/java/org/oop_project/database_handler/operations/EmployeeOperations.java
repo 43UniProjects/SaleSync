@@ -1,18 +1,18 @@
 package org.oop_project.database_handler.operations;
 
-import com.mongodb.client.MongoCollection;
-import com.mongodb.client.model.Filters;
-import com.mongodb.client.model.Sorts;
-import org.bson.Document;
-import org.bson.conversions.Bson;
-import org.oop_project.database_handler.models.Employee;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import static com.mongodb.client.model.Filters.eq;
+import org.bson.Document;
+import org.bson.conversions.Bson;
 import static org.oop_project.database_handler.DatabaseConnectionManager.EMPLOYEE_COLLECTION_NAME;
+import org.oop_project.database_handler.models.Employee;
+
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.model.Filters;
+import static com.mongodb.client.model.Filters.eq;
+import com.mongodb.client.model.Sorts;
 
 public class EmployeeOperations implements Operations<Employee> {
 

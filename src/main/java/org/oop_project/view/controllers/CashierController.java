@@ -15,6 +15,7 @@ import org.oop_project.database_handler.models.Product;
 import org.oop_project.database_handler.operations.ProductOperations;
 import org.oop_project.utils.Text;
 import org.oop_project.view.helpers.BillRow;
+import org.oop_project.view.helpers.Navigators;
 
 import static org.oop_project.view.helpers.Validator.safeText;
 import static org.oop_project.view.helpers.Navigators.navigateToLoginPanel;
@@ -38,6 +39,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 public class CashierController implements Initializable {
@@ -316,7 +318,7 @@ public class CashierController implements Initializable {
             statusLabel.setStyle("-fx-text-fill: red;");
             return;
         }
-
+        
         try {
             receivedCashAmount = Double.parseDouble(result.get().trim());
         } catch (NumberFormatException ex) {
@@ -343,6 +345,8 @@ public class CashierController implements Initializable {
             String css = getClass().getResource("/org/oop_project/view/css/style.css").toExternalForm();
             scene.getStylesheets().add(css);
             Stage stage = new Stage();
+            Image icon = new Image(Navigators.class.getResourceAsStream("/org/oop_project/view/images/icon.png"));
+            stage.getIcons().add(icon);
             stage.setScene(scene);
             stage.setTitle("SaleSync - Checkout");
             stage.setResizable(false);
@@ -542,6 +546,35 @@ public class CashierController implements Initializable {
 
     private Optional<BillRow> itemAddedBefore(String itemName) {
         return productList.stream().filter(p -> p.getItemName().equals(itemName)).findFirst();
+    }
+
+    @FXML
+    public void showProfile(ActionEvent actionEvent) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/oop_project/view/fxml/profile.fxml"));
+            Scene scene = new Scene(loader.load());
+            String css = getClass().getResource("/org/oop_project/view/css/style.css").toExternalForm();
+            scene.getStylesheets().add(css);
+            Stage stage = new Stage();
+            Image icon = new Image(Navigators.class.getResourceAsStream("/org/oop_project/view/images/icon.png"));
+            stage.getIcons().add(icon);
+            stage.setScene(scene);
+            stage.setTitle("SaleSync - Profile");
+            stage.setResizable(false);
+            stage.centerOnScreen();
+
+            ProfileController pc = (ProfileController) loader.getController();
+            pc.setDetails(cashier);
+
+            stage.show();
+
+            scanInputField.requestFocus();
+
+        } catch (Exception e) {
+            System.err.println("Error displaying profile: " + e.getMessage());
+        }
+
+        actionEvent.consume();
     }
 
 }
