@@ -384,7 +384,7 @@ public class CashierController implements Initializable {
 
         saleOp.add(new Sale(
             saleOp.getLastId() + 1,
-            cashier.getUsername(),
+            cashier.getId(),
             totalBillAmount,
             LocalDate.now()
         ));
@@ -476,7 +476,7 @@ public class CashierController implements Initializable {
         
         tableBuilder.append(HRULE + NEW_LINE);
 
-        System.out.println(tableBuilder.toString());
+        //System.out.println(tableBuilder.toString());
 
         return tableBuilder.toString();
 
