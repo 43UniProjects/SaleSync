@@ -42,6 +42,7 @@ public class AdminController {
 
     @FXML
     private Button btnAccount;
+    
 
     @FXML
     private Button btnAdd;
@@ -377,6 +378,25 @@ public class AdminController {
 
         } catch (Exception e) {
             System.err.println("Error displaying profile: " + e.getMessage());
+        }
+        actionEvent.consume();
+    }
+
+    @FXML
+    public void openAnalysis(ActionEvent actionEvent) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/oop_project/view/fxml/analysis.fxml"));
+            Scene scene = new Scene(loader.load());
+            String css = getClass().getResource("/org/oop_project/view/css/style.css").toExternalForm();
+            scene.getStylesheets().add(css);
+            Stage stage = new Stage();
+            stage.setScene(scene);
+            stage.setTitle("SaleSync - Analysis");
+            stage.setResizable(false);
+            stage.centerOnScreen();
+            stage.show();
+        } catch (Exception e) {
+            System.err.println("Error displaying analysis: " + e.getMessage());
         }
         actionEvent.consume();
     }

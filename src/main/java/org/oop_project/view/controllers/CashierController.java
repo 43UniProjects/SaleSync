@@ -3,6 +3,7 @@ package org.oop_project.view.controllers;
 
 import java.net.URL;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -386,7 +387,7 @@ public class CashierController implements Initializable {
             saleOp.getLastId() + 1,
             cashier.getId(),
             totalBillAmount,
-            LocalDate.now()
+            LocalDateTime.now()
         ));
 
         // Reset for next transaction
@@ -461,8 +462,8 @@ public class CashierController implements Initializable {
 
         String receivedCashAmountStr = String.valueOf("%.2f".formatted(receivedCashAmount));
 
-        System.out.println(receivedCashAmountStr);
-        System.out.println(receivedCashAmountStr.length());
+        //System.out.println(receivedCashAmountStr);
+        //System.out.println(receivedCashAmountStr.length());
 
         String formattedTotalBillAmount = ("%" + receivedCashAmountStr.length() + ".2f").formatted(totalBillAmount);
         String formatterReceivedCashAmount = ("%" + receivedCashAmountStr.length() + ".2f").formatted(receivedCashAmount);

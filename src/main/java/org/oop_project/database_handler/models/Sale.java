@@ -1,6 +1,8 @@
 package org.oop_project.database_handler.models;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 import org.bson.codecs.pojo.annotations.BsonId;
 import org.bson.codecs.pojo.annotations.BsonProperty;
@@ -15,11 +17,15 @@ public class Sale {
 
     private String cashierId;
     private double price;
-    private LocalDate date;
+    private LocalDateTime date;
 
     // Constructors, getters, and setters
 
-    public Sale(int transactionId, String cashierId, double price, LocalDate date) {
+    // Required by the MongoDB PojoCodec to instantiate the POJO
+    public Sale() {
+    }
+
+    public Sale(int transactionId, String cashierId, double price, LocalDateTime date) {
         this.transactionId = transactionId;
         this.cashierId = cashierId;
         this.price = price;
@@ -38,7 +44,7 @@ public class Sale {
         return price;
     }
 
-    public LocalDate getDate() {
+    public LocalDateTime getDate() {
         return date;
     }
 
@@ -54,8 +60,16 @@ public class Sale {
         this.price = price;
     }
 
-    public void setDate(LocalDate date) {
+    public void setDate(LocalDateTime date) {
         this.date = date;
+    }
+
+    public String get_id() {
+        return _id;
+    }
+
+    public void set_id(String _id) {
+        this._id = _id;
     }
 
 }
