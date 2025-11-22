@@ -11,10 +11,13 @@ import java.util.ResourceBundle;
 
 import org.oop_project.database_handler.models.Cashier;
 import org.oop_project.database_handler.models.Product;
+import org.oop_project.database_handler.models.Sale;
 import org.oop_project.database_handler.operations.ProductOperations;
+import org.oop_project.database_handler.operations.SaleOperations;
 import org.oop_project.utils.Text;
 import org.oop_project.view.helpers.BillRow;
 import org.oop_project.view.helpers.Navigators;
+import java.time.LocalDate;
 
 import static org.oop_project.view.helpers.Validator.safeText;
 import static org.oop_project.view.helpers.Navigators.navigateToLoginPanel;
@@ -97,6 +100,7 @@ public class CashierController implements Initializable {
     private Button btnCheckout;
 
     private final static ProductOperations productManager = new ProductOperations();
+    private final static SaleOperations saleOp = new SaleOperations();
     private final ObservableList<BillRow> billItemTableRows = FXCollections.observableArrayList();
     private ArrayList<BillRow> productList = new ArrayList<>();
 
@@ -377,6 +381,13 @@ public class CashierController implements Initializable {
         } catch (Exception e) {
             System.err.println("Error displaying bill: " + e.getMessage());
         }
+
+        saleOp.add(new Sale(
+            saleOp.getLastId() + 1,
+            cashier.getUsername(),
+            totalBillAmount,
+            LocalDate.now()
+        ));
 
         // Reset for next transaction
         billItemTableRows.clear();
