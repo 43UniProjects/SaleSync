@@ -169,6 +169,22 @@
     -fx-background-color: #f1a22b;
 }
 
+#btnAnalytics {
+    background-color: #3071cc; /* compat */
+    -fx-background-color: #3071cc;
+    -fx-background-radius: 5;
+    cursor: hand; /* compat */
+    -fx-cursor: hand;
+    -fx-alignment: CENTER; /* Centers both text and image */
+    -fx-graphic-text-gap: 5; /* Adjusts spacing between text and image */
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+
+#btnAnalytics:hover {
+    -fx-background-color: #376eb7;
+}
+
 #btnAccount {
     background-color: #1c9856; /* compat */
     -fx-background-color: #1c9856;

@@ -5,8 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.oop_project.database_handler.enums.Role;
-import org.oop_project.database_handler.models.Employee;
 import org.oop_project.database_handler.models.Admin;
+import org.oop_project.database_handler.models.Employee;
 import org.oop_project.database_handler.operations.EmployeeOperations;
 import org.oop_project.database_handler.operations.Operations;
 import org.oop_project.utils.Generate;
@@ -88,6 +88,9 @@ public class AdminController {
     private Label statusLabel;
     @FXML
     private DatePicker startDatePicker;
+
+    @FXML
+    private Button btnAnalytics;   
 
     // Table columns
     @FXML
@@ -383,20 +386,20 @@ public class AdminController {
     }
 
     @FXML
-    public void openAnalysis(ActionEvent actionEvent) {
+    public void showAnalytics(ActionEvent actionEvent) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/oop_project/view/fxml/analysis.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/oop_project/view/fxml/analytics.fxml"));
             Scene scene = new Scene(loader.load());
             String css = getClass().getResource("/org/oop_project/view/css/style.css").toExternalForm();
             scene.getStylesheets().add(css);
             Stage stage = new Stage();
             stage.setScene(scene);
-            stage.setTitle("SaleSync - Analysis");
+            stage.setTitle("SaleSync - Analytics");
             stage.setResizable(false);
             stage.centerOnScreen();
             stage.show();
         } catch (Exception e) {
-            System.err.println("Error displaying analysis: " + e.getMessage());
+            System.err.println("Error displaying analytics: " + e.getMessage());
         }
         actionEvent.consume();
     }
