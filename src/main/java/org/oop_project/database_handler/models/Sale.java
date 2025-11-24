@@ -1,8 +1,6 @@
 package org.oop_project.database_handler.models;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 
 import org.bson.codecs.pojo.annotations.BsonId;
 import org.bson.codecs.pojo.annotations.BsonProperty;
@@ -18,6 +16,7 @@ public class Sale {
     private String cashierId;
     private double price;
     private LocalDateTime date;
+    private int itemsCount; // total number of items in this sale
 
     // Constructors, getters, and setters
 
@@ -30,6 +29,15 @@ public class Sale {
         this.cashierId = cashierId;
         this.price = price;
         this.date = date;
+        this.itemsCount = 0;
+    }
+
+    public Sale(int transactionId, String cashierId, double price, LocalDateTime date, int itemsCount) {
+        this.transactionId = transactionId;
+        this.cashierId = cashierId;
+        this.price = price;
+        this.date = date;
+        this.itemsCount = itemsCount;
     }
 
     public int getTransactionId() {
@@ -48,6 +56,10 @@ public class Sale {
         return date;
     }
 
+    public int getItemsCount() {
+        return itemsCount;
+    }
+
     public void setTransactionId(int transactionId) {
         this.transactionId = transactionId;
     }
@@ -62,6 +74,10 @@ public class Sale {
 
     public void setDate(LocalDateTime date) {
         this.date = date;
+    }
+
+    public void setItemsCount(int itemsCount) {
+        this.itemsCount = itemsCount;
     }
 
     public String get_id() {

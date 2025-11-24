@@ -1,20 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane fx:id="AnchorMain" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="522.0" prefWidth="677.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.oop_project.view.controllers.AnalysisController">
+<AnchorPane fx:id="AnchorMain2" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="476.0" prefWidth="677.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.oop_project.view.controllers.AnalysisController">
    <children>
-      <AnchorPane fx:id="AnchorHead" prefHeight="113.0" prefWidth="677.0">
+      <AnchorPane fx:id="AnchorHead" prefHeight="99.0" prefWidth="678.0">
          <children>
-            <Label alignment="CENTER" layoutY="39.0" prefHeight="19.0" prefWidth="677.0" text="Analytics Dashboard">
-               <font>
-                  <Font name="System Bold" size="23.0" />
-               </font>
-            </Label>
+                  <Label fx:id="AnlHead" alignment="CENTER" layoutY="30.0" prefHeight="24.0" prefWidth="677.0" text="Analytics Dashboard">
+                     <font>
+                        <Font name="System Bold" size="26.0" />
+                     </font>
+                  </Label>
          </children>
       </AnchorPane>
+      <AnchorPane fx:id="analyticsSide" layoutY="90.0" prefHeight="388.0" prefWidth="135.0">
+         <children>
+         <Button fx:id="btnDaily" layoutX="24.0" layoutY="108.0" mnemonicParsing="false" onAction="#onDaily" prefHeight="38.0" prefWidth="87.0" text="Daily">
+               <font>
+                  <Font name="System Bold" size="12.800000190734863" />
+               </font>
+            </Button>
+            <Button fx:id="btnWeekly" layoutX="24.0" layoutY="165.0" mnemonicParsing="false" onAction="#onWeekly" prefHeight="38.0" prefWidth="87.0" text="Weekly">
+               <font>
+                  <Font name="System Bold" size="12.800000190734863" />
+               </font>
+            </Button>
+            <Button fx:id="btnMonthly" layoutX="24.0" layoutY="222.0" mnemonicParsing="false" onAction="#onMonthly" prefHeight="38.0" prefWidth="87.0" text="Monthly">
+               <font>
+                  <Font name="System Bold" size="12.800000190734863" />
+               </font>
+            </Button>
+         </children>
+      </AnchorPane>
+      <TextArea fx:id="analyticsOutput" layoutX="135.0" layoutY="98.0" prefHeight="360.0" prefWidth="524.0" />
    </children>
 </AnchorPane>
