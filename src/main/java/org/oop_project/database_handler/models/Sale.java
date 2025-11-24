@@ -11,20 +11,17 @@ public class Sale {
     private String _id;
 
     @BsonProperty("transactionId")
-    private int transactionId;
+    private String transactionId;
 
     private String cashierId;
     private double price;
     private LocalDateTime date;
-    private int itemsCount; // total number of items in this sale
+    private int itemsCount; 
 
-    // Constructors, getters, and setters
-
-    // Required by the MongoDB PojoCodec to instantiate the POJO
     public Sale() {
     }
 
-    public Sale(int transactionId, String cashierId, double price, LocalDateTime date) {
+    public Sale(String transactionId, String cashierId, double price, LocalDateTime date) {
         this.transactionId = transactionId;
         this.cashierId = cashierId;
         this.price = price;
@@ -32,7 +29,7 @@ public class Sale {
         this.itemsCount = 0;
     }
 
-    public Sale(int transactionId, String cashierId, double price, LocalDateTime date, int itemsCount) {
+    public Sale(String transactionId, String cashierId, double price, LocalDateTime date, int itemsCount) {
         this.transactionId = transactionId;
         this.cashierId = cashierId;
         this.price = price;
@@ -40,27 +37,27 @@ public class Sale {
         this.itemsCount = itemsCount;
     }
 
-    public int getTransactionId() {
-        return transactionId;
+    public String getTransactionId() {
+        return this.transactionId;
     }
 
     public String getCashierId() {
-        return cashierId;
+        return this.cashierId;
     }
 
     public double getPrice() {
-        return price;
+        return this.price;
     }
 
     public LocalDateTime getDate() {
-        return date;
+        return this.date;
     }
 
     public int getItemsCount() {
-        return itemsCount;
+        return this.itemsCount;
     }
 
-    public void setTransactionId(int transactionId) {
+    public void setTransactionId(String transactionId) {
         this.transactionId = transactionId;
     }
 
@@ -80,11 +77,11 @@ public class Sale {
         this.itemsCount = itemsCount;
     }
 
-    public String get_id() {
-        return _id;
+    public String getId() {
+        return this._id;
     }
 
-    public void set_id(String _id) {
+    public void setId(String _id) {
         this._id = _id;
     }
 

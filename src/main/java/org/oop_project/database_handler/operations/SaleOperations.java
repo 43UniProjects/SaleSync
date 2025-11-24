@@ -1,38 +1,65 @@
 package org.oop_project.database_handler.operations;
 
 import static org.oop_project.database_handler.DatabaseConnectionManager.SALE_COLLECTION_NAME;
+
+import org.bson.Document;
+import org.bson.conversions.Bson;
 import org.oop_project.database_handler.models.Sale;
-import static org.oop_project.database_handler.operations.Operations.dbClient;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 import com.mongodb.client.MongoCollection;
-import static com.mongodb.client.model.Filters.eq;
+
+import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Sorts;
 
-public class SaleOperations {
+public class SaleOperations implements Operations<Sale> {
 
     private final MongoCollection<Sale> saleCollection = dbClient.getCollection(SALE_COLLECTION_NAME, Sale.class);
 
-    public int getLastId() {
-        Sale s = saleCollection.find().sort(Sorts.descending("transactionId")).first();
-        return s != null ? s.getTransactionId() : 0;
-    }
-
+    @Override    
     public void add(Sale newSale) {
         saleCollection.insertOne(newSale);
-        //System.out.printf("\nSale saved: %d\n", newSale.getTransactionId());
+        System.out.println("\nProduct added: " + newSale.getId());
     }
 
-    public boolean find(int transactionId) {
-        return saleCollection.find(eq("transactionId", transactionId)).first() != null;
+    @Override
+    public boolean find(String id) {
+        return saleCollection.find(Filters.eq("id", id)).first() != null;
     }
 
-    public Sale get(int transactionId) {
-        return saleCollection.find(eq("transactionId", transactionId)).first();
+    @Override
+    public Sale get(String id) {
+        return saleCollection.find(Filters.eq("id", id)).first();
     }
 
-    public java.util.List<Sale> getAll() {
-        java.util.List<Sale> list = new java.util.ArrayList<>();
-        saleCollection.find().into(list);
-        return list;
+    @Override
+    public List<Sale> getAll() {
+        List<Sale> sales = new ArrayList<>();
+        saleCollection.find().into(sales);
+        return sales.isEmpty() ? null : sales;
     }
+
+    @Override
+    public String getLastId() {
+        Sale lastSale = saleCollection.find().sort(Sorts.descending("_id")).first();
+        return lastSale != null ? lastSale.getId() : null;
+    }
+
+    @Override
+    public void update(String id, HashMap<String, Object> updatedRecords) {
+        Bson filter = Filters.eq("id", id);
+
+        Bson updateOperation = new Document("$set", new Document(updatedRecords));
+        saleCollection.updateOne(filter, updateOperation);
+    }
+
+    @Override
+    public boolean delete(String id) {
+        // this can return whether record is deleted or not as a boolean value
+        return saleCollection.deleteOne(Filters.eq("id", id)).getDeletedCount() > 0;
+    }
+
 }
