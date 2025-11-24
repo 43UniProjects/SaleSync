@@ -11,6 +11,7 @@ import java.util.ResourceBundle;
 
 import org.oop_project.database_handler.models.Sale;
 import org.oop_project.database_handler.operations.SaleOperations;
+import org.oop_project.database_handler.operations.EmployeeOperations;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -30,7 +31,7 @@ public class AnalysisController implements Initializable {
 	private TextArea analyticsOutput;
 
 	private final SaleOperations saleOp = new SaleOperations();
-	private final org.oop_project.database_handler.operations.EmployeeOperations empOp = new org.oop_project.database_handler.operations.EmployeeOperations();
+	private final EmployeeOperations empOp = new EmployeeOperations();
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {

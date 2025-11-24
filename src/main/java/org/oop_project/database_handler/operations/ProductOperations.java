@@ -44,7 +44,7 @@ public class ProductOperations implements Operations<Product> {
 
     @Override
     public String getLastId() {
-        Product lastProduct = productCollection.find().sort(Sorts.descending("id")).first();
+        Product lastProduct = productCollection.find().sort(Sorts.descending("_id")).first();
         return lastProduct != null ? lastProduct.getId() : null;
     }
 

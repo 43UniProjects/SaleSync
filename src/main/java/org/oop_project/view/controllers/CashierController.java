@@ -3,7 +3,6 @@ package org.oop_project.view.controllers;
 
 import java.net.URL;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,7 +17,6 @@ import org.oop_project.database_handler.operations.SaleOperations;
 import org.oop_project.utils.Text;
 import org.oop_project.view.helpers.BillRow;
 import org.oop_project.view.helpers.Navigators;
-import java.time.LocalDate;
 
 import static org.oop_project.view.helpers.Validator.safeText;
 import static org.oop_project.view.helpers.Navigators.navigateToLoginPanel;
@@ -171,7 +169,8 @@ public class CashierController implements Initializable {
             Platform.runLater(() -> scanInputField.clear());
             statusLabel.setText("");
             Platform.runLater(() -> scanInputField.setText(currentScanValue.substring(currentScanValue.length() - 1)));
-            scanInputField.requestFocus();
+            Platform.runLater(() -> scanInputField.requestFocus());
+            Platform.runLater(() -> scanInputField.positionCaret(scanInputField.getLength()));
         }
 
         if (!productManager.find(currentScanValue)) {
