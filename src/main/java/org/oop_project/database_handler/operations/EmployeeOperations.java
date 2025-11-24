@@ -11,7 +11,6 @@ import org.oop_project.database_handler.models.Employee;
 import static org.oop_project.utils.EmployeeMapper.mapEmployee;
 import static org.oop_project.utils.EmployeeMapper.mapEmployees;
 
-
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Filters;
 import static com.mongodb.client.model.Filters.eq;
@@ -36,6 +35,13 @@ public class EmployeeOperations implements Operations<Employee> {
     @Override
     public Employee get(String username) {
         return mapEmployee(employeeCollection.find(eq("username", username)).first());
+    }
+
+    /**
+     * Get an employee by their numeric/user id field (`id`).
+     */
+    public Employee getById(String id) {
+        return mapEmployee(employeeCollection.find(eq("id", id)).first());
     }
 
     @Override

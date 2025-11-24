@@ -5,8 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.oop_project.database_handler.enums.Role;
-import org.oop_project.database_handler.models.Employee;
 import org.oop_project.database_handler.models.Admin;
+import org.oop_project.database_handler.models.Employee;
 import org.oop_project.database_handler.operations.EmployeeOperations;
 import org.oop_project.database_handler.operations.Operations;
 import org.oop_project.utils.Generate;
@@ -42,6 +42,7 @@ public class AdminController {
 
     @FXML
     private Button btnAccount;
+    
 
     @FXML
     private Button btnAdd;
@@ -87,6 +88,9 @@ public class AdminController {
     private Label statusLabel;
     @FXML
     private DatePicker startDatePicker;
+
+    @FXML
+    private Button btnAnalytics;   
 
     // Table columns
     @FXML
@@ -377,6 +381,27 @@ public class AdminController {
 
         } catch (Exception e) {
             System.err.println("Error displaying profile: " + e.getMessage());
+        }
+        actionEvent.consume();
+    }
+
+    @FXML
+    public void showAnalytics(ActionEvent actionEvent) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/oop_project/view/fxml/analytics.fxml"));
+            Scene scene = new Scene(loader.load());
+            String css = getClass().getResource("/org/oop_project/view/css/style.css").toExternalForm();
+            scene.getStylesheets().add(css);
+            Stage stage = new Stage();
+            Image icon = new Image(Navigators.class.getResourceAsStream("/org/oop_project/view/images/icon.png"));
+            stage.getIcons().add(icon);
+            stage.setScene(scene);
+            stage.setTitle("SaleSync - Analytics");
+            stage.setResizable(false);
+            stage.centerOnScreen();
+            stage.show();
+        } catch (Exception e) {
+            System.err.println("Error displaying analytics: " + e.getMessage());
         }
         actionEvent.consume();
     }

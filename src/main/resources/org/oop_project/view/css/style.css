@@ -1,3 +1,4 @@
+
 .date-picker .arrow-button,
 .date-picker .text-field,
 .date-picker .cell,
@@ -34,9 +35,13 @@
 
 /* heading styles */
 
-#headLogin, #headAdminPanel, #productHead  {
+#headLogin, #headAdminPanel, #productHead, #AnlHead  {
     -fx-text-fill: rgb(192, 192, 243);
     -fx-font-size: 36px;
+}
+
+#AnlHead {
+    -fx-font-size: 34px;
 }
 
 #headCashierPanel {
@@ -59,6 +64,11 @@
     -fx-text-fill: #6cb2ff;
 }
 
+#analyticsSide {
+    background-color: #3d3d3d; /* compat */
+    -fx-background-color: #3d3d3d;
+}
+
 
 
 #dobPicker, #startDatePicker {
@@ -77,6 +87,11 @@
 #AnchorMain {
     background-color: #333333; /* compat */
     -fx-background-color: #333333;
+}
+
+#AnchorMain2 {
+    background-color: #3d3d3d; /* compat */
+    -fx-background-color: #3d3d3d;
 }
 
 #otpAlert {
@@ -101,6 +116,22 @@
 #btnAdd:hover, #btnSearch:hover, #btnPrint:hover {
     background-color: #45a049; /* compat */
     -fx-background-color: #45a049;
+}
+
+#btnDaily, #btnWeekly, #btnMonthly {
+     background-color: #164fc2; /* compat */
+    -fx-background-color: #164fc2;
+    -fx-text-fill: white;
+    -fx-background-radius: 5;
+    cursor: hand; /* compat */
+    -fx-cursor: hand;
+    -fx-alignment: CENTER; /* Centers both text and image */
+    -fx-graphic-text-gap: 5; /* Adjusts spacing between text and image */
+}
+
+#btnDaily:hover, #btnWeekly:hover, #btnMonthly:hover {
+    background-color: #2941a9; /* compat */
+    -fx-background-color: #2941a9;
 }
 
 #btnAdd, #btnClear, #btnDelete, #btnClear, #btnReset, #btnUpdate, #btnLogout{
@@ -167,6 +198,22 @@
 
 #btnLogout:hover {
     -fx-background-color: #f1a22b;
+}
+
+#btnAnalytics {
+    background-color: #3071cc; /* compat */
+    -fx-background-color: #3071cc;
+    -fx-background-radius: 5;
+    cursor: hand; /* compat */
+    -fx-cursor: hand;
+    -fx-alignment: CENTER; /* Centers both text and image */
+    -fx-graphic-text-gap: 5; /* Adjusts spacing between text and image */
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+
+#btnAnalytics:hover {
+    -fx-background-color: #376eb7;
 }
 
 #btnAccount {

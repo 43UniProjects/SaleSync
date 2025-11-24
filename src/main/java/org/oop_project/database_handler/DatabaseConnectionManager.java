@@ -24,6 +24,7 @@ public class DatabaseConnectionManager {
     public static final String PRODUCT_COLLECTION_NAME = "Product";
     public static final String SUPPLIER_COLLECTION_NAME = "Supplier";
     public static final String ITEM_FAMILY_COLLECTION_NAME = "ItemFamily";
+    public static final String SALE_COLLECTION_NAME = "Sale";
 
     private static DatabaseConnectionManager INSTANCE; // Keep a single shared instance (simple singleton pattern)
     private MongoClient mongoClient;

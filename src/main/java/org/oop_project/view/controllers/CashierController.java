@@ -3,6 +3,7 @@ package org.oop_project.view.controllers;
 
 import java.net.URL;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,10 +12,13 @@ import java.util.ResourceBundle;
 
 import org.oop_project.database_handler.models.Cashier;
 import org.oop_project.database_handler.models.Product;
+import org.oop_project.database_handler.models.Sale;
 import org.oop_project.database_handler.operations.ProductOperations;
+import org.oop_project.database_handler.operations.SaleOperations;
 import org.oop_project.utils.Text;
 import org.oop_project.view.helpers.BillRow;
 import org.oop_project.view.helpers.Navigators;
+import java.time.LocalDate;
 
 import static org.oop_project.view.helpers.Validator.safeText;
 import static org.oop_project.view.helpers.Navigators.navigateToLoginPanel;
@@ -97,6 +101,7 @@ public class CashierController implements Initializable {
     private Button btnCheckout;
 
     private final static ProductOperations productManager = new ProductOperations();
+    private final static SaleOperations saleOp = new SaleOperations();
     private final ObservableList<BillRow> billItemTableRows = FXCollections.observableArrayList();
     private ArrayList<BillRow> productList = new ArrayList<>();
 
@@ -378,6 +383,17 @@ public class CashierController implements Initializable {
             System.err.println("Error displaying bill: " + e.getMessage());
         }
 
+        // compute total items sold in this transaction
+        int totalItems = productList.stream().mapToInt(item -> (int) Math.round(item.getQuantity())).sum();
+
+        saleOp.add(new Sale(
+            saleOp.getLastId() + 1,
+            cashier.getId(),
+            totalBillAmount,
+            LocalDateTime.now(),
+            totalItems
+        ));
+
         // Reset for next transaction
         billItemTableRows.clear();
         productList.clear();
@@ -450,8 +466,8 @@ public class CashierController implements Initializable {
 
         String receivedCashAmountStr = String.valueOf("%.2f".formatted(receivedCashAmount));
 
-        System.out.println(receivedCashAmountStr);
-        System.out.println(receivedCashAmountStr.length());
+        //System.out.println(receivedCashAmountStr);
+        //System.out.println(receivedCashAmountStr.length());
 
         String formattedTotalBillAmount = ("%" + receivedCashAmountStr.length() + ".2f").formatted(totalBillAmount);
         String formatterReceivedCashAmount = ("%" + receivedCashAmountStr.length() + ".2f").formatted(receivedCashAmount);
@@ -465,7 +481,7 @@ public class CashierController implements Initializable {
         
         tableBuilder.append(HRULE + NEW_LINE);
 
-        System.out.println(tableBuilder.toString());
+        //System.out.println(tableBuilder.toString());
 
         return tableBuilder.toString();
 
