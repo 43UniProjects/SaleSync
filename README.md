@@ -1,8 +1,6 @@
-#  🛒 SaleSync
+#  🛒 SaleSync - A Modern Sales Manager
 
 <div align="center">
-
-**Simple Store Manager Application**
 
 This project was developed to fulfill the requirements of the **Object Oriented Programming** course module **(IIC 1153)** at the University of Sri Jayewardenepura, Faculty of Technology
 
