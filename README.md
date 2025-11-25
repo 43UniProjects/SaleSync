@@ -1,4 +1,4 @@
-#  🛒 SaleSync - A Modern Sales Manager
+##  🛒 SaleSync - A Modern Sales Manager
 
 <div align="center">
 
