@@ -382,16 +382,22 @@ public class CashierController implements Initializable {
             System.err.println("Error displaying bill: " + e.getMessage());
         }
 
+        
+
         // compute total items sold in this transaction
         int totalItems = productList.stream().mapToInt(item -> (int) Math.round(item.getQuantity())).sum();
 
+
         saleOp.add(new Sale(
-            saleOp.getLastId() + 1,
+            String.valueOf(Integer.parseInt(saleOp.getLastId()) + 1),
+            
             cashier.getId(),
             totalBillAmount,
             LocalDateTime.now(),
             totalItems
         ));
+
+        System.out.println("Sale recorded");
 
         // Reset for next transaction
         billItemTableRows.clear();

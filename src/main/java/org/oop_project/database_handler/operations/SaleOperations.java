@@ -1,17 +1,15 @@
 package org.oop_project.database_handler.operations;
 
-import static org.oop_project.database_handler.DatabaseConnectionManager.SALE_COLLECTION_NAME;
-
-import org.bson.Document;
-import org.bson.conversions.Bson;
-import org.oop_project.database_handler.models.Sale;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import com.mongodb.client.MongoCollection;
+import org.bson.Document;
+import org.bson.conversions.Bson;
+import static org.oop_project.database_handler.DatabaseConnectionManager.SALE_COLLECTION_NAME;
+import org.oop_project.database_handler.models.Sale;
 
+import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Sorts;
 
@@ -27,12 +25,12 @@ public class SaleOperations implements Operations<Sale> {
 
     @Override
     public boolean find(String id) {
-        return saleCollection.find(Filters.eq("id", id)).first() != null;
+        return saleCollection.find(Filters.eq("transactionId", id)).first() != null;
     }
 
     @Override
     public Sale get(String id) {
-        return saleCollection.find(Filters.eq("id", id)).first();
+        return saleCollection.find(Filters.eq("transactionId", id)).first();
     }
 
     @Override
@@ -44,13 +42,13 @@ public class SaleOperations implements Operations<Sale> {
 
     @Override
     public String getLastId() {
-        Sale lastSale = saleCollection.find().sort(Sorts.descending("_id")).first();
-        return lastSale != null ? lastSale.getId() : null;
+        Sale lastSale = saleCollection.find().sort(Sorts.descending("transactionId")).first();
+        return lastSale != null ? lastSale.getTransactionId() : "0";
     }
 
     @Override
     public void update(String id, HashMap<String, Object> updatedRecords) {
-        Bson filter = Filters.eq("id", id);
+        Bson filter = Filters.eq("transactionId", id);
 
         Bson updateOperation = new Document("$set", new Document(updatedRecords));
         saleCollection.updateOne(filter, updateOperation);
