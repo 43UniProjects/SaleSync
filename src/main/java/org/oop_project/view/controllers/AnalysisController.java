@@ -9,9 +9,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+import org.oop_project.database_handler.models.Employee;
 import org.oop_project.database_handler.models.Sale;
-import org.oop_project.database_handler.operations.SaleOperations;
 import org.oop_project.database_handler.operations.EmployeeOperations;
+import org.oop_project.database_handler.operations.SaleOperations;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -120,7 +121,7 @@ public class AnalysisController implements Initializable {
 			String bestName = "-";
 			if (!bestId.equals("-")) {
 				try {
-					org.oop_project.database_handler.models.Employee emp = empOp.getById(bestId);
+					Employee emp = empOp.getById(bestId);
 					if (emp != null) {
 						bestName = (emp.getFirstName() != null ? emp.getFirstName() : "") + " " + (emp.getLastName() != null ? emp.getLastName() : "");
 					}

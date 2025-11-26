@@ -4,11 +4,17 @@ import java.time.LocalDateTime;
 
 import org.bson.codecs.pojo.annotations.BsonId;
 import org.bson.codecs.pojo.annotations.BsonProperty;
+import org.bson.types.ObjectId;
 
 public class Sale {
 
+    // MongoDB document id (ObjectId)
     @BsonId
-    private String _id;
+    private ObjectId _id;
+
+    // Application-level string identifier used for ordering/printing
+    @BsonProperty("id")
+    private String id;
 
     @BsonProperty("transactionId")
     private String transactionId;
@@ -16,21 +22,15 @@ public class Sale {
     private String cashierId;
     private double price;
     private LocalDateTime date;
-    private int itemsCount; 
+    @BsonProperty("itemCount")
+    private int itemsCount;
 
     public Sale() {
     }
 
-    public Sale(String transactionId, String cashierId, double price, LocalDateTime date) {
-        this.transactionId = transactionId;
-        this.cashierId = cashierId;
-        this.price = price;
-        this.date = date;
-        this.itemsCount = 0;
-    }
-
-    public Sale(String transactionId, String cashierId, double price, LocalDateTime date, int itemsCount) {
-        this.transactionId = transactionId;
+    public Sale(String id, String cashierId, double price, LocalDateTime date, int itemsCount) {
+        this.id = id;
+        this.transactionId = id; // reuse id as transaction id if caller provides single id
         this.cashierId = cashierId;
         this.price = price;
         this.date = date;
@@ -77,12 +77,22 @@ public class Sale {
         this.itemsCount = itemsCount;
     }
 
+    // string id used by application logic (e.g., getLastId)
     public String getId() {
+        return this.id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    // access to the raw MongoDB ObjectId if needed
+    public ObjectId getObjectId() {
         return this._id;
     }
 
-    public void setId(String _id) {
-        this._id = _id;
+    public void setObjectId(ObjectId oid) {
+        this._id = oid;
     }
 
 }
