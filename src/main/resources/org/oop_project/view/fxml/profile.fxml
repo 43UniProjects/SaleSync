@@ -4,14 +4,14 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorMain" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="512.0" prefWidth="418.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.oop_project.view.controllers.ProfileController">
+<AnchorPane id="AnchorMain" styleClass="card" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="512.0" prefWidth="418.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.oop_project.view.controllers.ProfileController">
    <children>
       <Label fx:id="lblDetails" layoutX="21.0" layoutY="85.0" text="Employee Details">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-      <AnchorPane id="AnchorHead" prefHeight="70.0" prefWidth="418.0">
+      <AnchorPane id="AnchorHead" styleClass="card" prefHeight="70.0" prefWidth="418.0">
          <children>
             <Label fx:id="profileHead" alignment="CENTER" layoutX="3.0" layoutY="17.0" prefHeight="35.0" prefWidth="410.0">
                <font>
@@ -20,7 +20,7 @@
             </Label>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="detailsPane" layoutX="-4.0" layoutY="113.0" prefHeight="435.0" prefWidth="426.0">
+      <AnchorPane fx:id="detailsPane" styleClass="card" layoutX="-4.0" layoutY="113.0" prefHeight="435.0" prefWidth="426.0">
          <children>
 
             <Label layoutX="28.0" layoutY="8.0" text="Employee ID:" />

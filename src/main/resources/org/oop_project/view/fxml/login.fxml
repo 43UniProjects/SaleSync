@@ -7,9 +7,9 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorMain" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="419.0" prefWidth="592.0" styleClass="root-dark" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.oop_project.view.controllers.LoginController">
+<AnchorPane id="AnchorMain" styleClass="card root-dark" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="419.0" prefWidth="592.0" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.oop_project.view.controllers.LoginController">
    <children>
-      <AnchorPane id="AnchorHead" layoutX="-3.0" prefHeight="146.0" prefWidth="595.0" stylesheets="@../css/style.css">
+      <AnchorPane id="AnchorHead" styleClass="card" layoutX="-3.0" prefHeight="146.0" prefWidth="595.0" stylesheets="@../css/style.css">
          <children>
             <Label fx:id="headLogin" layoutX="224.0" layoutY="28.0" text="SaleSync" textAlignment="CENTER">
                <font>

@@ -14,9 +14,9 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="AnchorMain2" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="476.0" prefWidth="677.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.oop_project.view.controllers.AnalysisController">
+<AnchorPane fx:id="AnchorMain2" styleClass="card" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="476.0" prefWidth="677.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.oop_project.view.controllers.AnalysisController">
    <children>
-      <AnchorPane fx:id="AnchorHead" prefHeight="99.0" prefWidth="678.0">
+      <AnchorPane fx:id="AnchorHead" styleClass="card" prefHeight="99.0" prefWidth="678.0">
          <children>
                   <Label fx:id="AnlHead" alignment="CENTER" layoutY="30.0" prefHeight="24.0" prefWidth="677.0" text="Analytics Dashboard">
                      <font>
@@ -25,7 +25,7 @@
                   </Label>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="analyticsSide" layoutY="90.0" prefHeight="388.0" prefWidth="135.0">
+      <AnchorPane fx:id="analyticsSide" styleClass="card" layoutY="90.0" prefHeight="388.0" prefWidth="135.0">
          <children>
          <Button fx:id="btnDaily" layoutX="24.0" layoutY="108.0" mnemonicParsing="false" onAction="#onDaily" prefHeight="38.0" prefWidth="87.0" text="Daily">
                <font>

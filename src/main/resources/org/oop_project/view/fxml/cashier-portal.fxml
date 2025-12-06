@@ -11,9 +11,9 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorMain" prefHeight="575.0" prefWidth="923.0" styleClass="root-dark" stylesheets="@/org/oop_project/view/css/style.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.oop_project.view.controllers.CashierController">
+<AnchorPane id="AnchorMain" styleClass="card root-dark" prefHeight="575.0" prefWidth="923.0" stylesheets="@/org/oop_project/view/css/style.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.oop_project.view.controllers.CashierController">
   <children>
-    <AnchorPane id="AnchorHead" prefHeight="138.0" prefWidth="923.0" styleClass="header-dark">
+    <AnchorPane id="AnchorHead" prefHeight="138.0" prefWidth="923.0" styleClass="card header-dark">
       <children>
         <Label fx:id="headAdminPanel" alignment="CENTER" layoutY="28.0" prefHeight="54.0" prefWidth="923.0" text="Cashier Portal" textAlignment="CENTER">
           <font><Font name="System Bold" size="36.0" /></font>
@@ -41,7 +41,7 @@
       </children>
     </AnchorPane>
       <!-- Product summary panel -->
-      <AnchorPane fx:id="detailsPane" layoutX="19.0" layoutY="209.0" prefHeight="347.0" prefWidth="374.0">
+      <AnchorPane fx:id="detailsPane" styleClass="card" layoutX="19.0" layoutY="209.0" prefHeight="347.0" prefWidth="374.0">
         <children>
           <Label layoutX="10.0" text="Product Details">
             <font>
