@@ -11,6 +11,7 @@ import java.util.ResourceBundle;
 import java.time.DayOfWeek;
 
 import org.oop_project.database_handler.models.Employee;
+import org.oop_project.database_handler.enums.Role;
 import org.oop_project.database_handler.models.Sale;
 import org.oop_project.database_handler.operations.EmployeeOperations;
 import org.oop_project.database_handler.operations.SaleOperations;
@@ -19,6 +20,10 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
+import javafx.scene.chart.LineChart;
+import javafx.scene.chart.XYChart;
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.PieChart;
 
 public class AnalysisController implements Initializable {
 
@@ -32,14 +37,30 @@ public class AnalysisController implements Initializable {
 	@FXML
 	private TextArea analyticsOutput;
 
+	@FXML
+	private LineChart<String, Number> monthlySalesChart;
+
+	@FXML
+	private BarChart<String, Number> transactionsChart;
+
+	@FXML
+	private PieChart topProductsPie;
+
 	private final SaleOperations salesManager = new SaleOperations();
 	private final EmployeeOperations employeeManager = new EmployeeOperations();
 
 	private final LocalDate today = LocalDate.now();
 
+	private Role viewerRole = Role.ADMIN; // default admin; can be overridden
+
+	public void setViewerRole(Role role) {
+		this.viewerRole = role == null ? Role.ADMIN : role;
+	}
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		showDaily();
+		applyRolePermissions();
 	}
 
 	@FXML
@@ -55,6 +76,18 @@ public class AnalysisController implements Initializable {
 	@FXML
 	private void onMonthly() {
 		showMonthly();
+	}
+
+	private void applyRolePermissions() {
+		if (viewerRole == Role.CASHIER) {
+			if (monthlySalesChart != null) monthlySalesChart.setVisible(false);
+			if (transactionsChart != null) transactionsChart.setVisible(false);
+			if (topProductsPie != null) topProductsPie.setVisible(false);
+		} else {
+			if (monthlySalesChart != null) monthlySalesChart.setVisible(true);
+			if (transactionsChart != null) transactionsChart.setVisible(true);
+			if (topProductsPie != null) topProductsPie.setVisible(true);
+		}
 	}
 
 	private void showDaily() {
@@ -178,10 +211,16 @@ public class AnalysisController implements Initializable {
 						.append(System.lineSeparator());
 			}
 
+
 			if (analyticsOutput != null) {
 				analyticsOutput.setText(sb.toString());
 				analyticsOutput.setStyle("-fx-font-family: monospace; -fx-text-fill: black;");
 			}
+
+			// Populate charts
+			populateMonthlySalesChart();
+			populateTransactionsChart();
+			populateTopProductsPie(start, end);
 
 		} catch (Exception ex) {
 			if (analyticsOutput != null) {
@@ -190,6 +229,94 @@ public class AnalysisController implements Initializable {
 			System.err.println("Error loading analytics: " + ex.getMessage());
 			ex.printStackTrace();
 		}
+	}
+
+	private void populateMonthlySalesChart() {
+		try {
+			if (monthlySalesChart == null) return;
+			monthlySalesChart.getData().clear();
+			Map<String, Double> monthlyTotals = new HashMap<>();
+			LocalDate now = LocalDate.now();
+			LocalDate startMonth = now.minusMonths(11).withDayOfMonth(1);
+			LocalDate endMonth = now.withDayOfMonth(now.lengthOfMonth());
+			LocalDateTime start = startMonth.atStartOfDay();
+			LocalDateTime end = endMonth.atTime(LocalTime.MAX);
+			List<Sale> sales = salesManager.getAll();
+			if (sales == null) return;
+			for (Sale s : sales) {
+				LocalDateTime dt = s.getDate();
+				if (dt == null) continue;
+				if ((dt.isEqual(start) || dt.isAfter(start)) && (dt.isEqual(end) || dt.isBefore(end))) {
+					String key = dt.getYear() + "-" + String.format("%02d", dt.getMonthValue());
+					monthlyTotals.put(key, monthlyTotals.getOrDefault(key, 0.0) + s.getPrice());
+				}
+			}
+			XYChart.Series<String, Number> series = new XYChart.Series<>();
+			for (int i = 11; i >= 0; i--) {
+				LocalDate m = now.minusMonths(i);
+				String key = m.getYear() + "-" + String.format("%02d", m.getMonthValue());
+				double val = monthlyTotals.getOrDefault(key, 0.0);
+				series.getData().add(new XYChart.Data<>(key, val));
+			}
+			series.setName("Monthly Sales");
+			monthlySalesChart.getData().add(series);
+		} catch (Exception ignored) {}
+	}
+
+	private void populateTransactionsChart() {
+		try {
+			if (transactionsChart == null) return;
+			transactionsChart.getData().clear();
+			Map<String, Integer> monthlyTx = new HashMap<>();
+			LocalDate now = LocalDate.now();
+			LocalDate startMonth = now.minusMonths(11).withDayOfMonth(1);
+			LocalDate endMonth = now.withDayOfMonth(now.lengthOfMonth());
+			LocalDateTime start = startMonth.atStartOfDay();
+			LocalDateTime end = endMonth.atTime(LocalTime.MAX);
+			List<Sale> sales = salesManager.getAll();
+			if (sales == null) return;
+			for (Sale s : sales) {
+				LocalDateTime dt = s.getDate();
+				if (dt == null) continue;
+				if ((dt.isEqual(start) || dt.isAfter(start)) && (dt.isEqual(end) || dt.isBefore(end))) {
+					String key = dt.getYear() + "-" + String.format("%02d", dt.getMonthValue());
+					monthlyTx.put(key, monthlyTx.getOrDefault(key, 0) + 1);
+				}
+			}
+			XYChart.Series<String, Number> series = new XYChart.Series<>();
+			for (int i = 11; i >= 0; i--) {
+				LocalDate m = now.minusMonths(i);
+				String key = m.getYear() + "-" + String.format("%02d", m.getMonthValue());
+				int val = monthlyTx.getOrDefault(key, 0);
+				series.getData().add(new XYChart.Data<>(key, val));
+			}
+			series.setName("Transactions");
+			transactionsChart.getData().add(series);
+		} catch (Exception ignored) {}
+	}
+
+	private void populateTopProductsPie(LocalDateTime start, LocalDateTime end) {
+		try {
+			if (topProductsPie == null) return;
+			topProductsPie.getData().clear();
+			List<Sale> sales = salesManager.getAll();
+			if (sales == null) return;
+			Map<String, Double> cashierTotals = new HashMap<>();
+			for (Sale s : sales) {
+				LocalDateTime dt = s.getDate();
+				if (dt == null) continue;
+				if ((dt.isEqual(start) || dt.isAfter(start)) && (dt.isEqual(end) || dt.isBefore(end))) {
+					String c = s.getCashierId();
+					if (c != null) {
+						cashierTotals.put(c, cashierTotals.getOrDefault(c, 0.0) + s.getPrice());
+					}
+				}
+			}
+			cashierTotals.entrySet().stream()
+					.sorted((a, b) -> Double.compare(b.getValue(), a.getValue()))
+					.limit(5)
+					.forEach(e -> topProductsPie.getData().add(new PieChart.Data(e.getKey(), e.getValue())));
+		} catch (Exception ignored) {}
 	}
 
 }

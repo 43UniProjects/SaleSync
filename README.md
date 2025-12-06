@@ -1,3 +1,15 @@
+## Analytics Dashboard
+
+- Key Metrics: Monthly Sales (last 12 months), Monthly Transactions, Cashier Sales Distribution, Daily/Weekly/Monthly summaries.
+- Data Sources: `SaleOperations.getAll()` for sales, `EmployeeOperations.getById(id)` for cashier names.
+- Components: Line chart for monthly sales, bar chart for transactions per month, pie chart for top cashiers by sales, plus a text summary area.
+- User Roles and Permissions: Admins/Product Managers see all charts; Cashiers see only the text summary (charts hidden).
+
+### Usage
+- Open the Analytics view (`analytics.fxml`). The controller `AnalysisController` computes metrics and renders charts.
+- Buttons: Daily, Weekly, Monthly filter the summary and pie chart range; trend charts always show last 12 months.
+- To enforce permissions, call `AnalysisController#setViewerRole(Role)` with the logged-in user's role.
+
 ##  🛒 SaleSync - A Modern Sales Manager
 
 <div align="center">
