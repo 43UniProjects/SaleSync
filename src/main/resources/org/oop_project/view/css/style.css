@@ -2,6 +2,10 @@
 .date-picker .arrow-button,
 .date-picker .text-field,
 .date-picker .cell,
+* {
+    -fx-text-fill: #e0e0e0;
+    -fx-font-family: 'Inter', 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+}
 .date-picker .calendar-cell,
 .date-picker .calendar-cell:focused,
 .date-picker .calendar-cell:hover,
@@ -9,10 +13,25 @@
     -fx-background-color: #222 !important;
     background-color: #222 !important;
     -fx-text-fill: #e0e0e0 !important;
+#AnchorHead, .card {
+    background-color: #3d3d3d; /* compat */
+    -fx-background-color: #3d3d3d;
+    -fx-font-size: 32px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #6cb2ff;
+    -fx-background-radius: 16;
+    -fx-border-radius: 16;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.35), 18, 0.2, 0, 8);
+    -fx-padding: 12;
+}
     color: #e0e0e0 !important;
 }
 .date-picker-popup,
 .date-picker .month-year-pane,
+#AnchorMain, #mainAnchor {
+    background-color: #333333; /* compat */
+    -fx-background-color: #333333;
+}
 .date-picker .calendar-pane {
     -fx-background-color: #222 !important;
     background-color: #222 !important;
@@ -23,11 +42,32 @@
 /* Minimalistic dark theme */
 .root-dark {
     background-color: #333333; /* compat */
+#btnAdd, #btnSearch, #btnPrint, #btnSubmit, #btnCheckout, #btnLogin, #btnUpdate, #btnDelete, #btnReset, #btnClear, #btnLogout, #btnAnalytics, #btnAccount, #btnDaily, #btnWeekly, #btnMonthly{
+    background-color: #4CAF50; /* compat */
+    -fx-background-color: #4CAF50;
+    -fx-text-fill: white;
+    -fx-background-radius: 12;
+    cursor: hand; /* compat */
+    -fx-cursor: hand;
+    -fx-alignment: CENTER; /* Centers both text and image */
+    -fx-graphic-text-gap: 5; /* Adjusts spacing between text and image */
+    -fx-padding: 8 16 8 16;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 12, 0.2, 0, 4);
+    -fx-background-insets: 0,1,2;
+    -fx-border-color: rgba(255,255,255,0.08);
+    -fx-border-radius: 12;
+    -fx-border-width: 0.5;
+    -fx-transition: all 160ms ease-in-out; /* non-functional hint */
     -fx-background-color: #333333;
     -fx-font-family: 'Ubuntu', 'Roboto', 'Arial', sans-serif;
     -fx-text-fill: #e0e0e0;
 }
 
+#btnAdd:hover, #btnSearch:hover, #btnPrint:hover, #btnSubmit:hover, #btnCheckout:hover, #btnLogin:hover, #btnUpdate:hover, #btnDelete:hover, #btnReset:hover, #btnClear:hover, #btnLogout:hover, #btnAnalytics:hover, #btnAccount:hover, #btnDaily:hover, #btnWeekly:hover, #btnMonthly:hover {
+    background-color: #45a049; /* compat */
+    -fx-background-color: #45a049;
+    -fx-translate-y: -1;
+}
 * {
     -fx-text-fill: #e0e0e0;
     -fx-font-family: 'Ubuntu', 'Roboto', 'Arial', sans-serif;
@@ -38,6 +78,9 @@
 #headLogin, #headAdminPanel, #productHead, #AnlHead  {
     -fx-text-fill: rgb(192, 192, 243);
     -fx-font-size: 36px;
+#btnDaily, #btnWeekly, #btnMonthly, #btnAnalytics {
+    -fx-background-color: linear-gradient(to bottom right, #4f7cff, #3b5bd9);
+}
 }
 
 #AnlHead {
@@ -47,6 +90,12 @@
 #headCashierPanel {
     -fx-text-fill: rgb(192, 192, 243);
     -fx-font-size: 30px;
+#btnUpdate { -fx-background-color: linear-gradient(to bottom right, #42a5f5, #1e88e5); }
+#btnDelete, #btnReset { -fx-background-color: linear-gradient(to bottom right, #ef5350, #e53935); }
+#btnClear { -fx-background-color: linear-gradient(to bottom right, #9e9e9e, #757575); }
+#btnLogout { -fx-background-color: linear-gradient(to bottom right, #f6ad55, #ed8936); }
+#btnAccount { -fx-background-color: linear-gradient(to bottom right, #34d399, #10b981); }
+#btnLogin, #btnSubmit, #btnCheckout { -fx-background-color: linear-gradient(to bottom right, #7c59ff, #5a52d5); }
 
 }
 
@@ -59,6 +108,19 @@
 .header-dark {
     background-color: #3d3d3d; /* compat */
     -fx-background-color: #3d3d3d;
+.text-field, .password-field {
+    background-color: #222; /* compat */
+    -fx-background-color: #222;
+    -fx-text-fill: #e0e0e0;
+    -fx-prompt-text-fill: #a0a0a0;
+    -fx-font-size: 15px;
+    -fx-background-radius: 10;
+    border-color: #555555; /* compat */
+    -fx-border-color: #555555;
+    border-radius: 10; /* compat */
+    -fx-border-radius: 10;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0.1, 0, 2);
+}
     -fx-font-size: 32px;
     -fx-font-weight: bold;
     -fx-text-fill: #6cb2ff;
@@ -71,6 +133,19 @@
 
 
 
+.combo-box-base, .date-picker {
+    background-color: #222; /* compat */
+    -fx-background-color: #222;
+    -fx-text-fill: #e0e0e0;
+    -fx-prompt-text-fill: #a0a0a0;
+    -fx-font-size: 15px;
+    -fx-background-radius: 10;
+    border-color: #555555; /* compat */
+    -fx-border-color: #555555;
+    border-radius: 10; /* compat */
+    -fx-border-radius: 10;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0.1, 0, 2);
+}
 #dobPicker, #startDatePicker {
     -fx-text-fill: black;
 }
@@ -78,10 +153,41 @@
 /* Legacy IDs fallback for existing files */
 #AnchorHead {
     background-color: #3d3d3d; /* compat */
+.table-view {
+    background-color: #23272b; /* compat */
+    -fx-background-color: #23272b;
+    -fx-table-cell-border-color: #444;
+    -fx-font-size: 15px;
+    -fx-text-fill: #e0e0e0;
+    -fx-background-radius: 12;
+    -fx-padding: 8;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 12, 0.2, 0, 4);
+}
     -fx-background-color: #3d3d3d;
     -fx-font-size: 32px;
     -fx-font-weight: bold;
     -fx-text-fill: #6cb2ff;
+
+/* Charts styling */
+.chart-legend, .chart-title { -fx-text-fill: #e0e0e0; }
+.chart-plot-background { -fx-background-color: transparent; }
+.chart-series-line { -fx-stroke-width: 2; }
+.axis { -fx-tick-label-fill: #e0e0e0; }
+.axis .axis-label { -fx-text-fill: #a0a0a0; }
+
+/* Focus ring for accessibility */
+.text-field:focused, .password-field:focused, .combo-box-base:focused, .date-picker:focused, .button:focused {
+    -fx-border-color: #90cdf4;
+    -fx-border-width: 2;
+}
+
+/* Subtle hover for inputs */
+.text-field:hover, .password-field:hover, .combo-box-base:hover, .date-picker:hover {
+    -fx-border-color: #6cb2ff;
+}
+
+/* AnchorPane as card */
+#AnchorMain2, #analyticsSide { -fx-background-radius: 16; -fx-border-radius: 16; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 14, 0.2, 0, 6); }
 }
 
 #AnchorMain {
