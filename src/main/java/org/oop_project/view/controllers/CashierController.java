@@ -99,7 +99,7 @@ public class CashierController implements Initializable {
     private Button btnCheckout;
 
     private final static ProductOperations productManager = new ProductOperations();
-    private final static SaleOperations saleOp = new SaleOperations();
+    private final static SaleOperations salesManager = new SaleOperations();
     private final ObservableList<BillRow> billItemTableRows = FXCollections.observableArrayList();
     private ArrayList<BillRow> productList = new ArrayList<>();
 
@@ -383,14 +383,11 @@ public class CashierController implements Initializable {
         }
 
         
-
         // compute total items sold in this transaction
         int totalItems = productList.stream().mapToInt(item -> (int) Math.round(item.getQuantity())).sum();
 
-
-        saleOp.add(new Sale(
-            String.valueOf(Integer.parseInt(saleOp.getLastId()) + 1),
-            
+        salesManager.add(new Sale(
+            "TXN%d".formatted(System.currentTimeMillis()),
             cashier.getId(),
             totalBillAmount,
             LocalDateTime.now(),
@@ -548,7 +545,6 @@ public class CashierController implements Initializable {
         return lengths;
 
     }
-
 
     public void clearField() {
 
