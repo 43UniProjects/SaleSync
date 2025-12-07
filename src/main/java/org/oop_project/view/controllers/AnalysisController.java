@@ -8,7 +8,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
-import java.time.DayOfWeek;
 
 import org.oop_project.database_handler.models.Employee;
 import org.oop_project.database_handler.enums.Role;
@@ -46,19 +45,12 @@ public class AnalysisController implements Initializable {
 	@FXML
 	private PieChart topProductsPie;
 
-	private final SaleOperations salesManager = new SaleOperations();
-	private final EmployeeOperations employeeManager = new EmployeeOperations();
-
-	private final LocalDate today = LocalDate.now();
-
-	private Role viewerRole = Role.ADMIN; // default admin; can be overridden
-
-	public void setViewerRole(Role role) {
-		this.viewerRole = role == null ? Role.ADMIN : role;
-	}
+	private final SaleOperations saleOp = new SaleOperations();
+	private final EmployeeOperations empOp = new EmployeeOperations();
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		// default view: daily
 		showDaily();
 		applyRolePermissions();
 	}
@@ -91,6 +83,7 @@ public class AnalysisController implements Initializable {
 	}
 
 	private void showDaily() {
+		LocalDate today = LocalDate.now();
 		LocalDateTime start = today.atStartOfDay();
 		LocalDateTime end = today.atTime(LocalTime.MAX);
 		String range = today.toString();
@@ -98,7 +91,8 @@ public class AnalysisController implements Initializable {
 	}
 
 	private void showWeekly() {
-		LocalDate weekStart = today.with(DayOfWeek.MONDAY);
+		LocalDate today = LocalDate.now();
+		LocalDate weekStart = today.with(java.time.DayOfWeek.MONDAY);
 		LocalDateTime start = weekStart.atStartOfDay();
 		LocalDateTime end = today.atTime(LocalTime.MAX);
 		String range = weekStart.toString() + " - " + today.toString();
@@ -106,6 +100,7 @@ public class AnalysisController implements Initializable {
 	}
 
 	private void showMonthly() {
+		LocalDate today = LocalDate.now();
 		LocalDate monthStart = today.withDayOfMonth(1);
 		LocalDateTime start = monthStart.atStartOfDay();
 		LocalDateTime end = today.atTime(LocalTime.MAX);
@@ -115,7 +110,7 @@ public class AnalysisController implements Initializable {
 
 	private void loadAndDisplay(LocalDateTime start, LocalDateTime end, String rangeLabel) {
 		try {
-			List<Sale> sales = salesManager.getAll();
+			List<Sale> sales = saleOp.getAll();
 
 			double totalIncome = 0.0;
 			int totalProducts = 0;
@@ -124,24 +119,19 @@ public class AnalysisController implements Initializable {
 			Map<String, Double> cashierTotals = new HashMap<>();
 			Map<String, Integer> cashierProducts = new HashMap<>();
 
-			if (sales == null) {
-				return;
-			}
-
-			for (Sale s : sales) {
-
-				LocalDateTime dt = s.getDate();
-				
-				if (dt == null)
-					continue;
-				if ((dt.isEqual(start) || dt.isAfter(start)) && (dt.isEqual(end) || dt.isBefore(end))) {
-					totalIncome += s.getPrice();
-					totalProducts += s.getItemsCount();
-					transactions++;
-					String c = s.getCashierId();
-					if (c != null) {
-						cashierTotals.put(c, cashierTotals.getOrDefault(c, 0.0) + s.getPrice());
-						cashierProducts.put(c, cashierProducts.getOrDefault(c, 0) + s.getItemsCount());
+			if (sales != null) {
+				for (Sale s : sales) {
+					LocalDateTime dt = s.getDate();
+					if (dt == null) continue;
+					if ((dt.isEqual(start) || dt.isAfter(start)) && (dt.isEqual(end) || dt.isBefore(end))) {
+						totalIncome += s.getPrice();
+						totalProducts += s.getItemsCount();
+						transactions++;
+						String c = s.getCashierId();
+						if (c != null) {
+							cashierTotals.put(c, cashierTotals.getOrDefault(c, 0.0) + s.getPrice());
+							cashierProducts.put(c, cashierProducts.getOrDefault(c, 0) + s.getItemsCount());
+						}
 					}
 				}
 			}
@@ -158,10 +148,9 @@ public class AnalysisController implements Initializable {
 			String bestName = "-";
 			if (!bestId.equals("-")) {
 				try {
-					Employee emp = employeeManager.getById(bestId);
+					Employee emp = empOp.getById(bestId);
 					if (emp != null) {
-						bestName = (emp.getFirstName() != null ? emp.getFirstName() : "") + " "
-								+ (emp.getLastName() != null ? emp.getLastName() : "");
+						bestName = (emp.getFirstName() != null ? emp.getFirstName() : "") + " " + (emp.getLastName() != null ? emp.getLastName() : "");
 					}
 				} catch (Exception ex) {
 					// ignore, leave bestName as id fallback
@@ -179,16 +168,13 @@ public class AnalysisController implements Initializable {
 			// Build analytics text output
 			StringBuilder sb = new StringBuilder();
 			sb.append("Date: ").append(rangeLabel).append(System.lineSeparator()).append(System.lineSeparator());
-			sb.append("Total Income: ").append(String.format("Rs. %.2f", totalIncome)).append(" (").append(transactions)
-					.append(" tx)").append(System.lineSeparator());
-			sb.append("Total Products Sold: ").append(totalProducts).append(System.lineSeparator())
-					.append(System.lineSeparator());
+			sb.append("Total Income: ").append(String.format("Rs. %.2f", totalIncome)).append(" (").append(transactions).append(" tx)").append(System.lineSeparator());
+			sb.append("Total Products Sold: ").append(totalProducts).append(System.lineSeparator()).append(System.lineSeparator());
 			sb.append("Best Cashier:\n");
 			sb.append("  ID: ").append(bestId).append(System.lineSeparator());
 			sb.append("  Name: ").append(bestName).append(System.lineSeparator());
 			sb.append("  Sales Value: ").append(String.format("Rs. %.2f", bestVal)).append(System.lineSeparator());
-			sb.append("  Products Sold: ").append(bestProdCount).append(System.lineSeparator())
-					.append(System.lineSeparator());
+			sb.append("  Products Sold: ").append(bestProdCount).append(System.lineSeparator()).append(System.lineSeparator());
 
 			sb.append("Per-cashier summary:\n");
 			for (String cid : cashierTotals.keySet()) {
@@ -196,19 +182,17 @@ public class AnalysisController implements Initializable {
 				int cProd = cashierProducts.getOrDefault(cid, 0);
 				String cName = cid.equals(bestId) ? bestName : "-";
 				// attempt to resolve name if not best
-				if (cName.equals("-")) {
+				if (cName.equals("-") ) {
 					try {
-						var emp = employeeManager.getById(cid);
+						var emp = empOp.getById(cid);
 						if (emp != null) {
-							cName = (emp.getFirstName() != null ? emp.getFirstName() : "") + " "
-									+ (emp.getLastName() != null ? emp.getLastName() : "");
+							cName = (emp.getFirstName() != null ? emp.getFirstName() : "") + " " + (emp.getLastName() != null ? emp.getLastName() : "");
 						}
 					} catch (Exception ign) {
 						// ignore
 					}
 				}
-				sb.append(String.format("  %s | %s | Rs. %.2f | %d products", cid, cName, cVal, cProd))
-						.append(System.lineSeparator());
+				sb.append(String.format("  %s | %s | Rs. %.2f | %d products", cid, cName, cVal, cProd)).append(System.lineSeparator());
 			}
 
 

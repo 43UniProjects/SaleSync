@@ -37,6 +37,7 @@ public class Navigators {
             stage.show();
         } catch (Exception e) {
             if (label != null) {
+                
                 label.setText("Error loading login!");
                 label.setStyle("-fx-text-fill: red;");
             } else {
