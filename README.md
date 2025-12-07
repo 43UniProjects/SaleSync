@@ -41,7 +41,7 @@ The system addresses a practical business or operational problem faced by a loca
 
 ## 📄 Assignment Requirements
 
-This project addresses the core requirements of the IIC 1153 Group Assignment:
+This project addresses the core requirements of the IIC 1153 Group Assignment[cite: 7, 8]:
 
 * **Problem Identification**: Identify a current operational or management issue faced by a local startup company and propose a software solution
 * **OOP Implementation**: Design and implement the solution in Java, applying sound OOP design principles
@@ -69,7 +69,7 @@ The **SaleSync** application supports the following key functionalities:
 * ✅ **Product Inventory**: Full CRUD operations to manage product stock and details.
 * ✅ **Data Persistence**: Uses a NoSQL database (MongoDB) to store all application data.
 * ✅ **GUI Interface**: Provides a user-friendly graphical interface using JavaFX.
-* ✅ **Robustness**: Utilizes **exception handling** techniques to build a robust, error-tolerant application.
+* ✅ **Robustness**: Utilizes **exception handling** techniques to build a robust, error-tolerant application[cite: 15].
 
 ---
 
