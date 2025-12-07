@@ -399,6 +399,8 @@ public class AdminController {
             stage.setTitle("SaleSync - Analytics");
             stage.setResizable(false);
             stage.centerOnScreen();
+            AnalysisController ac = loader.getController();
+            ac.setViewerRole(admin.getRole());
             stage.show();
         } catch (Exception e) {
             System.err.println("Error displaying analytics: " + e.getMessage());
