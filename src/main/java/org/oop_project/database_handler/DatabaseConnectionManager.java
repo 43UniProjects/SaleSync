@@ -1,20 +1,21 @@
 package org.oop_project.database_handler;
 
+import org.bson.codecs.configuration.CodecProvider;
+import static org.bson.codecs.configuration.CodecRegistries.fromProviders;
+import static org.bson.codecs.configuration.CodecRegistries.fromRegistries;
+import org.bson.codecs.configuration.CodecRegistry;
+import static org.bson.codecs.pojo.PojoCodecProvider.builder;
+import static org.oop_project.Main.MIGRATION_PACKAGE;
+
 import com.mongodb.ConnectionString;
 import com.mongodb.MongoClientSettings;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+
 import io.mongock.driver.mongodb.sync.v4.driver.MongoSync4Driver;
 import io.mongock.runner.standalone.MongockStandalone;
-import org.bson.codecs.configuration.CodecProvider;
-import org.bson.codecs.configuration.CodecRegistry;
-
-import static org.bson.codecs.configuration.CodecRegistries.fromProviders;
-import static org.bson.codecs.configuration.CodecRegistries.fromRegistries;
-import static org.bson.codecs.pojo.PojoCodecProvider.builder;
-import static org.oop_project.Main.MIGRATION_PACKAGE;
 
 public class DatabaseConnectionManager {
 

@@ -98,8 +98,11 @@ public class Navigators {
             stage.setTitle("SaleSync - Product Dashboard");
             stage.centerOnScreen();
         } catch (Exception e) {
-            label.setText("Error loading product dashboard!");
-            label.setStyle("-fx-text-fill: red;");
+            e.printStackTrace();
+            if (label != null) {
+                label.setText("Error loading product dashboard!");
+                label.setStyle("-fx-text-fill: red;");
+            }
         }
     }
 
