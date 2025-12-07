@@ -52,7 +52,6 @@ public class AnalysisController implements Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
 		// default view: daily
 		showDaily();
-		applyRolePermissions();
 	}
 
 	@FXML
@@ -70,17 +69,6 @@ public class AnalysisController implements Initializable {
 		showMonthly();
 	}
 
-	private void applyRolePermissions() {
-		if (viewerRole == Role.CASHIER) {
-			if (monthlySalesChart != null) monthlySalesChart.setVisible(false);
-			if (transactionsChart != null) transactionsChart.setVisible(false);
-			if (topProductsPie != null) topProductsPie.setVisible(false);
-		} else {
-			if (monthlySalesChart != null) monthlySalesChart.setVisible(true);
-			if (transactionsChart != null) transactionsChart.setVisible(true);
-			if (topProductsPie != null) topProductsPie.setVisible(true);
-		}
-	}
 
 	private void showDaily() {
 		LocalDate today = LocalDate.now();
@@ -225,7 +213,7 @@ public class AnalysisController implements Initializable {
 			LocalDate endMonth = now.withDayOfMonth(now.lengthOfMonth());
 			LocalDateTime start = startMonth.atStartOfDay();
 			LocalDateTime end = endMonth.atTime(LocalTime.MAX);
-			List<Sale> sales = salesManager.getAll();
+			List<Sale> sales = saleOp.getAll();
 			if (sales == null) return;
 			for (Sale s : sales) {
 				LocalDateTime dt = s.getDate();
@@ -257,7 +245,7 @@ public class AnalysisController implements Initializable {
 			LocalDate endMonth = now.withDayOfMonth(now.lengthOfMonth());
 			LocalDateTime start = startMonth.atStartOfDay();
 			LocalDateTime end = endMonth.atTime(LocalTime.MAX);
-			List<Sale> sales = salesManager.getAll();
+			List<Sale> sales = saleOp.getAll();
 			if (sales == null) return;
 			for (Sale s : sales) {
 				LocalDateTime dt = s.getDate();
@@ -283,7 +271,7 @@ public class AnalysisController implements Initializable {
 		try {
 			if (topProductsPie == null) return;
 			topProductsPie.getData().clear();
-			List<Sale> sales = salesManager.getAll();
+			List<Sale> sales = saleOp.getAll();
 			if (sales == null) return;
 			Map<String, Double> cashierTotals = new HashMap<>();
 			for (Sale s : sales) {
