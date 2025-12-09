@@ -17,7 +17,7 @@ public class DatabaseChangeUnit_007 {
     @Execution
     public void execute(MongoDatabase db) {
 
-        System.out.println("Inserting Default Admin with credentials of Username \"admin\" and Password \"1234\"");
+        System.out.println("- Inserting Default Admin with credentials of Username \"admin\" and Password \"1234\"");
 
         Document defaultAdmin = new Document()
                 .append("id", "ADMIN-01")

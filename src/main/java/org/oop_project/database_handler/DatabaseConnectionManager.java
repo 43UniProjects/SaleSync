@@ -93,7 +93,7 @@ public class DatabaseConnectionManager {
                     .buildRunner()
                     .execute();
 
-            System.out.println("OK");
+            System.out.println("\nMigration completed.");
 
             // --- Application continues here after database is migrated ---
             System.out.println("\nStarting up...");

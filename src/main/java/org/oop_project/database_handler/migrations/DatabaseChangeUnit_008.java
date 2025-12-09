@@ -19,7 +19,7 @@ public class DatabaseChangeUnit_008 {
     @Execution
     public void execute(MongoDatabase db) {
 
-        System.out.println("\n- Creating 'Sale' Collection...");
+        System.out.println("- Creating 'Sale' Collection...");
 
         Document employeeJsonSchema = buildSaleSchema();
 
