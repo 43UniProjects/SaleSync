@@ -8,6 +8,11 @@ This project was developed to fulfill the requirements of the **Object Oriented 
 
 </div>
 
+## 💁‍♂️ Pronunciation
+
+**SaleSync** — “sales sync”  
+Phonetic: **/seɪlz sɪŋk/**
+
 ## 🎯 Overview
 
 **SaleSync** is a Java application designed as a simple store manager system. It serves as a practical demonstration of **Object-Oriented Programming (OOP) principles** and related Java features as required by the **IIC 1153 - Object Oriented Programming** 
