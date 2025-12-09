@@ -20,7 +20,7 @@ public class DatabaseChangeUnit_001 {
     @Execution
     public void execute(MongoDatabase db) {
 
-        System.out.println("- Creating 'Employee' Collection...");
+        System.out.println("\n- Creating 'Employee' Collection...");
 
         Document employeeJsonSchema = buildEmployeeSchema();
 

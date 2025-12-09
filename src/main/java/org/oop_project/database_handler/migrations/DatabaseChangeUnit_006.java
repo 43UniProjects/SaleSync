@@ -14,6 +14,7 @@ public class DatabaseChangeUnit_006 {
     @Execution
     public void execute(MongoDatabase db) {
 
+        System.out.println("- Changing Product Validation Schema 1...");
 
         Document newProductJsonSchema = buildProductSchema();
 
